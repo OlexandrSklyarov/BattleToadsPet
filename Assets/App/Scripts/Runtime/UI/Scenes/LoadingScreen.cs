@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,22 +7,64 @@ namespace BT.Runtime.UI.Scenes
 {
     public class LoadingScreen : MonoBehaviour
     {
-        [SerializeField] private Image _screen;
+        [SerializeField] private CanvasGroup _screen;
         [SerializeField] private Slider _progressBar;
         [SerializeField] private TextMeshProUGUI _operationInfo;
 
-        public void Show() => _screen.gameObject.SetActive(true);
+        private float _targetProgress;
+        private float _curProgress;
+        private float _smoothVelocity;
+
+        private const float DURATION = 0.5f;
+        private const float FADE_DURATION = 0.5f;
+
+        public void Show() 
+        {
+            _screen.blocksRaycasts = true;
+            _curProgress = _targetProgress = 0f;
+
+            StartCoroutine(UpdateProgressBarAnimation());
+        }
 
         public void Hide() 
         {
-            _screen.gameObject.SetActive(false);
-            Destroy(this.gameObject, 1f);
+            _screen.blocksRaycasts = false;
+            _curProgress = 1f;
         }
 
-        public void UpdateProgress(float progress, string operation)
+        public void SetProgress(float progress, string operation)
         {
-            _progressBar.value = progress;
-            _operationInfo.text = $"Loading {operation}... [{Mathf.RoundToInt(100 * progress)}%]";
+            _targetProgress = progress;
+            _operationInfo.text = $"Loading {operation}";
         }
+
+        private IEnumerator UpdateProgressBarAnimation()
+        {
+            while(_curProgress < 1f)
+            {
+                if(_screen.alpha < 1f)
+                {
+                    _screen.alpha += Time.deltaTime / FADE_DURATION;
+                }
+
+                _curProgress = Mathf.SmoothDamp(_curProgress, _targetProgress, ref _smoothVelocity, DURATION);
+                _progressBar.value = _curProgress;
+
+                yield return null;
+            }
+
+            _progressBar.value = 1f;
+
+            yield return new WaitForSeconds(DURATION);
+            
+            while(_screen.alpha > 0f)
+            {
+                _screen.alpha -= Time.deltaTime / FADE_DURATION;
+
+                yield return null;
+            }
+
+            Debug.Log("Loading completed");
+        }        
     }
 }

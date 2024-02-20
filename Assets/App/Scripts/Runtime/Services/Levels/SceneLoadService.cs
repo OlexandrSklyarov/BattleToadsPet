@@ -37,27 +37,32 @@ namespace BT.Runtime.Services.Levels
             await SceneManager.LoadSceneAsync(level.Scene, LoadSceneMode.Single)
                 .ToUniTask
                 (
-                    Progress.CreateOnlyValueChanged(progress => loadingScreen.UpdateProgress(progress, level.Scene), 
+                    Progress.CreateOnlyValueChanged(progress => loadingScreen.SetProgress(progress, level.Scene), 
                     EqualityComparer<float>.Default)
                 );
 
             await SceneManager.LoadSceneAsync(level.SceneEnvironment, LoadSceneMode.Additive)
                 .ToUniTask
                 (
-                    Progress.CreateOnlyValueChanged(progress => loadingScreen.UpdateProgress(progress, level.SceneEnvironment), 
+                    Progress.CreateOnlyValueChanged(progress => loadingScreen.SetProgress(progress, level.SceneEnvironment), 
                     EqualityComparer<float>.Default)
                 );
 
-            loadingScreen.UpdateProgress(1f, "Completed");                      
+            loadingScreen.SetProgress(1f, "Completed");                      
             await UniTask.Yield();
 
             loadingScreen.Hide();                      
         }
 
         private LoadingScreen GetLoadingScreen()
-        {
-            var screen =  UnityEngine.Object.Instantiate(_uiElementConfig.LoadingScreenPrefab);
+        {            
+            var screen = UnityEngine.Object.FindFirstObjectByType<LoadingScreen>();
+            
+            if (screen == null)
+                screen = UnityEngine.Object.Instantiate(_uiElementConfig.LoadingScreenPrefab);
+
             UnityEngine.Object.DontDestroyOnLoad(screen);
+            
             return screen;
         }
     }
