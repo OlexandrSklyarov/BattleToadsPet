@@ -21,7 +21,7 @@ namespace BT.Runtime.UI.Scenes
         public void UpdateProgress(float progress, string operation)
         {
             _progressBar.value = progress;
-            _operationInfo.text = $"Loading {operation}... [{Mathf.RoundToInt(100 * progress)}]";
+            _operationInfo.text = $"Loading {operation}... [{Mathf.RoundToInt(100 * progress)}%]";
         }
     }
 }

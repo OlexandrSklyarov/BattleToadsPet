@@ -6,6 +6,7 @@ using BT.Runtime.Data.Persistent;
 using BT.Runtime.Services.Player;
 using BT.Runtime.UI.Scenes;
 using Cysharp.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -46,6 +47,9 @@ namespace BT.Runtime.Services.Levels
                     Progress.CreateOnlyValueChanged(progress => loadingScreen.UpdateProgress(progress, level.SceneEnvironment), 
                     EqualityComparer<float>.Default)
                 );
+
+            loadingScreen.UpdateProgress(1f, "Completed");                      
+            await UniTask.Yield();
 
             loadingScreen.Hide();                      
         }
