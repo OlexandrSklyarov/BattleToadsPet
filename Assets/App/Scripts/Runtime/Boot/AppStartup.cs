@@ -18,12 +18,12 @@ namespace BT.Runtime.Boot
 
         private async void Start()
         {
-            await _sceneLoadService.LoadGame();
+            await _sceneLoadService.LoadGameAsync();
 
             var startup = SceneManager.GetSceneByName("Game").GetRootGameObjects()
                 .Select(x => x.GetComponent<EcsStartup>())
                 .FirstOrDefault();
-                
+
             startup.Init();
         }
     }

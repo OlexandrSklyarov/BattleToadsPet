@@ -24,7 +24,7 @@ namespace BT.Runtime.Services.Levels
             _uiElementConfig = uiElementConfig;
         }
 
-        public async UniTask LoadGame()
+        public async UniTask LoadGameAsync()
         {
             var index = _dataStorageService.GetData<LevelData>().NextLevelIndex;
             var level = _levelDataBase.Levels[index];
@@ -47,7 +47,7 @@ namespace BT.Runtime.Services.Levels
                     EqualityComparer<float>.Default)
                 );
 
-            loadingScreen.Hide();          
+            loadingScreen.Hide();                      
         }
 
         private LoadingScreen GetLoadingScreen()

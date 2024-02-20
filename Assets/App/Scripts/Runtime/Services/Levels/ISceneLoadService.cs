@@ -5,6 +5,6 @@ namespace BT.Runtime.Services.Levels
 {
     public interface ISceneLoadService
     {
-        UniTask LoadGame();
+        UniTask LoadGameAsync();
     }
 }
