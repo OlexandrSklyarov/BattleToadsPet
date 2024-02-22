@@ -16,7 +16,7 @@ namespace BT.Runtime.UI.Scenes
         private float _smoothVelocity;
 
         private const float DURATION = 0.5f;
-        private const float FADE_DURATION = 0.5f;
+        private const float HIDE_DURATION = 0.5f;
 
         public void Show() 
         {
@@ -40,29 +40,28 @@ namespace BT.Runtime.UI.Scenes
 
         private IEnumerator UpdateProgressBarAnimation()
         {
+            _screen.alpha = 1f;
+
             while(_curProgress < 1f)
             {
-                if(_screen.alpha < 1f)
-                {
-                    _screen.alpha += Time.deltaTime / FADE_DURATION;
-                }
-
                 _curProgress = Mathf.SmoothDamp(_curProgress, _targetProgress, ref _smoothVelocity, DURATION);
                 _progressBar.value = _curProgress;
 
                 yield return null;
             }
-
+           
             _progressBar.value = 1f;
 
             yield return new WaitForSeconds(DURATION);
             
             while(_screen.alpha > 0f)
             {
-                _screen.alpha -= Time.deltaTime / FADE_DURATION;
+                _screen.alpha -= Time.deltaTime / HIDE_DURATION;
 
                 yield return null;
             }
+
+            yield return new WaitForSeconds(DURATION);
 
             Debug.Log("Loading completed");
         }        
