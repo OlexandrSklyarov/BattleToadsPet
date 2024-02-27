@@ -48,9 +48,7 @@ namespace BT.Runtime.Services.Levels
                     EqualityComparer<float>.Default)
                 );
 
-            loadingScreen.SetProgress(1f, "Completed");                      
-            await UniTask.Yield();
-
+            loadingScreen.SetProgress(1f, "Completed");   
             loadingScreen.Hide();                      
         }
 

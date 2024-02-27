@@ -1,21 +1,43 @@
+using BT.Runtime.Gameplay.Services.GameWorldData;
+using BT.Runtime.Gameplay.Systems.Hero;
+using Cysharp.Threading.Tasks;
 using Leopotam.EcsLite;
 using UnityEngine;
+using VContainer;
 
-namespace BT 
+namespace BT.Runtime.Gameplay 
 {
     sealed class EcsStartup : MonoBehaviour 
     {
-        EcsWorld _world;        
-        IEcsSystems _systems;
+        private EcsWorld _world;        
+        private IEcsSystems _systems;
+        private IObjectResolver _resolver;
+        private bool _isInitialized;
+
+        [Inject]
+        private void Conctruct(IObjectResolver resolver)
+        {
+            _resolver = resolver;
+        }
 
         public void Init()
         {
+            _isInitialized = true;
+        }
+
+        private void Start()
+        {
+            var sharedData = new SharedData()
+            {
+                DIResolver = _resolver
+            };
+
             _world = new EcsWorld ();
-            _systems = new EcsSystems (_world);
+            _systems = new EcsSystems (_world, sharedData);
             _systems
-                // register your systems here, for example:
-                // .Add (new TestSystem1 ())
-                // .Add (new TestSystem2 ())
+                .Add(new SpawnHeroSystem())
+                .Add(new HeroApplyInputSystem())
+                .Add(new CharacterControllerMoveSystem())
                 
                 // register additional worlds here, for example:
                 // .AddWorld (new EcsWorld (), "events")
@@ -27,19 +49,20 @@ namespace BT
                 .Init ();
         }
 
-        void Update () 
+        private void Update () 
         {
+            if (!_isInitialized) return;
+
             _systems?.Run ();
         }
 
-        void OnDestroy () 
+        private void OnDestroy () 
         {            
             _systems?.Destroy();
             _systems = null;
            
-
             _world?.Destroy();
             _world = null;            
-        }
+        }        
     }
 }

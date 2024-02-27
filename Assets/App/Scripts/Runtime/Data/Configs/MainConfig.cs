@@ -7,5 +7,6 @@ namespace BT.Runtime.Data.Configs
     {
         [field: SerializeField] public LevelDataBase LevelDataBase {get; private set;}        
         [field: Space, SerializeField] public UIElementConfig UI {get; private set;}        
+        [field: Space, SerializeField] public HeroConfig Hero {get; private set;}        
     }
 }

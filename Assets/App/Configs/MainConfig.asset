@@ -16,3 +16,5 @@ MonoBehaviour:
     type: 2}
   <UI>k__BackingField: {fileID: 11400000, guid: e756a6fa21c84d9ecad376599070572d,
     type: 2}
+  <Hero>k__BackingField: {fileID: 11400000, guid: 73edd3b2befb8865cab050083dfdec8f,
+    type: 2}
