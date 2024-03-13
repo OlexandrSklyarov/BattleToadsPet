@@ -1,6 +1,7 @@
 using BT.Runtime.Data.Configs;
 using BT.Runtime.Gameplay.Components;
 using BT.Runtime.Gameplay.Services.GameWorldData;
+using BT.Runtime.Gameplay.Systems.Character;
 using BT.Runtime.Gameplay.Views.Camera;
 using BT.Runtime.Gameplay.Views.World;
 using Leopotam.EcsLite;
@@ -28,6 +29,14 @@ namespace BT.Runtime.Gameplay.Systems.Hero
             //character controller
             ref var cc = ref  world.GetPool<CharacterControllerComponent>().Add(entity);
             cc.CCRef = heroView;
+
+            //character transform
+            ref var tr = ref  world.GetPool<TranslateComponent>().Add(entity);
+            tr.TrRef = heroView.transform;
+
+            //character body transform (model)
+            ref var body = ref  world.GetPool<BodyTransformComponent>().Add(entity);
+            body.BodyTrRef = heroView.Model;
 
             //movement
             world.GetPool<MovementDataComponent>().Add(entity);

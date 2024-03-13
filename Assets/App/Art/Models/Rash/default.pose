@@ -1,0 +1,189 @@
+bind left calf roll spikedMace: 0 0 0 0 0 0 1 1 1
+bind nonStretchyTongue 1: 0 0 0 0 0 0 1 1 1
+bind nonStretchyTongue 2: 0 0 0 0 0 0 1 1 1
+bind nonStretchyTongue 3: 0 0 0 0 0 0 1 1 1
+bind root: 0 0 0 0 0 0 1 1 1
+bind hips: 0 0 0 0 0 0 1 1 1
+bind left hip: 0 0 0 0 0 0 1 1 1
+bind left thigh A: 0 0 0 0 0 0 1 1 1
+bind left thigh B: 0 0 0 0 0 0 1 1 1
+bind left thigh C: 0 0 0 0 0 0 1 1 1
+bind left thigh roll: 0 0 0 0 0 0 1 1 1
+bind left knee: 0 0 0 0 0 0 1 1 1
+bind left calf: 0 0 0 0 0 0 1 1 1
+bind left ankle: 0 0 0 0 0 0 1 1 1
+bind left ball: 0 0 0 0 0 0 1 1 1
+bind left toe middle 1: 0 0 0 0 0 0 1 1 1
+bind left toe middle 2: 0 0 0 0 0 0 1 1 1
+bind left toe middle 3: 0 0 0 0 0 0 1 1 1
+bind left toe pinky 1: 0 0 0 0 0 0 1 1 1
+bind left toe pinky 2: 0 0 0 0 0 0 1 1 1
+bind left toe pinky 3: 0 0 0 0 0 0 1 1 1
+bind left toe thumb 1: 0 0 0 0 0 0 1 1 1
+bind left toe thumb 2: 0 0 0 0 0 0 1 1 1
+bind left toe thumb 3: 0 0 0 0 0 0 1 1 1
+bind left calf roll: 0 0 0 0 0 0 1 1 1
+bind left kneePad: 0 0 0 0 0 0 1 1 1
+bind right hip: 0 0 0 0 0 0 1 1 1
+bind right thigh A: 0 0 0 0 0 0 1 1 1
+bind right thigh B: 0 0 0 0 0 0 1 1 1
+bind right thigh C: 0 0 0 0 0 0 1 1 1
+bind right thigh roll: 0 0 0 0 0 0 1 1 1
+bind right knee: 0 0 0 0 0 0 1 1 1
+bind right calf: 0 0 0 0 0 0 1 1 1
+bind right ankle: 0 0 0 0 0 0 1 1 1
+bind right ball: 0 0 0 0 0 0 1 1 1
+bind right toe middle 1: 0 0 0 0 0 0 1 1 1
+bind right toe middle 2: 0 0 0 0 0 0 1 1 1
+bind right toe middle 3: 0 0 0 0 0 0 1 1 1
+bind right toe pinky 1: 0 0 0 0 0 0 1 1 1
+bind right toe pinky 2: 0 0 0 0 0 0 1 1 1
+bind right toe pinky 3: 0 0 0 0 0 0 1 1 1
+bind right toe thumb 1: 0 0 0 0 0 0 1 1 1
+bind right toe thumb 2: 0 0 0 0 0 0 1 1 1
+bind right toe thumb 3: 0 0 0 0 0 0 1 1 1
+bind right calf roll: 0 0 0 0 0 0 1 1 1
+bind right kneePad: 0 0 0 0 0 0 1 1 1
+bind spine: 0 0 0 0 0 0 1 1 1
+bind spineAdd: 0 0 0 0 0 0 1 1 1
+bind spine1: 0 0 0 0 0 0 1 1 1
+bind left pectoral: 0 0 0 0 0 0 1 1 1
+bind right pectoral: 0 0 0 0 0 0 1 1 1
+bind spine2: 0 0 0 0 0 0 1 1 1
+bind left clavicle: 0 0 0 0 0 0 1 1 1
+bind left upperArm A: 0 0 0 0 0 0 1 1 1
+bind left upperArm B: 0 0 0 0 0 0 1 1 1
+bind left upperArm C: 0 0 0 0 0 0 1 1 1
+bind left upperArm roll: 0 0 0 0 0 0 1 1 1
+bind left biceps: 0 0 0 0 0 0 1 1 1
+bind left upperArm roll1: 0 0 0 0 0 0 1 1 1
+bind left elbow: 0 0 0 0 0 0 1 1 1
+bind left wrist: 0 0 0 0 0 0 1 1 1
+bind left index 1: 0 0 0 0 0 0 1 1 1
+bind left index 2: 0 0 0 0 0 0 1 1 1
+bind left index 3: 0 0 0 0 0 0 1 1 1
+bind left middle 1: 0 0 0 0 0 0 1 1 1
+bind left middle 2: 0 0 0 0 0 0 1 1 1
+bind left middle 3: 0 0 0 0 0 0 1 1 1
+bind left pinky base: 0 0 0 0 0 0 1 1 1
+bind left pinky 1: 0 0 0 0 0 0 1 1 1
+bind left pinky 2: 0 0 0 0 0 0 1 1 1
+bind left pinky 3: 0 0 0 0 0 0 1 1 1
+bind left thumb 1: 0 0 0 0 0 0 1 1 1
+bind left thumb 2: 0 0 0 0 0 0 1 1 1
+bind left thumb 3: 0 0 0 0 0 0 1 1 1
+bind left wrist roll: 0 0 0 0 0 0 1 1 1
+bind left wrist roll1: 0 0 0 0 0 0 1 1 1
+bind neck: 0 0 0 0 0 0 1 1 1
+bind neck1: 0 0 0 0 0 0 1 1 1
+bind head: 0 0 0 0 0 0 1 1 1
+bind center upperLip update: 0 0 0 0 0 0 1 1 1
+bind jaw update: 0 0 0 0 0 0 1 1 1
+bind center lowerLip update: 0 0 0 0 0 0 1 1 1
+bind left lowerLip 01 update: 0 0 0 0 0 0 1 1 1
+bind left lowerLip 02 update: 0 0 0 0 0 0 1 1 1
+bind left lowerLip 03 update: 0 0 0 0 0 0 1 1 1
+bind lower teeth: 0 0 0 0 0 0 1 1 1
+bind center lower teeth: 0 0 0 0 0 0 1 1 1
+bind left lower teeth A: 0 0 0 0 0 0 1 1 1
+bind left lower teeth B: 0 0 0 0 0 0 1 1 1
+bind right lower teeth A: 0 0 0 0 0 0 1 1 1
+bind right lower teeth B: 0 0 0 0 0 0 1 1 1
+bind right lowerLip 01 update: 0 0 0 0 0 0 1 1 1
+bind right lowerLip 02 update: 0 0 0 0 0 0 1 1 1
+bind right lowerLip 03 update: 0 0 0 0 0 0 1 1 1
+bind tongue 01 update: 0 0 0 0 0 0 1 1 1
+bind tongue 02 update: 0 0 0 0 0 0 1 1 1
+bind tongue 03 update: 0 0 0 0 0 0 1 1 1
+bind left back eyebrowCorrector: 0 0 0 0 0 0 1 1 1
+bind left cornerLip update: 0 0 0 0 0 0 1 1 1
+bind left eyeSocket: 0 0 0 0 0 0 1 1 1
+bind left lowerMainEye update: 0 0 0 0 0 0 1 1 1
+bind left upperMainEye update: 0 0 0 0 0 0 1 1 1
+bind left inner brow update: 0 0 0 0 0 0 1 1 1
+bind left lowerCheek update: 0 0 0 0 0 0 1 1 1
+bind left mainEye update: 0 0 0 0 0 0 1 1 1
+bind left eyeStretch zeroTranslation: 0 0 0 0 0 0 1 1 1
+bind left eyeStretch: 0 0 0 0 0 0 1 1 1
+bind left middle brow update: 0 0 0 0 0 0 1 1 1
+bind left outer brow update: 0 0 0 0 0 0 1 1 1
+bind left upperCheek update: 0 0 0 0 0 0 1 1 1
+bind left upperLip 01 update: 0 0 0 0 0 0 1 1 1
+bind left upperLip 02 update: 0 0 0 0 0 0 1 1 1
+bind left upperLip 03 update: 0 0 0 0 0 0 1 1 1
+bind right back eyebrowCorrector: 0 0 0 0 0 0 1 1 1
+bind right cornerLip update: 0 0 0 0 0 0 1 1 1
+bind right eyeSocket: 0 0 0 0 0 0 1 1 1
+bind right lowerMainEye update: 0 0 0 0 0 0 1 1 1
+bind right upperMainEye update: 0 0 0 0 0 0 1 1 1
+bind right inner brow update: 0 0 0 0 0 0 1 1 1
+bind right lowerCheek update: 0 0 0 0 0 0 1 1 1
+bind right mainEye update: 0 0 0 0 0 0 1 1 1
+bind right eyeStretch zeroTranslation: 0 0 0 0 0 0 1 1 1
+bind right eyeStretch: 0 0 0 0 0 0 1 1 1
+bind right middle brow update: 0 0 0 0 0 0 1 1 1
+bind right outer brow update: 0 0 0 0 0 0 1 1 1
+bind right upperCheek update: 0 0 0 0 0 0 1 1 1
+bind right upperLip 01 update: 0 0 0 0 0 0 1 1 1
+bind right upperLip 02 update: 0 0 0 0 0 0 1 1 1
+bind right upperLip 03 update: 0 0 0 0 0 0 1 1 1
+bind sunglasses: 0 0 0 0 0 0 1 1 1
+bind left sunglasses leg: 0 0 0 0 0 0 1 1 1
+bind right sunglasses leg: 0 0 0 0 0 0 1 1 1
+bind upper teeth: 0 0 0 0 0 0 1 1 1
+bind center upper teeth: 0 0 0 0 0 0 1 1 1
+bind left upper teeth A: 0 0 0 0 0 0 1 1 1
+bind left upper teeth B: 0 0 0 0 0 0 1 1 1
+bind right upper teeth A: 0 0 0 0 0 0 1 1 1
+bind right upper teeth B: 0 0 0 0 0 0 1 1 1
+bind right clavicle: 0 0 0 0 0 0 1 1 1
+bind right upperArm A: 0 0 0 0 0 0 1 1 1
+bind right upperArm B: 0 0 0 0 0 0 1 1 1
+bind right upperArm C: 0 0 0 0 0 0 1 1 1
+bind right upperArm roll: 0 0 0 0 0 0 1 1 1
+bind right biceps: 0 0 0 0 0 0 1 1 1
+bind right upperArm roll1: 0 0 0 0 0 0 1 1 1
+bind right elbow: 0 0 0 0 0 0 1 1 1
+bind right wrist: 0 0 0 0 0 0 1 1 1
+bind right index 1: 0 0 0 0 0 0 1 1 1
+bind right index 2: 0 0 0 0 0 0 1 1 1
+bind right index 3: 0 0 0 0 0 0 1 1 1
+bind right middle 1: 0 0 0 0 0 0 1 1 1
+bind right middle 2: 0 0 0 0 0 0 1 1 1
+bind right middle 3: 0 0 0 0 0 0 1 1 1
+bind right pinky base: 0 0 0 0 0 0 1 1 1
+bind right pinky 1: 0 0 0 0 0 0 1 1 1
+bind right pinky 2: 0 0 0 0 0 0 1 1 1
+bind right pinky 3: 0 0 0 0 0 0 1 1 1
+bind right thumb 1: 0 0 0 0 0 0 1 1 1
+bind right thumb 2: 0 0 0 0 0 0 1 1 1
+bind right thumb 3: 0 0 0 0 0 0 1 1 1
+bind right wrist roll: 0 0 0 0 0 0 1 1 1
+bind right wrist roll1: 0 0 0 0 0 0 1 1 1
+bind stretchyTongue 16: 0 0 0 0 0 0 1 1 1
+bind stretchyTongue end A: 0 0 0 0 0 0 1 1 1
+bind stretchyTongue end B: 0 0 0 0 0 0 1 1 1
+bind stretchyTongue end C: 0 0 0 0 0 0 1 1 1
+bind stretchyTongue base 1: 0 0 0 0 0 0 1 1 1
+bind stretchyTongue base 2: 0 0 0 0 0 0 1 1 1
+bind stretchyTongue base 3: 0 0 0 0 0 0 1 1 1
+bind stretchyTongue 1: 0 0 0 0 0 0 1 1 1
+bind stretchyTongue 2: 0 0 0 0 0 0 1 1 1
+bind stretchyTongue 3: 0 0 0 0 0 0 1 1 1
+bind stretchyTongue 4: 0 0 0 0 0 0 1 1 1
+bind stretchyTongue 5: 0 0 0 0 0 0 1 1 1
+bind stretchyTongue 6: 0 0 0 0 0 0 1 1 1
+bind stretchyTongue 7: 0 0 0 0 0 0 1 1 1
+bind stretchyTongue 8: 0 0 0 0 0 0 1 1 1
+bind stretchyTongue 9: 0 0 0 0 0 0 1 1 1
+bind stretchyTongue 10: 0 0 0 0 0 0 1 1 1
+bind stretchyTongue 11: 0 0 0 0 0 0 1 1 1
+bind stretchyTongue 12: 0 0 0 0 0 0 1 1 1
+bind stretchyTongue 13: 0 0 0 0 0 0 1 1 1
+bind stretchyTongue 14: 0 0 0 0 0 0 1 1 1
+bind stretchyTongue 15: 0 0 0 0 0 0 1 1 1
+bind left calf roll end: 0 0 0 0 0 0 1 1 1
+bind stretchyTongue end C end: 0 0 0 0 0 0 1 1 1
+bind left eyeStretch end: 0 0 0 0 0 0 1 1 1
+bind left kneePad end: 0 0 0 0 0 0 1 1 1
+Armature: 0 0 0 0 0 0 0.01 0.01 0.01

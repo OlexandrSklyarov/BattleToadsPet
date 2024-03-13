@@ -1,4 +1,5 @@
 using BT.Runtime.Gameplay.Services.GameWorldData;
+using BT.Runtime.Gameplay.Systems.Character;
 using BT.Runtime.Gameplay.Systems.Hero;
 using Cysharp.Threading.Tasks;
 using Leopotam.EcsLite;
@@ -38,12 +39,13 @@ namespace BT.Runtime.Gameplay
                 .Add(new SpawnHeroSystem())
                 .Add(new HeroApplyInputSystem())
                 .Add(new CharacterControllerMoveSystem())
+                .Add(new BodyRotateSystem())
                 
                 // register additional worlds here, for example:
-                // .AddWorld (new EcsWorld (), "events")
+                .AddWorld (new EcsWorld (), "events")
 #if UNITY_EDITOR
                 // add debug systems for custom worlds here, for example:
-                // .Add (new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem ("events"))
+                .Add (new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem ("events"))
                 .Add (new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem ())
 #endif
                 .Init ();

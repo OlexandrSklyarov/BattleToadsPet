@@ -8,6 +8,8 @@ namespace BT.Runtime.Gameplay.Views.Hero
     {
         public CharacterController Controller => _cc ??= GetComponent<CharacterController>(); 
         public Transform TR => transform;
+        [field: SerializeField] public Transform Model { get; private set; }        
+
 
         private CharacterController _cc;
 

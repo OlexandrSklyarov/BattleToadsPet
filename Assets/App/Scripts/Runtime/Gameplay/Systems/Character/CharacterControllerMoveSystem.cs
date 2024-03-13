@@ -2,7 +2,7 @@ using BT.Runtime.Gameplay.Components;
 using Leopotam.EcsLite;
 using UnityEngine;
 
-namespace BT.Runtime.Gameplay.Systems.Hero
+namespace BT.Runtime.Gameplay.Systems.Character
 {
     public sealed class CharacterControllerMoveSystem : IEcsInitSystem, IEcsRunSystem
     {
