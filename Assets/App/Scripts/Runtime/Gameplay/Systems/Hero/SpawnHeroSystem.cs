@@ -40,6 +40,9 @@ namespace BT.Runtime.Gameplay.Systems.Hero
 
             //movement
             world.GetPool<MovementDataComponent>().Add(entity);
+
+            //input
+            world.GetPool<InputDataComponent>().Add(entity);
         }
     }
 }

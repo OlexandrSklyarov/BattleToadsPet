@@ -29,18 +29,14 @@ namespace BT.Runtime.Gameplay.Systems.Character
             {
                 ref var body = ref _bodyPool.Get(ent); 
                 ref var movement = ref  _movementDataPool.Get(ent);
-
-                if (movement.Direction.sqrMagnitude > Mathf.Epsilon)
-                {
-                    movement.Rotation = Vector3Math.DirToQuaternion(movement.Direction);
-                    body.BodyTrRef.rotation = Quaternion.RotateTowards
-                    (
-                        body.BodyTrRef.rotation,
-                        movement.Rotation,
-                        Time.deltaTime * 360f
-                    );
-                }
-
+                
+                movement.Rotation = Vector3Math.DirToQuaternion(movement.Direction);
+                body.BodyTrRef.rotation = Quaternion.RotateTowards
+                (
+                    body.BodyTrRef.rotation,
+                    movement.Rotation,
+                    Time.deltaTime * movement.RotateSpeed
+                );   
             }
         }
     }

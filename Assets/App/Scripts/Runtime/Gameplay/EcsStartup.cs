@@ -37,9 +37,12 @@ namespace BT.Runtime.Gameplay
             _systems = new EcsSystems (_world, sharedData);
             _systems
                 .Add(new SpawnHeroSystem())
+                .Add(new CharacterCheckGroundSystem())
                 .Add(new HeroApplyInputSystem())
                 .Add(new CharacterControllerMoveSystem())
                 .Add(new BodyRotateSystem())
+                .Add(new CharacterJumpSystem())
+                .Add(new CharacterGravitySystem())
                 
                 // register additional worlds here, for example:
                 .AddWorld (new EcsWorld (), "events")

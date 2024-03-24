@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace BT.Runtime.Gameplay.Systems.Character
+namespace BT.Runtime.Gameplay.Components
 {
     public struct BodyTransformComponent
     {

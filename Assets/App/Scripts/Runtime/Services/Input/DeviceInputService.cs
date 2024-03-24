@@ -6,9 +6,9 @@ namespace BT.Runtime.Services.Input
     public class DeviceInputService : IInputService
     {
         public Vector2 Movement => (!_isActive) ? Vector2.zero : _control.Player.Move.ReadValue<Vector2>();
-        public bool IsAttack => _control.Player.Fire.ReadValue<bool>();
-        public bool IsJump => false;
-        public bool IsRun => false;
+        public bool IsAttack => _control.Player.Attack.WasPressedThisFrame();
+        public bool IsJump => _control.Player.Jump.WasPressedThisFrame();
+        public bool IsRun => _control.Player.Run.WasPressedThisFrame();
 
         private readonly PlayerControl _control;
         private bool _isActive;
