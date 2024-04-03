@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed82af03c17aa703e8edc07a53bc9f20, type: 3}
   m_Name: UIElementConfig
   m_EditorClassIdentifier: 
-  <LoadingScreenPrefab>k__BackingField: {fileID: 2389038608113714706, guid: 959db9b6c58bdaaa3811e77c58f85d53,
+  <LoadingScreenPrefab>k__BackingField: {fileID: -1309725228271803131, guid: 959db9b6c58bdaaa3811e77c58f85d53,
     type: 3}

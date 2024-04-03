@@ -151,8 +151,7 @@ MonoBehaviour:
   parentReference:
     TypeName: 
   autoRun: 1
-  autoInjectGameObjects:
-  - {fileID: 2127843081}
+  autoInjectGameObjects: []
   _mainConfig: {fileID: 11400000, guid: f70795a6a42edd9bc98f178de24a6cbf, type: 2}
 --- !u!4 &1638427943
 Transform:
