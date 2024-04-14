@@ -16,6 +16,7 @@ MonoBehaviour:
     type: 3}
   <Engine>k__BackingField:
     <MoveSpeed>k__BackingField: 3
+    <RunSpeedMultiplier>k__BackingField: 2
     <RotateSpeed>k__BackingField: 750
     <JumpForce>k__BackingField: 5
     <FallGravityMultiplier>k__BackingField: 2

@@ -6,18 +6,18 @@ namespace BT.Runtime.Gameplay.Systems.Character
     public sealed class CharacterCheckGroundSystem : IEcsInitSystem, IEcsRunSystem
     {
         private EcsFilter _filter;
-        private EcsPool<CharacterControllerComponent> _characterPool;
+        private EcsPool<CharacterEngineComponent> _characterEnginePool;
         private EcsPool<MovementDataComponent> _movementDataPool;
 
         public void Init(IEcsSystems systems)
         {
             var world = systems.GetWorld();
 
-            _filter = world.Filter<CharacterControllerComponent>()
+            _filter = world.Filter<CharacterEngineComponent>()
                 .Inc<MovementDataComponent>()
                 .End();
 
-            _characterPool = world.GetPool<CharacterControllerComponent>();
+            _characterEnginePool = world.GetPool<CharacterEngineComponent>();
             _movementDataPool = world.GetPool<MovementDataComponent>();
         }
 
@@ -26,9 +26,9 @@ namespace BT.Runtime.Gameplay.Systems.Character
             foreach(var e in _filter)
             {
                 ref var movement = ref _movementDataPool.Get(e);
-                ref var character = ref _characterPool.Get(e); 
+                ref var engine = ref _characterEnginePool.Get(e); 
 
-                movement.IsGround = character.CCRef.Controller.isGrounded;
+                movement.IsGround = engine.CharacterControllerRef.Controller.isGrounded;
             }
         }   
     }

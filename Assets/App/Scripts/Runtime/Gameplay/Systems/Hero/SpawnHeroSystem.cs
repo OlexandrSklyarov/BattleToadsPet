@@ -27,8 +27,8 @@ namespace BT.Runtime.Gameplay.Systems.Hero
             var entity = world.NewEntity();
 
             //character controller
-            ref var cc = ref  world.GetPool<CharacterControllerComponent>().Add(entity);
-            cc.CCRef = heroView;
+            ref var cc = ref  world.GetPool<CharacterEngineComponent>().Add(entity);
+            cc.CharacterControllerRef = heroView;
 
             //character transform
             ref var tr = ref  world.GetPool<TranslateComponent>().Add(entity);

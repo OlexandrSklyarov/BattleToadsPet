@@ -10,7 +10,7 @@ namespace BT.Runtime.Gameplay.Systems.Character
     public sealed class CharacterGravitySystem : IEcsInitSystem, IEcsRunSystem
     {
         private EcsFilter _filter;
-        private EcsPool<CharacterControllerComponent> _characterPool;
+        private EcsPool<CharacterEngineComponent> _characterEnginePool;
         private EcsPool<MovementDataComponent> _movementDataPool;
         private HeroConfig.EngineConfig _config;
 
@@ -21,11 +21,11 @@ namespace BT.Runtime.Gameplay.Systems.Character
 
             var world = systems.GetWorld();
 
-            _filter = world.Filter<CharacterControllerComponent>()
+            _filter = world.Filter<CharacterEngineComponent>()
                 .Inc<MovementDataComponent>()
                 .End();
 
-            _characterPool = world.GetPool<CharacterControllerComponent>();
+            _characterEnginePool = world.GetPool<CharacterEngineComponent>();
             _movementDataPool = world.GetPool<MovementDataComponent>();
         }
 
@@ -34,7 +34,7 @@ namespace BT.Runtime.Gameplay.Systems.Character
             foreach(var e in _filter)
             {
                 ref var movement = ref _movementDataPool.Get(e);
-                ref var character = ref _characterPool.Get(e); 
+                ref var engine = ref _characterEnginePool.Get(e); 
 
                 ClampVerticalVelocity(ref movement, _config.MinVerticalVelocity);
                 
@@ -43,7 +43,7 @@ namespace BT.Runtime.Gameplay.Systems.Character
                 movement.VerticalVelocity += Physics.gravity.y * gravityMultiplier * Time.deltaTime; 
                 movement.VerticalVelocity = Mathf.Max(Physics.gravity.y, movement.VerticalVelocity);
                 
-                character.CCRef.Controller.Move(Vector3.up * movement.VerticalVelocity * Time.deltaTime);
+                engine.CharacterControllerRef.Controller.Move(Vector3.up * movement.VerticalVelocity * Time.deltaTime);
             }
         }       
 

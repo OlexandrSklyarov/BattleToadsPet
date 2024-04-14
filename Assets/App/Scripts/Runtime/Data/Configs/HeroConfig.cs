@@ -14,6 +14,7 @@ namespace BT.Runtime.Data.Configs
         public sealed class EngineConfig
         {
             [field: SerializeField, Min(1f)] public float MoveSpeed {get; private set;} = 3f;
+            [field: SerializeField, Min(1f)] public float RunSpeedMultiplier {get; private set;} = 2f;
             [field: SerializeField, Min(1f)] public float RotateSpeed {get; private set;} = 800f;
             [field: SerializeField, Min(1f)] public float JumpForce {get; private set;} = 50f;
             [field: SerializeField, Min(1f)] public float FallGravityMultiplier {get; private set;} = 10f;

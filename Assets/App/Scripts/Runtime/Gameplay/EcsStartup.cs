@@ -21,12 +21,7 @@ namespace BT.Runtime.Gameplay
         }
 
         public void Init()
-        {
-            _isInitialized = true;
-        }
-
-        private void Start()
-        {
+        {        
             var sharedData = new SharedData()
             {
                 DIResolver = _resolver
@@ -38,6 +33,7 @@ namespace BT.Runtime.Gameplay
                 .Add(new SpawnHeroSystem())
                 .Add(new CharacterCheckGroundSystem())
                 .Add(new HeroApplyInputSystem())
+                .Add(new ChangeSpeedSystem())
                 .Add(new CharacterControllerMoveSystem())
                 .Add(new BodyRotateSystem())
                 .Add(new CharacterJumpSystem())
@@ -51,6 +47,8 @@ namespace BT.Runtime.Gameplay
                 .Add (new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem ())
 #endif
                 .Init ();
+
+            _isInitialized = true;
         }
 
         private void Update () 

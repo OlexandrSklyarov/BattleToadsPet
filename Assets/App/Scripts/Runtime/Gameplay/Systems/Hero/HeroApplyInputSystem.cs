@@ -39,6 +39,8 @@ namespace BT.Runtime.Gameplay.Systems.Hero
                 ref var movement = ref _movementDataPool.Get(ent);
                 ref var input = ref  _inputDataPool.Get(ent);
 
+                ResetInput(ref input);
+
                 movement.RotateSpeed = _config.Engine.RotateSpeed;
                 movement.Speed = 0f;
 
@@ -52,6 +54,11 @@ namespace BT.Runtime.Gameplay.Systems.Hero
                 input.IsAttack = _inputService.IsAttack;          
                 input.IsRun = _inputService.IsRun;          
             }
+        }
+
+        private void ResetInput(ref InputDataComponent input)
+        {
+            input.IsJump = input.IsAttack = input.IsRun = false; 
         }
     }
 }

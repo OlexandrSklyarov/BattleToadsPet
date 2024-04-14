@@ -7,18 +7,18 @@ namespace BT.Runtime.Gameplay.Systems.Character
     public sealed class CharacterControllerMoveSystem : IEcsInitSystem, IEcsRunSystem
     {
         private EcsFilter _filter;
-        private EcsPool<CharacterControllerComponent> _ccPool;
+        private EcsPool<CharacterEngineComponent> _characterEnginePool;
         private EcsPool<MovementDataComponent> _movementDataPool;
 
         public void Init(IEcsSystems systems)
         {
             var world = systems.GetWorld();
 
-            _filter = world.Filter<CharacterControllerComponent>()
+            _filter = world.Filter<CharacterEngineComponent>()
                 .Inc<MovementDataComponent>()
                 .End();
 
-            _ccPool = world.GetPool<CharacterControllerComponent>();
+            _characterEnginePool = world.GetPool<CharacterEngineComponent>();
             _movementDataPool = world.GetPool<MovementDataComponent>();
         }
 
@@ -26,11 +26,11 @@ namespace BT.Runtime.Gameplay.Systems.Character
         {
             foreach (var ent in _filter)
             {
-                ref var cc = ref  _ccPool.Get(ent);
+                ref var engine = ref  _characterEnginePool.Get(ent);
                 ref var movement = ref  _movementDataPool.Get(ent);
 
                 var force = movement.Direction * movement.Speed * Time.deltaTime;
-                cc.CCRef.Controller.Move(force);
+                engine.CharacterControllerRef.Controller.Move(force);
             }
         }
     }
