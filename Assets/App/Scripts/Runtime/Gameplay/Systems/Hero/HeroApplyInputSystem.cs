@@ -11,23 +11,24 @@ namespace BT.Runtime.Gameplay.Systems.Hero
     public sealed class HeroApplyInputSystem : IEcsInitSystem, IEcsRunSystem
     {
         private EcsFilter _filter;
+        private EcsPool<CharacterConfigComponent> _heroPool;
         private EcsPool<MovementDataComponent> _movementDataPool;
         private EcsPool<InputDataComponent> _inputDataPool;
         private IInputService _inputService;
-        private HeroConfig _config;
 
         public void Init(IEcsSystems systems)
         {
             var data = systems.GetShared<SharedData>();
             _inputService = data.DIResolver.Resolve<IInputService>();
-            _config = data.DIResolver.Resolve<MainConfig>().Hero;
            
             var world = systems.GetWorld();
 
-            _filter = world.Filter<MovementDataComponent>()
+            _filter = world.Filter<CharacterConfigComponent>()
+                .Inc<MovementDataComponent>()
                 .Inc<InputDataComponent>()
                 .End();
 
+            _heroPool = world.GetPool<CharacterConfigComponent>();
             _movementDataPool = world.GetPool<MovementDataComponent>();
             _inputDataPool = world.GetPool<InputDataComponent>();
         }
@@ -38,16 +39,17 @@ namespace BT.Runtime.Gameplay.Systems.Hero
             {
                 ref var movement = ref _movementDataPool.Get(ent);
                 ref var input = ref  _inputDataPool.Get(ent);
+                ref var hero = ref  _heroPool.Get(ent);
 
                 ResetInput(ref input);
 
-                movement.RotateSpeed = _config.Engine.RotateSpeed;
+                movement.RotateSpeed = hero.ConfigRef.Engine.RotateSpeed;
                 movement.Speed = 0f;
 
                 if (_inputService.Movement.sqrMagnitude > Mathf.Epsilon)
                 {
-                    movement.Direction = (new Vector3(_inputService.Movement.x, 0f, _inputService.Movement.y)).normalized;
-                    movement.Speed = _config.Engine.MoveSpeed;
+                    movement.Direction = new Vector3(_inputService.Movement.x, 0f, _inputService.Movement.y).normalized;
+                    movement.Speed = hero.ConfigRef.Engine.MoveSpeed;
                 }   
 
                 input.IsJump = _inputService.IsJump;          

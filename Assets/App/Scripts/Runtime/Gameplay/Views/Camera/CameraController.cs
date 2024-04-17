@@ -1,7 +1,10 @@
+using System;
+using BT.Runtime.Data.Configs;
 using Cinemachine;
 using Cysharp.Threading.Tasks;
 using NaughtyAttributes;
 using UnityEngine;
+using VContainer;
 
 namespace BT.Runtime.Gameplay.Views.Camera
 {
@@ -15,10 +18,44 @@ namespace BT.Runtime.Gameplay.Views.Camera
         [SerializeField] private CinemachineVirtualCamera _overviewCamera;
 
         private CinemachineBasicMultiChannelPerlin _perlin;
+        private CameraConfig _config;
+
+        [Inject]
+        private void Construct(CameraConfig config)
+        {
+            _config = config;
+        }
 
         private void Awake() 
         {
             _perlin = _followCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();     
+        }
+
+        private void Start() 
+        {
+            SetPresset(_followCamera);
+            SetPresset(_overviewCamera);    
+        }
+
+        private void Update() 
+        {
+            if (!_config.IsChangeInRuntime) return;
+
+            SetPresset(_followCamera);
+            SetPresset(_overviewCamera);
+        }
+
+        private void SetPresset(CinemachineVirtualCamera cam)
+        {
+            cam.m_Lens.FieldOfView = _config.FOV;
+            
+            var body = cam.GetCinemachineComponent<CinemachineTransposer>();
+            body.m_FollowOffset = _config.FollowOffset;
+            body.m_XDamping = _config.BodyDamping.x;
+            body.m_YDamping = _config.BodyDamping.y;
+            body.m_ZDamping = _config.BodyDamping.z;
+
+            cam.GetCinemachineComponent<CinemachineComposer>().m_TrackedObjectOffset = _config.AimOffset;            
         }
 
         public void FollowTarget(ICameraTarget target)

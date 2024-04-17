@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <LevelDataBase>k__BackingField: {fileID: 11400000, guid: 94fa6e7b902dbdfe5911ca849c38066c,
     type: 2}
+  <Camera>k__BackingField: {fileID: 11400000, guid: 86e8a334eb06d2b7da87b39e4b65a17f,
+    type: 2}
   <UI>k__BackingField: {fileID: 11400000, guid: e756a6fa21c84d9ecad376599070572d,
     type: 2}
-  <Hero>k__BackingField: {fileID: 11400000, guid: 73edd3b2befb8865cab050083dfdec8f,
+  <Factory>k__BackingField: {fileID: 11400000, guid: 06a084fa428d7ab28827475996a3f76b,
     type: 2}

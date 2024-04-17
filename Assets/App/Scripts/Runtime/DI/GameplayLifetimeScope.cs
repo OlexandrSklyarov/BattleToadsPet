@@ -3,6 +3,8 @@ using BT.Runtime.Gameplay;
 using BT.Runtime.Gameplay.Views.Camera;
 using BT.Runtime.Gameplay.Views.World;
 using BT.Runtime.Services.Input;
+using BT.Runtime.Services.Spawn;
+using BT.Runtime.Services.Spawn.Factory;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -20,16 +22,26 @@ namespace BT
             RegisterInHierarchy(builder);
 
             RegisterServices(builder);
+
+            RegisterFactories(builder);
+        }
+
+        private void RegisterFactories(IContainerBuilder builder)
+        {
+            builder.Register<ICharacterFactory, CharacterFactory>(Lifetime.Singleton);
         }
 
         private void RegisterServices(IContainerBuilder builder)
         {
             builder.Register<IInputService, DeviceInputService>(Lifetime.Singleton);
+            builder.Register<IItemGenerator, ItemGenerator>(Lifetime.Singleton);
         }
 
         private void RegisterConfigs(IContainerBuilder builder)
         {
             builder.RegisterInstance(_mainConfig);
+            builder.RegisterInstance(_mainConfig.Factory);
+            builder.RegisterInstance(_mainConfig.Camera);
         }
 
         private void RegisterInHierarchy(IContainerBuilder builder)

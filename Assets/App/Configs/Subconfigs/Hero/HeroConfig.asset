@@ -12,12 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae02274c79d74504894ff9bb6b2f38b1, type: 3}
   m_Name: HeroConfig
   m_EditorClassIdentifier: 
-  <HeroPrefab>k__BackingField: {fileID: 1280118273359490907, guid: 8f4a558cd70c0b619910c4f36582e4c0,
-    type: 3}
-  <Engine>k__BackingField:
-    <MoveSpeed>k__BackingField: 3
-    <RunSpeedMultiplier>k__BackingField: 2
-    <RotateSpeed>k__BackingField: 750
-    <JumpForce>k__BackingField: 5
-    <FallGravityMultiplier>k__BackingField: 2
-    <MinVerticalVelocity>k__BackingField: 1
+  <Engine>k__BackingField: {fileID: 11400000, guid: b069b71c27feada8b84cf18f0a7f09f9,
+    type: 2}
+  <Gravity>k__BackingField: {fileID: 11400000, guid: 7692d7cc8754eafd7be7a51a494d19fd,
+    type: 2}
