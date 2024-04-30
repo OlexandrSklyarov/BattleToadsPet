@@ -1,4 +1,7 @@
+using System.Runtime.InteropServices;
 using BT.Runtime.Gameplay.Components;
+using BT.Runtime.Gameplay.General.Components;
+using BT.Runtime.Gameplay.Hero.Components;
 using BT.Runtime.Gameplay.Services.GameWorldData;
 using BT.Runtime.Gameplay.Views.Camera;
 using BT.Runtime.Gameplay.Views.Hero;
@@ -7,7 +10,7 @@ using BT.Runtime.Services.Spawn;
 using Leopotam.EcsLite;
 using VContainer;
 
-namespace BT.Runtime.Gameplay.Systems.Hero
+namespace BT.Runtime.Gameplay.Hero.Systems
 {
     public sealed class SpawnHeroSystem : IEcsInitSystem
     {
@@ -27,6 +30,8 @@ namespace BT.Runtime.Gameplay.Systems.Hero
             var entity = world.NewEntity();
 
             //Hero
+            world.GetPool<HeroTeg>().Add(entity);
+
             ref var configComp = ref world.GetPool<CharacterConfigComponent>().Add(entity);
             configComp.ConfigRef = view.Config;
 
@@ -39,14 +44,18 @@ namespace BT.Runtime.Gameplay.Systems.Hero
             tr.TrRef = view.transform;
 
             //character body transform (model)
-            ref var body = ref  world.GetPool<BodyTransformComponent>().Add(entity);
-            body.BodyTrRef = view.Model;
+            ref var body = ref  world.GetPool<ViewModelTransformComponent>().Add(entity);
+            body.ModelTransformRef = view.Model;
 
             //movement
             world.GetPool<MovementDataComponent>().Add(entity);
 
             //input
             world.GetPool<InputDataComponent>().Add(entity);
+
+            //animations
+            ref var animation = ref world.GetPool<AnimatorComponent>().Add(entity);
+            animation.AnimatorRef = view.Animator;
         }
     }
 }

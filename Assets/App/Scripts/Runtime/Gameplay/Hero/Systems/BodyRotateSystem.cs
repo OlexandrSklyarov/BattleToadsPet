@@ -1,14 +1,15 @@
 using BT.Runtime.Gameplay.Components;
+using BT.Runtime.Gameplay.Hero.Components;
 using Leopotam.EcsLite;
 using UnityEngine;
 using Util;
 
-namespace BT.Runtime.Gameplay.Systems.Character
+namespace BT.Runtime.Gameplay.Hero.Systems
 {
     public sealed class BodyRotateSystem : IEcsInitSystem, IEcsRunSystem
     {
         private EcsFilter _filter;
-        private EcsPool<BodyTransformComponent> _bodyPool;
+        private EcsPool<ViewModelTransformComponent> _bodyPool;
         private EcsPool<MovementDataComponent> _movementDataPool;
 
         public void Init(IEcsSystems systems)
@@ -16,10 +17,10 @@ namespace BT.Runtime.Gameplay.Systems.Character
             var world = systems.GetWorld();
 
             _filter = world.Filter<MovementDataComponent>()
-                .Inc<BodyTransformComponent>()
+                .Inc<ViewModelTransformComponent>()
                 .End();
 
-            _bodyPool = world.GetPool<BodyTransformComponent>();
+            _bodyPool = world.GetPool<ViewModelTransformComponent>();
             _movementDataPool = world.GetPool<MovementDataComponent>();
         }
 
@@ -31,9 +32,9 @@ namespace BT.Runtime.Gameplay.Systems.Character
                 ref var movement = ref  _movementDataPool.Get(ent);
                 
                 movement.Rotation = Vector3Math.DirToQuaternion(movement.Direction);
-                body.BodyTrRef.rotation = Quaternion.RotateTowards
+                body.ModelTransformRef.rotation = Quaternion.RotateTowards
                 (
-                    body.BodyTrRef.rotation,
+                    body.ModelTransformRef.rotation,
                     movement.Rotation,
                     Time.deltaTime * movement.RotateSpeed
                 );   

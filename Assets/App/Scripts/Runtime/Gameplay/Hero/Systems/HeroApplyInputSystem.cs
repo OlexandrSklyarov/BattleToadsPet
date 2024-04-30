@@ -1,12 +1,11 @@
-using BT.Runtime.Data.Configs;
-using BT.Runtime.Gameplay.Components;
+using BT.Runtime.Gameplay.Hero.Components;
 using BT.Runtime.Gameplay.Services.GameWorldData;
 using BT.Runtime.Services.Input;
 using Leopotam.EcsLite;
 using UnityEngine;
 using VContainer;
 
-namespace BT.Runtime.Gameplay.Systems.Hero
+namespace BT.Runtime.Gameplay.Hero.Systems
 {
     public sealed class HeroApplyInputSystem : IEcsInitSystem, IEcsRunSystem
     {
@@ -45,6 +44,7 @@ namespace BT.Runtime.Gameplay.Systems.Hero
 
                 movement.RotateSpeed = hero.ConfigRef.Engine.RotateSpeed;
                 movement.Speed = 0f;
+                movement.MaxSpeed = hero.ConfigRef.Engine.MaxSpeed;
 
                 if (_inputService.Movement.sqrMagnitude > Mathf.Epsilon)
                 {

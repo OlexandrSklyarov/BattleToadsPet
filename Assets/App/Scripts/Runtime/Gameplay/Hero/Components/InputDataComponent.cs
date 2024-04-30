@@ -1,4 +1,4 @@
-namespace BT.Runtime.Gameplay.Components
+namespace BT.Runtime.Gameplay.Hero.Components
 {
     public struct InputDataComponent
     {

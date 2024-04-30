@@ -1,7 +1,8 @@
-using BT.Runtime.Gameplay.Components;
+using BT.Runtime.Gameplay.Hero.Components;
 using Leopotam.EcsLite;
+using UnityEngine;
 
-namespace BT.Runtime.Gameplay.Systems.Character
+namespace BT.Runtime.Gameplay.Hero.Systems
 {
     public sealed class ChangeSpeedSystem : IEcsInitSystem, IEcsRunSystem
     {
@@ -30,12 +31,19 @@ namespace BT.Runtime.Gameplay.Systems.Character
             {
                 ref var movement = ref  _movementDataPool.Get(ent);
                 ref var input = ref  _inputDataPool.Get(ent);
-                ref var config = ref  _configPool.Get(ent);
+                ref var config = ref  _configPool.Get(ent);               
+                
+                var nextSpeed = (movement.Speed > 0f && movement.IsGround && input.IsRun) ? 
+                    movement.MaxSpeed : 
+                    movement.Speed;
 
-                if (movement.IsGround && input.IsRun)
-                {
-                    movement.Speed *= config.ConfigRef.Engine.RunSpeedMultiplier;
-                }
+                movement.TargetSpeed = Mathf.SmoothDamp
+                (
+                    movement.TargetSpeed, 
+                    nextSpeed, 
+                    ref movement.MovementSmoothVelocity,
+                    config.ConfigRef.Engine.SpeedSmoothTime
+                );
             }
         }
     }

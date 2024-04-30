@@ -1,8 +1,8 @@
-using BT.Runtime.Gameplay.Components;
+using BT.Runtime.Gameplay.Hero.Components;
 using Leopotam.EcsLite;
 using UnityEngine;
 
-namespace BT.Runtime.Gameplay.Systems.Character
+namespace BT.Runtime.Gameplay.Hero.Systems
 {
     public sealed class CharacterJumpSystem : IEcsInitSystem, IEcsRunSystem
     {

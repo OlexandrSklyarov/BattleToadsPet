@@ -1,8 +1,8 @@
-using BT.Runtime.Gameplay.Components;
+using BT.Runtime.Gameplay.Hero.Components;
 using Leopotam.EcsLite;
 using UnityEngine;
 
-namespace BT.Runtime.Gameplay.Systems.Character
+namespace BT.Runtime.Gameplay.Hero.Systems
 {
     public sealed class CharacterControllerMoveSystem : IEcsInitSystem, IEcsRunSystem
     {
@@ -29,7 +29,7 @@ namespace BT.Runtime.Gameplay.Systems.Character
                 ref var engine = ref  _characterEnginePool.Get(ent);
                 ref var movement = ref  _movementDataPool.Get(ent);
 
-                var force = movement.Direction * movement.Speed * Time.deltaTime;
+                var force = movement.Direction * movement.TargetSpeed * Time.deltaTime;
                 engine.CharacterControllerRef.Controller.Move(force);
             }
         }

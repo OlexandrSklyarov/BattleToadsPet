@@ -1,6 +1,5 @@
+using BT.Runtime.Gameplay.Hero.Systems;
 using BT.Runtime.Gameplay.Services.GameWorldData;
-using BT.Runtime.Gameplay.Systems.Character;
-using BT.Runtime.Gameplay.Systems.Hero;
 using Leopotam.EcsLite;
 using UnityEngine;
 using VContainer;
@@ -30,6 +29,8 @@ namespace BT.Runtime.Gameplay
             _world = new EcsWorld ();
             _systems = new EcsSystems (_world, sharedData);
             _systems
+                .AddWorld (new EcsWorld (), "events")
+
                 .Add(new SpawnHeroSystem())
                 .Add(new CharacterCheckGroundSystem())
                 .Add(new HeroApplyInputSystem())
@@ -38,9 +39,8 @@ namespace BT.Runtime.Gameplay
                 .Add(new BodyRotateSystem())
                 .Add(new CharacterJumpSystem())
                 .Add(new CharacterGravitySystem())
+                .Add(new HeroAnimationSystem())                
                 
-                // register additional worlds here, for example:
-                .AddWorld (new EcsWorld (), "events")
 #if UNITY_EDITOR
                 // add debug systems for custom worlds here, for example:
                 .Add (new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem ("events"))
