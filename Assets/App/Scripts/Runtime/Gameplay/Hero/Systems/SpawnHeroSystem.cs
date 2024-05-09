@@ -56,6 +56,10 @@ namespace BT.Runtime.Gameplay.Hero.Systems
             //animations
             ref var animation = ref world.GetPool<AnimatorComponent>().Add(entity);
             animation.AnimatorRef = view.Animator;
+
+            //IK
+            ref var ik = ref world.GetPool<CharacterFootIKComponent>().Add(entity);
+            ik.FootIKRef = view.FootIK;
         }
     }
 }

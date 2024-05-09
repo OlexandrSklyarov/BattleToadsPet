@@ -1,3 +1,4 @@
+using BT.Runtime.Gameplay.Hero.Components;
 using BT.Runtime.Gameplay.Hero.Systems;
 using BT.Runtime.Gameplay.Services.GameWorldData;
 using Leopotam.EcsLite;
@@ -39,6 +40,7 @@ namespace BT.Runtime.Gameplay
                 .Add(new BodyRotateSystem())
                 .Add(new CharacterJumpSystem())
                 .Add(new CharacterGravitySystem())
+                .Add(new HeroIKFootIKSystem())
                 .Add(new HeroAnimationSystem())                
                 
 #if UNITY_EDITOR

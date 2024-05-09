@@ -3,6 +3,7 @@ using BT.Runtime.Data;
 using BT.Runtime.Gameplay.General.Components;
 using BT.Runtime.Gameplay.Hero.Components;
 using Leopotam.EcsLite;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace BT.Runtime.Gameplay.Hero.Systems
@@ -57,7 +58,14 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                 }
                 else
                 {
-                    animator.AnimatorRef.Play(GameConstants.AnimatorPrm.JUMP_FALL);
+                    if (movement.VerticalVelocity > 0f)
+                    {
+                        animator.AnimatorRef.Play(GameConstants.AnimatorPrm.JUMP_FALL);
+                    }
+                    else if (movement.VerticalVelocity <= Physics.gravity.y)
+                    {
+                        animator.AnimatorRef.Play(GameConstants.AnimatorPrm.JUMP_FALL);
+                    }
                 }
             }
         }
