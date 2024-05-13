@@ -56,7 +56,7 @@ CharacterController:
   m_Height: 2
   m_Radius: 0.22
   m_SlopeLimit: 45
-  m_StepOffset: 0.3
+  m_StepOffset: 0.4
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1.08, z: 0}
@@ -226,7 +226,7 @@ MonoBehaviour:
   rayCastRange: 2
   groundLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 1
   ignoreTriggers: 1
   leftFootRayStartHeight: 0.5
   rightFootRayStartHeight: 0.5
