@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c904c474ebe81b1709b00d8f909c5c46, type: 3}
   m_Name: HeroEngineConfig
   m_EditorClassIdentifier: 
-  <MoveSpeed>k__BackingField: 3
-  <MaxSpeed>k__BackingField: 6
+  <MoveSpeed>k__BackingField: 4
+  <MaxSpeed>k__BackingField: 7
   <SpeedSmoothTime>k__BackingField: 0.15
   <RotateSpeed>k__BackingField: 800
-  <JumpForce>k__BackingField: 25
+  <JumpForce>k__BackingField: 5.5
+  <JumpTime>k__BackingField: 0.2

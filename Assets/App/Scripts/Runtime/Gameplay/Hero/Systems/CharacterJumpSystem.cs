@@ -35,13 +35,23 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                 ref var movement = ref _movementDataPool.Get(e);
                 ref var input = ref _inputDataPool.Get(e);
                 ref var engine = ref _characterEnginePool.Get(e);
-                ref var config = ref _configPool.Get(e);
+                ref var config = ref _configPool.Get(e);             
                 
-                if (movement.IsGround && input.IsJump) 
+                if (movement.IsGround && input.IsJump && movement.JumpTime <= 0f) 
+                {
+                    movement.JumpTime = config.ConfigRef.Engine.JumpTime;
+                }
+                else if (input.IsJump && movement.JumpTime > 0f)
                 {
                     var jumpForce = config.ConfigRef.Engine.JumpForce;
-                    movement.VerticalVelocity = Mathf.Sqrt(jumpForce * -2f * Physics.gravity.y);
+                    movement.VerticalVelocity = Mathf.Sqrt(jumpForce * -2f * Physics.gravity.y);               
+
                     engine.CharacterControllerRef.Controller.Move(Vector3.up * movement.VerticalVelocity * Time.deltaTime);
+                }
+
+                if (movement.JumpTime > 0f)
+                {
+                    movement.JumpTime -= Time.deltaTime;
                 }
             }
         }
