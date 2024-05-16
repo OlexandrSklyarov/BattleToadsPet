@@ -1,9 +1,7 @@
-using System;
 using BT.Runtime.Data;
 using BT.Runtime.Gameplay.General.Components;
 using BT.Runtime.Gameplay.Hero.Components;
 using Leopotam.EcsLite;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace BT.Runtime.Gameplay.Hero.Systems
@@ -38,7 +36,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                 ref var input = ref _inputPool.Get(ent);  
                 ref var movement = ref _movementPool.Get(ent);   
 
-                var normSpeed = Mathf.Clamp01(movement.TargetSpeed / movement.MaxSpeed);
+                var normSpeed = Mathf.Clamp01(movement.DesiredSpeed / movement.MaxSpeed);
                 animator.AnimatorRef.SetFloat(GameConstants.AnimatorPrm.NORM_SPEED_PRM, normSpeed);
 
                 if (movement.IsGround)
@@ -58,11 +56,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                 }
                 else
                 {
-                    if (movement.VerticalVelocity > 0f)
-                    {
-                        animator.AnimatorRef.Play(GameConstants.AnimatorPrm.JUMP_FALL);
-                    }
-                    else if (movement.VerticalVelocity <= Physics.gravity.y)
+                    if (movement.VerticalVelocity > 0f || movement.VerticalVelocity <= movement.Gravity)
                     {
                         animator.AnimatorRef.Play(GameConstants.AnimatorPrm.JUMP_FALL);
                     }

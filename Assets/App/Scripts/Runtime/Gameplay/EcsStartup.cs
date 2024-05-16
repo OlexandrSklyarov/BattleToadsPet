@@ -36,10 +36,10 @@ namespace BT.Runtime.Gameplay
                 .Add(new CharacterCheckGroundSystem())
                 .Add(new HeroApplyInputSystem())
                 .Add(new ChangeSpeedSystem())
-                .Add(new CharacterControllerMoveSystem())
                 .Add(new BodyRotateSystem())
-                .Add(new CharacterJumpSystem())
                 .Add(new CharacterGravitySystem())
+                .Add(new CharacterJumpSystem())
+                .Add(new CharacterControllerMoveSystem())
                 .Add(new HeroIKFootIKSystem())
                 .Add(new HeroAnimationSystem())                
                 

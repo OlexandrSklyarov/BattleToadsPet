@@ -10,9 +10,12 @@ namespace BT.Runtime.Gameplay.Hero.Components
         public float MovementSmoothVelocity;
         public float Speed;
         public float MaxSpeed;
-        public float TargetSpeed;
+        public float DesiredSpeed;
         public float RotateSpeed;
-        public float JumpTime;
+        public float InitialJumpVelocity;
+        public float Gravity;
         public bool IsGround;
+        public bool IsJumping;
+        public bool IsFalling;
     }
 }

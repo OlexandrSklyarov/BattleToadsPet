@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: HeroGravityConfig
   m_EditorClassIdentifier: 
   <FallGravityMultiplier>k__BackingField: 8
-  <MinVerticalVelocity>k__BackingField: 2
+  <MinVerticalVelocity>k__BackingField: 0.05

@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using BT.Runtime.Gameplay.Hero.Components;
 using Leopotam.EcsLite;
 using UnityEngine;
@@ -26,34 +27,47 @@ namespace BT.Runtime.Gameplay.Hero.Systems
             _characterEnginePool = world.GetPool<CharacterEngineComponent>();
             _movementDataPool = world.GetPool<MovementDataComponent>();
             _inputDataPool = world.GetPool<InputDataComponent>();
-        }
+
+            foreach (var e in _filter)
+            {
+                ref var movement = ref _movementDataPool.Get(e);
+                ref var config = ref _configPool.Get(e);
+                SetupGravityPrm(ref movement, ref config);
+            }
+        }        
 
         public void Run(IEcsSystems systems)
-        {
+        {            
             foreach(var e in _filter)
             {
                 ref var movement = ref _movementDataPool.Get(e);
                 ref var input = ref _inputDataPool.Get(e);
                 ref var engine = ref _characterEnginePool.Get(e);
-                ref var config = ref _configPool.Get(e);             
+                ref var config = ref _configPool.Get(e);   
+        
+                if (config.ConfigRef.Engine.IsChangeRuntime)
+                {
+                    SetupGravityPrm(ref movement, ref config);
+                }          
                 
-                if (movement.IsGround && input.IsJump && movement.JumpTime <= 0f) 
+                if (!movement.IsJumping && movement.IsGround && input.IsJumpPressed) 
                 {
-                    movement.JumpTime = config.ConfigRef.Engine.JumpTime;
+                    movement.IsJumping = true;
+                    movement.VerticalVelocity = movement.InitialJumpVelocity * 0.5f;
                 }
-                else if (input.IsJump && movement.JumpTime > 0f)
-                {
-                    var jumpForce = config.ConfigRef.Engine.JumpForce;
-                    movement.VerticalVelocity = Mathf.Sqrt(jumpForce * -2f * Physics.gravity.y);               
-
-                    engine.CharacterControllerRef.Controller.Move(Vector3.up * movement.VerticalVelocity * Time.deltaTime);
-                }
-
-                if (movement.JumpTime > 0f)
-                {
-                    movement.JumpTime -= Time.deltaTime;
+                else if (!input.IsJumpPressed && movement.IsJumping && movement.IsGround)
+                {             
+                    movement.IsJumping = false;                    
                 }
             }
+        }
+
+        [Conditional("UNITY_EDITOR")]
+        private void SetupGravityPrm(ref MovementDataComponent movement, ref CharacterConfigComponent config)
+        {
+            var timeToApex = config.ConfigRef.Engine.JumpTime / 2f;
+            movement.Gravity = (-2f * config.ConfigRef.Engine.MaxJumpHeight) / Mathf.Pow(timeToApex, 2);
+            movement.InitialJumpVelocity = (2f * config.ConfigRef.Engine.MaxJumpHeight) / timeToApex;
         }
     }
 }

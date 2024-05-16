@@ -54,7 +54,7 @@ namespace BT.Runtime.Services.Input
 
         private void OnJumpHandler(InputAction.CallbackContext context)
         {
-            IsJump = context.ReadValue<float>() > 0;
+            IsJump = context.ReadValueAsButton();
         }
 
         private void OnRunHandler(InputAction.CallbackContext context)

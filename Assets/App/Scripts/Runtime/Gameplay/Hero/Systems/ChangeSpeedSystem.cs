@@ -37,9 +37,9 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                     movement.MaxSpeed : 
                     movement.Speed;
 
-                movement.TargetSpeed = Mathf.SmoothDamp
+                movement.DesiredSpeed = Mathf.SmoothDamp
                 (
-                    movement.TargetSpeed, 
+                    movement.DesiredSpeed, 
                     nextSpeed, 
                     ref movement.MovementSmoothVelocity,
                     config.ConfigRef.Engine.SpeedSmoothTime

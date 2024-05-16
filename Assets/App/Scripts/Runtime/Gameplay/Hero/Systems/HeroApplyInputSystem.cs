@@ -52,7 +52,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                     movement.Speed = hero.ConfigRef.Engine.MoveSpeed;
                 }   
 
-                input.IsJump = _inputService.IsJump;          
+                input.IsJumpPressed = _inputService.IsJump;          
                 input.IsAttack = _inputService.IsAttack;          
                 input.IsRun = _inputService.IsRun;          
             }
@@ -60,7 +60,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
 
         private void ResetInput(ref InputDataComponent input)
         {
-            input.IsJump = input.IsAttack = input.IsRun = false; 
+            input.IsJumpPressed = input.IsAttack = input.IsRun = false; 
         }
     }
 }

@@ -29,8 +29,9 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                 ref var engine = ref  _characterEnginePool.Get(ent);
                 ref var movement = ref  _movementDataPool.Get(ent);
 
-                var force = movement.Direction * movement.TargetSpeed * Time.deltaTime;
-                engine.CharacterControllerRef.Controller.Move(force);
+                var force = movement.Direction * movement.DesiredSpeed;
+                force.y = movement.VerticalVelocity;
+                engine.CharacterControllerRef.Controller.Move(force * Time.deltaTime);
             }
         }
     }
