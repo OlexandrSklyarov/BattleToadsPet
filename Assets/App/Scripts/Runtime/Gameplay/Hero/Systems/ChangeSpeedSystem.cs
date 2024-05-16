@@ -33,9 +33,12 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                 ref var input = ref  _inputDataPool.Get(ent);
                 ref var config = ref  _configPool.Get(ent);               
                 
-                var nextSpeed = (movement.Speed > 0f && movement.IsGround && input.IsRun) ? 
+                var nextSpeed = (movement.Speed <= 0f) ? 
+                    0f :  (movement.IsGround && input.IsRun) ?
                     movement.MaxSpeed : 
                     movement.Speed;
+
+                if (!movement.IsGround) nextSpeed = movement.DesiredSpeed;
 
                 movement.DesiredSpeed = Mathf.SmoothDamp
                 (
