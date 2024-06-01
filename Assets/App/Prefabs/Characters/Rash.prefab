@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1498536871767918597}
   - component: {fileID: 6907639711442540779}
   - component: {fileID: 7608476161554785265}
+  - component: {fileID: 7758531157591450032}
   m_Layer: 0
   m_Name: Rash
   m_TagString: Untagged
@@ -75,6 +76,19 @@ MonoBehaviour:
   <Config>k__BackingField: {fileID: 11400000, guid: 73edd3b2befb8865cab050083dfdec8f,
     type: 2}
   <Model>k__BackingField: {fileID: 3341318221341726614}
+--- !u!114 &7758531157591450032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3765119562512824100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdbcafb1ab398e10687104dbca773229, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _config: {fileID: 11400000, guid: 73edd3b2befb8865cab050083dfdec8f, type: 2}
 --- !u!1 &6041608466213473771
 GameObject:
   m_ObjectHideFlags: 0

@@ -32,6 +32,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
             //Hero
             world.GetPool<HeroTeg>().Add(entity);
 
+            //hero config
             ref var configComp = ref world.GetPool<CharacterConfigComponent>().Add(entity);
             configComp.ConfigRef = view.Config;
 

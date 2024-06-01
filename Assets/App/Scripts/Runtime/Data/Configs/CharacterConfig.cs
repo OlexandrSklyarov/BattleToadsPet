@@ -6,6 +6,7 @@ namespace BT.Runtime.Data.Configs
     public sealed class CharacterConfig : ScriptableObject
     {
         [field: Space, SerializeField] public EngineConfig Engine {get; private set;}
-        [field: Space, SerializeField] public CharacterGravityConfig Gravity {get; private set;}        
+        [field: Space, SerializeField] public CharacterGravityConfig Gravity {get; private set;}       
+        [field: Space, SerializeField] public bool IsShowDebug {get; private set;}       
     }
 }
