@@ -31,13 +31,14 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                 ref var body = ref _bodyPool.Get(ent); 
                 ref var movement = ref  _movementDataPool.Get(ent);
                 
-                movement.Rotation = Vector3Math.DirToQuaternion(movement.Direction);
-                body.ModelTransformRef.rotation = Quaternion.RotateTowards
+                movement.Rotation = Vector3Math.DirToQuaternion(movement.Direction);               
+
+                body.ModelTransformRef.rotation = Quaternion.Slerp
                 (
                     body.ModelTransformRef.rotation,
                     movement.Rotation,
                     Time.deltaTime * movement.RotateSpeed
-                );   
+                );  
             }
         }
     }

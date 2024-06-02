@@ -15,7 +15,7 @@ MonoBehaviour:
   <MoveSpeed>k__BackingField: 5
   <MaxSpeed>k__BackingField: 9
   <SpeedSmoothTime>k__BackingField: 0.25
-  <RotateSpeed>k__BackingField: 800
+  <RotateSpeed>k__BackingField: 9
   <MaxJumpHeight>k__BackingField: 8
   <JumpTime>k__BackingField: 1.1
   <IsChangeRuntime>k__BackingField: 0

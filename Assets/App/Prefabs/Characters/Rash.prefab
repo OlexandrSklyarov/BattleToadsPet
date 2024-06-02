@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6907639711442540779}
   - component: {fileID: 7608476161554785265}
   - component: {fileID: 7758531157591450032}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Rash
   m_TagString: Untagged
   m_Icon: {fileID: 0}

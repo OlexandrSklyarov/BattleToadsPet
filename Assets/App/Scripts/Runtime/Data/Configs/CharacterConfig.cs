@@ -7,6 +7,7 @@ namespace BT.Runtime.Data.Configs
     {
         [field: Space, SerializeField] public EngineConfig Engine {get; private set;}
         [field: Space, SerializeField] public CharacterGravityConfig Gravity {get; private set;}       
+        [field: Space, SerializeField] public AnimationConfig Animation {get; private set;}       
         [field: Space, SerializeField] public bool IsShowDebug {get; private set;}       
     }
 }

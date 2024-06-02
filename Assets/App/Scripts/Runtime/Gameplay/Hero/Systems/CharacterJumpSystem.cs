@@ -44,7 +44,8 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                 ref var input = ref _inputDataPool.Get(e);
                 ref var engine = ref _characterEnginePool.Get(e);
                 ref var config = ref _configPool.Get(e);   
-        
+
+                //only editor
                 if (config.ConfigRef.Engine.IsChangeRuntime)
                 {
                     SetupGravityPrm(ref movement, ref config);

@@ -12,6 +12,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
         private EcsPool<AnimatorComponent> _animatorPool;
         private EcsPool<InputDataComponent> _inputPool;
         private EcsPool<MovementDataComponent> _movementPool;
+        private EcsPool<CharacterConfigComponent> _characterConfigPool;
 
         public void Init(IEcsSystems systems)
         {
@@ -21,11 +22,13 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                 .Inc<AnimatorComponent>()
                 .Inc<InputDataComponent>()
                 .Inc<MovementDataComponent>()
+                .Inc<CharacterConfigComponent>()
                 .End();
 
             _animatorPool = world.GetPool<AnimatorComponent>();
             _inputPool = world.GetPool<InputDataComponent>();
             _movementPool = world.GetPool<MovementDataComponent>();
+            _characterConfigPool = world.GetPool<CharacterConfigComponent>();
         }
 
         public void Run(IEcsSystems systems)
@@ -35,31 +38,58 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                 ref var animator = ref _animatorPool.Get(ent);  
                 ref var input = ref _inputPool.Get(ent);  
                 ref var movement = ref _movementPool.Get(ent);   
+                ref var config = ref _characterConfigPool.Get(ent);   
 
+                //set speed prm
                 var normSpeed = Mathf.Clamp01(movement.DesiredSpeed / movement.MaxSpeed);
                 animator.AnimatorRef.SetFloat(GameConstants.AnimatorPrm.NORM_SPEED_PRM, normSpeed);
 
-                if (movement.IsGround)
+                if (movement.IsGround) // land **************************************************************
                 {
+                    //in case of falling and collision with the ground
                     if (IsState(ref animator, GameConstants.AnimatorPrm.JUMP_FALL))
-                    {
-                        animator.AnimatorRef.Play(GameConstants.AnimatorPrm.JUMP_LANDING);
+                    {                           
+                        animator.AnimatorRef.Play(GameConstants.AnimatorPrm.JUMP_LANDING);                        
                         continue;
                     }
 
+                    //if we lose the landing and the animation is not completed
                     if (IsState(ref animator, GameConstants.AnimatorPrm.JUMP_LANDING) && !IsStateTimeEnd(ref animator))
                     {
                         continue;
                     }
-                    
-                    animator.AnimatorRef.Play(GameConstants.AnimatorPrm.MOVEMENT);
-                }
-                else
-                {
-                    if (movement.VerticalVelocity > 0f || movement.VerticalVelocity <= movement.Gravity)
+
+                    if (!animator.IsPlayLocomotion)
                     {
-                        animator.AnimatorRef.Play(GameConstants.AnimatorPrm.JUMP_FALL);
+                        animator.AnimatorRef.CrossFade
+                        (
+                            GameConstants.AnimatorPrm.MOVEMENT, 
+                            config.ConfigRef.Animation.CrosfadeAnimime
+                        
+                        );
+                        animator.IsPlayLocomotion = true;
+                        continue;
                     }
+
+                    //default locomotion...
+                    //animator.AnimatorRef.Play(GameConstants.AnimatorPrm.MOVEMENT);
+                }
+                else // fall ******************************************************************************
+                {
+                    if (movement.VerticalVelocity > 0f || 
+                        movement.VerticalVelocity < -config.ConfigRef.Animation.MaxFallVelocity)
+                    {
+                        if (!IsState(ref animator, GameConstants.AnimatorPrm.JUMP_FALL))
+                        {
+                            animator.AnimatorRef.CrossFade
+                            (
+                                GameConstants.AnimatorPrm.JUMP_FALL, 
+                                config.ConfigRef.Animation.CrosfadeAnimime
+                            );
+                        }
+                    }
+
+                    animator.IsPlayLocomotion = false;
                 }
             }
         }

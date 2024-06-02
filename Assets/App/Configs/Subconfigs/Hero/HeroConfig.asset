@@ -16,4 +16,6 @@ MonoBehaviour:
     type: 2}
   <Gravity>k__BackingField: {fileID: 11400000, guid: 7692d7cc8754eafd7be7a51a494d19fd,
     type: 2}
+  <Animation>k__BackingField: {fileID: 11400000, guid: 008adbf214228c80ead304e46c79a87a,
+    type: 2}
   <IsShowDebug>k__BackingField: 1
