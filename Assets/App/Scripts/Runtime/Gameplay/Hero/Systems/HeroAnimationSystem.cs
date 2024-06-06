@@ -1,4 +1,7 @@
+using System;
 using BT.Runtime.Data;
+using BT.Runtime.Data.Configs;
+using BT.Runtime.Gameplay.Extensions;
 using BT.Runtime.Gameplay.General.Components;
 using BT.Runtime.Gameplay.Hero.Components;
 using Leopotam.EcsLite;
@@ -13,6 +16,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
         private EcsPool<InputDataComponent> _inputPool;
         private EcsPool<MovementDataComponent> _movementPool;
         private EcsPool<CharacterConfigComponent> _characterConfigPool;
+        private EcsPool<CharacterAttackComponent> _attackPool;
 
         public void Init(IEcsSystems systems)
         {
@@ -23,12 +27,14 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                 .Inc<InputDataComponent>()
                 .Inc<MovementDataComponent>()
                 .Inc<CharacterConfigComponent>()
+                .Inc<CharacterAttackComponent>()
                 .End();
 
             _animatorPool = world.GetPool<AnimatorComponent>();
             _inputPool = world.GetPool<InputDataComponent>();
             _movementPool = world.GetPool<MovementDataComponent>();
             _characterConfigPool = world.GetPool<CharacterConfigComponent>();
+            _attackPool = world.GetPool<CharacterAttackComponent>();
         }
 
         public void Run(IEcsSystems systems)
@@ -39,6 +45,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                 ref var input = ref _inputPool.Get(ent);  
                 ref var movement = ref _movementPool.Get(ent);   
                 ref var config = ref _characterConfigPool.Get(ent);   
+                ref var attack = ref _attackPool.Get(ent);   
 
                 //set speed prm
                 var normSpeed = Mathf.Clamp01(movement.DesiredSpeed / movement.MaxSpeed);
@@ -46,6 +53,42 @@ namespace BT.Runtime.Gameplay.Hero.Systems
 
                 if (movement.IsGround) // land **************************************************************
                 {
+                    //simple
+                    if (attack.IsExecuted)
+                    {
+                        if (IsState(ref animator, GameConstants.AnimatorPrm.ATTACK) && 
+                            !IsStateTimeProgressHasReached(ref animator, config.ConfigRef.Attack.MinAttackAnimationProgress))
+                        {
+                            continue;
+                        }
+
+                        var item = config.ConfigRef.Attack.Combos[attack.ComboIndex];
+                        PlayAttack(ref animator, item);
+
+                        continue;   
+                    }
+
+                    //power
+                    if (attack.IsExecutedPower)
+                    {
+                        if (IsState(ref animator, GameConstants.AnimatorPrm.ATTACK) &&
+                            !IsStateTimeProgressHasReached(ref animator, config.ConfigRef.Attack.MinAttackAnimationProgress))
+                        {
+                            continue;
+                        }
+
+                        var item = config.ConfigRef.Attack.PowerAttackUp;
+                        PlayAttack(ref animator, item);
+
+                        continue;
+                    }
+
+                    //wait attack anim
+                    if (IsState(ref animator, GameConstants.AnimatorPrm.ATTACK) && !IsStateTimeEnd(ref animator))
+                    {
+                        continue;
+                    }
+
                     //in case of falling and collision with the ground
                     if (IsState(ref animator, GameConstants.AnimatorPrm.JUMP_FALL))
                     {                           
@@ -70,9 +113,6 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                         animator.IsPlayLocomotion = true;
                         continue;
                     }
-
-                    //default locomotion...
-                    //animator.AnimatorRef.Play(GameConstants.AnimatorPrm.MOVEMENT);
                 }
                 else // fall ******************************************************************************
                 {
@@ -94,15 +134,26 @@ namespace BT.Runtime.Gameplay.Hero.Systems
             }
         }
 
+        private void PlayAttack(ref AnimatorComponent animator, ComboItem item)
+        {
+            animator.AnimatorRef.runtimeAnimatorController = item.AnimatorController;
+            animator.AnimatorRef.SetFloat(GameConstants.AnimatorPrm.ATTACK_SPEED_PRM, item.AnimationSpeed);
+            animator.AnimatorRef.Play(GameConstants.AnimatorPrm.ATTACK);
+        }
+
+        private bool IsStateTimeProgressHasReached(ref AnimatorComponent animator, float normProgress)
+        {
+            return AnimatorExtensions.IsStateTimeProgressHasReached(animator.AnimatorRef,normProgress);
+        }
+
         private bool IsStateTimeEnd(ref AnimatorComponent animator)
         {
-            return animator.AnimatorRef.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f;
+            return AnimatorExtensions.IsStateTimeEnd(animator.AnimatorRef);
         }
 
         private bool IsState(ref AnimatorComponent animator, int state)
         {
-            var info = animator.AnimatorRef.GetCurrentAnimatorStateInfo(0);
-            return info.shortNameHash == state;
+            return AnimatorExtensions.IsState(animator.AnimatorRef, state);
         }
     }
 }

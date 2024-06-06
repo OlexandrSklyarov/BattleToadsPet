@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5e50c17c823fe5a39b62924ba21d5d5, type: 3}
+  m_Name: HeroAttackConfig
+  m_EditorClassIdentifier: 
+  <SwitchComboAttackTimer>k__BackingField: 0.65
+  <MinAttackAnimationProgress>k__BackingField: 0.7
+  <Combos>k__BackingField:
+  - {fileID: 11400000, guid: 6eba66492cc71b16193065c74826b7fa, type: 2}
+  - {fileID: 11400000, guid: 2698a392f4521a2d9ba2b0af2d6e3cab, type: 2}
+  - {fileID: 11400000, guid: 7a30d9a0763d013158c97a5c35e1ce95, type: 2}
+  <PowerAttackUp>k__BackingField: {fileID: 11400000, guid: 88dcc41a2a4d83d9082d79c81778a25e,
+    type: 2}
+  <PowerAttackDown>k__BackingField: {fileID: 11400000, guid: 94318e67cf965ba2a919fda3e91edc73,
+    type: 2}
+  <IsCanStartPowerAttackDebug>k__BackingField: 0

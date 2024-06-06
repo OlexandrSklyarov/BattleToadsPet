@@ -18,4 +18,6 @@ MonoBehaviour:
     type: 2}
   <Animation>k__BackingField: {fileID: 11400000, guid: 008adbf214228c80ead304e46c79a87a,
     type: 2}
+  <Attack>k__BackingField: {fileID: 11400000, guid: 7e541b74e32d98bed9278465441d71ef,
+    type: 2}
   <IsShowDebug>k__BackingField: 1

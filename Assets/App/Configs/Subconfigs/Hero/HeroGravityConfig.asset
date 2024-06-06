@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: HeroGravityConfig
   m_EditorClassIdentifier: 
   <MinVerticalVelocity>k__BackingField: 0.05
-  <FallMultiplier>k__BackingField: 2
+  <FallMultiplier>k__BackingField: 1.5
   <MaxFallVelocity>k__BackingField: 20
   <CheckGroundOffset>k__BackingField: {x: 0, y: 0.2, z: 0}
   <CheckGroundSphereRadius>k__BackingField: 0.205

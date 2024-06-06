@@ -61,6 +61,9 @@ namespace BT.Runtime.Gameplay.Hero.Systems
             //IK
             ref var ik = ref world.GetPool<CharacterFootIKComponent>().Add(entity);
             ik.FootIKRef = view.FootIK;
+
+            //attack
+            ref var attack = ref world.GetPool<CharacterAttackComponent>().Add(entity);
         }
     }
 }

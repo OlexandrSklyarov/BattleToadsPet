@@ -40,7 +40,8 @@ namespace BT.Runtime.Gameplay.Hero.Systems
 
                 if (!movement.IsGround) nextSpeed = movement.DesiredSpeed;
 
-                movement.DesiredSpeed = Mathf.SmoothDamp
+                movement.DesiredSpeed = (input.IsAttack) ?
+                    0f : Mathf.SmoothDamp
                 (
                     movement.DesiredSpeed, 
                     nextSpeed, 
