@@ -2,7 +2,6 @@ using BT.Runtime.Gameplay.Hero.Components;
 using BT.Runtime.Gameplay.Services.GameWorldData;
 using BT.Runtime.Services.Input;
 using Leopotam.EcsLite;
-using UnityEngine;
 using VContainer;
 
 namespace BT.Runtime.Gameplay.Hero.Systems
@@ -10,8 +9,6 @@ namespace BT.Runtime.Gameplay.Hero.Systems
     public sealed class HeroApplyInputSystem : IEcsInitSystem, IEcsRunSystem
     {
         private EcsFilter _filter;
-        private EcsPool<CharacterConfigComponent> _heroPool;
-        private EcsPool<MovementDataComponent> _movementDataPool;
         private EcsPool<InputDataComponent> _inputDataPool;
         private IInputService _inputService;
 
@@ -22,13 +19,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
            
             var world = systems.GetWorld();
 
-            _filter = world.Filter<CharacterConfigComponent>()
-                .Inc<MovementDataComponent>()
-                .Inc<InputDataComponent>()
-                .End();
-
-            _heroPool = world.GetPool<CharacterConfigComponent>();
-            _movementDataPool = world.GetPool<MovementDataComponent>();
+            _filter = world.Filter<InputDataComponent>().End();
             _inputDataPool = world.GetPool<InputDataComponent>();
         }
 
@@ -36,31 +27,25 @@ namespace BT.Runtime.Gameplay.Hero.Systems
         {
             foreach (var ent in _filter)
             {
-                ref var movement = ref _movementDataPool.Get(ent);
                 ref var input = ref  _inputDataPool.Get(ent);
-                ref var hero = ref  _heroPool.Get(ent);
 
-                ResetInput(ref input);
+                ResetInput(ref input);                   
 
-                movement.RotateSpeed = hero.ConfigRef.Engine.RotateSpeed;
-                movement.Speed = 0f;
-                movement.MaxSpeed = hero.ConfigRef.Engine.MaxSpeed;
+                input.MoveDirection = _inputService.Movement;
 
-                if (_inputService.Movement.sqrMagnitude > Mathf.Epsilon)
-                {
-                    movement.Direction = new Vector3(_inputService.Movement.x, 0f, _inputService.Movement.y).normalized;
-                    movement.Speed = hero.ConfigRef.Engine.MoveSpeed;
-                }   
+                input.IsJumpWasPressed = _inputService.IsJumpWasPressed; 
+                input.IsJumpHold = _inputService.IsJumpHold;    
+                input.IsJumpWasReleased = _inputService.IsJumpWasReleased;    
 
-                input.IsJumpPressed = _inputService.IsJump;          
-                input.IsAttack = _inputService.IsAttack;          
-                input.IsRun = _inputService.IsRun;          
+                input.IsRunHold = _inputService.IsRunHold;  
+                        
+                input.IsAttackWasPressed = _inputService.IsAttackWasPressed;          
             }
         }
 
         private void ResetInput(ref InputDataComponent input)
         {
-            input.IsJumpPressed = input.IsAttack = input.IsRun = false; 
+            input.IsJumpWasPressed = input.IsAttackWasPressed = input.IsRunHold = false; 
         }
     }
 }

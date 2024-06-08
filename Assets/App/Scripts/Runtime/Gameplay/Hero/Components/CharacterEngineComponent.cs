@@ -4,6 +4,6 @@ namespace BT.Runtime.Gameplay.Hero.Components
 {
     public struct CharacterEngineComponent
     {
-        public ICharacterController CharacterControllerRef;
+        public ICharacterController ControllerRef;
     }
 }

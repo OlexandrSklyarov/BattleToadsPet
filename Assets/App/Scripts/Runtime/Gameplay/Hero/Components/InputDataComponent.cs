@@ -1,10 +1,15 @@
+using UnityEngine;
+
 namespace BT.Runtime.Gameplay.Hero.Components
 {
     public struct InputDataComponent
     {
-        public bool IsAttack;
-        public bool IsJumpPressed;
-        public bool IsRun;
+        public Vector2 MoveDirection;
+        public bool IsJumpWasPressed;
+        public bool IsJumpWasReleased;
+        public bool IsJumpHold;
+        public bool IsAttackWasPressed;
+        public bool IsRunHold;
     }
 }
 

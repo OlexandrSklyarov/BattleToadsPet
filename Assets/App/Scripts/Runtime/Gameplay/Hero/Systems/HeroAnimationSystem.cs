@@ -48,7 +48,8 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                 ref var attack = ref _attackPool.Get(ent);   
 
                 //set speed prm
-                var normSpeed = Mathf.Clamp01(movement.DesiredSpeed / movement.MaxSpeed);
+                var velMagnitude = new Vector3(movement.Velocity.x, 0f, movement.Velocity.z).magnitude;
+                var normSpeed = Mathf.Clamp01(velMagnitude / config.ConfigRef.Engine.MaxRunSpeed);
                 animator.AnimatorRef.SetFloat(GameConstants.AnimatorPrm.NORM_SPEED_PRM, normSpeed);
 
                 if (movement.IsGround) // land **************************************************************
@@ -116,8 +117,8 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                 }
                 else // fall ******************************************************************************
                 {
-                    if (movement.VerticalVelocity > 0f || 
-                        movement.VerticalVelocity < -config.ConfigRef.Animation.MaxFallVelocity)
+                    if (movement.Velocity.y > 0f || 
+                        movement.Velocity.y < -config.ConfigRef.Animation.MaxFallVelocity)
                     {
                         if (!IsState(ref animator, GameConstants.AnimatorPrm.JUMP_FALL))
                         {

@@ -4,14 +4,8 @@ namespace BT.Runtime.Gameplay.Hero.Components
 {
     public struct MovementDataComponent
     {
-        public Vector3 Direction;
         public Quaternion Rotation;
-        public float VerticalVelocity;
-        public float MovementSmoothVelocity;
-        public float Speed;
-        public float MaxSpeed;
-        public float DesiredSpeed;
-        public float RotateSpeed;
+        public Vector3 Velocity;
         public float InitialJumpVelocity;
         public float Gravity;
         public bool IsGround;

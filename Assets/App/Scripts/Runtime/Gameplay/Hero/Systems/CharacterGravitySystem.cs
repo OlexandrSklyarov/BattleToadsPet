@@ -37,26 +37,26 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                 ref var config = ref _configPool.Get(e); 
                 ref var input = ref _inputDataPool.Get(e); 
 
-                movement.IsFalling = movement.VerticalVelocity <= 0f || !input.IsJumpPressed;
+                // movement.IsFalling = movement.Velocity.y <= 0f || !input.IsJumpWasPressed;
 
-                if (movement.IsGround)
-                {
-                    movement.VerticalVelocity = -config.ConfigRef.Gravity.MinVerticalVelocity;
-                }
-                else if (movement.IsFalling)
-                {
-                    var prevVelocity = movement.VerticalVelocity;
-                    var newVelocity = movement.VerticalVelocity + (movement.Gravity * config.ConfigRef.Gravity.FallMultiplier * Time.deltaTime);
-                    var nextVelocity = Mathf.Max((prevVelocity + newVelocity) * 0.5f, -config.ConfigRef.Gravity.MaxFallVelocity);
-                    movement.VerticalVelocity = nextVelocity;
-                }
-                else
-                {
-                    var prevVelocity = movement.VerticalVelocity;
-                    var newVelocity = movement.VerticalVelocity + (movement.Gravity * Time.deltaTime);
-                    var nextVelocity = (prevVelocity + newVelocity) * 0.5f;
-                    movement.VerticalVelocity = nextVelocity;
-                }
+                // if (movement.IsGround)
+                // {
+                //     movement.Velocity.y = -config.ConfigRef.Gravity.MinVerticalVelocity;
+                // }
+                // else if (movement.IsFalling)
+                // {
+                //     var prevVelocity = movement.Velocity.y;
+                //     var newVelocity = movement.Velocity.y + (movement.Gravity * config.ConfigRef.Gravity.FallMultiplier * Time.deltaTime);
+                //     var nextVelocity = Mathf.Max((prevVelocity + newVelocity) * 0.5f, -config.ConfigRef.Gravity.MaxFallVelocity);
+                //     movement.Velocity.y = nextVelocity;
+                // }
+                // else
+                // {
+                //     var prevVelocity = movement.Velocity.y;
+                //     var newVelocity = movement.Velocity.y + (movement.Gravity * Time.deltaTime);
+                //     var nextVelocity = (prevVelocity + newVelocity) * 0.5f;
+                //     movement.Velocity.y = nextVelocity;
+                // }
             }
         } 
     }

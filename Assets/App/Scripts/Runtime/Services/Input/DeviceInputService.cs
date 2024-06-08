@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,9 +6,11 @@ namespace BT.Runtime.Services.Input
     public class DeviceInputService : IInputService
     {
         public Vector2 Movement => (!_isActive) ? Vector2.zero : _control.Player.Move.ReadValue<Vector2>();
-        public bool IsAttack => _control.Player.Attack.WasPressedThisFrame();
-        public bool IsJump {get; private set;}
-        public bool IsRun {get; private set;}
+        public bool IsAttackWasPressed => _control.Player.Attack.WasPressedThisFrame();
+        public bool IsJumpWasPressed => _control.Player.Jump.WasPressedThisFrame();
+        public bool IsJumpHold => _control.Player.Jump.IsPressed();
+        public bool IsJumpWasReleased => _control.Player.Jump.WasPressedThisFrame();
+        public bool IsRunHold =>_control.Player.Run.IsPressed();
 
         private readonly PlayerControl _control;
         private bool _isActive;
@@ -28,13 +29,6 @@ namespace BT.Runtime.Services.Input
 
             _control.Enable();
             _isActive = true;
-
-            _control.Player.Run.started += OnRunHandler;
-            _control.Player.Run.performed += OnRunHandler;
-            _control.Player.Run.canceled += OnRunHandler;
-
-            _control.Player.Jump.started += OnJumpHandler;
-            _control.Player.Jump.canceled += OnJumpHandler;
         }        
 
         public void Disable()
@@ -43,23 +37,6 @@ namespace BT.Runtime.Services.Input
 
             _control.Disable();
             _isActive = false;
-
-            _control.Player.Run.started -= OnRunHandler;
-            _control.Player.Run.performed -= OnRunHandler;
-            _control.Player.Run.canceled -= OnRunHandler;
-
-            _control.Player.Jump.started -= OnJumpHandler;
-            _control.Player.Jump.canceled -= OnJumpHandler;
-        }
-
-        private void OnJumpHandler(InputAction.CallbackContext context)
-        {
-            IsJump = context.ReadValueAsButton();
-        }
-
-        private void OnRunHandler(InputAction.CallbackContext context)
-        {
-            IsRun = context.ReadValue<float>() > 0;
         }
     }
 }

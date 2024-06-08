@@ -38,7 +38,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
 
             //character controller
             ref var cc = ref  world.GetPool<CharacterEngineComponent>().Add(entity);
-            cc.CharacterControllerRef = view;
+            cc.ControllerRef = view;
 
             //character transform
             ref var tr = ref  world.GetPool<TranslateComponent>().Add(entity);
@@ -64,6 +64,11 @@ namespace BT.Runtime.Gameplay.Hero.Systems
 
             //attack
             ref var attack = ref world.GetPool<CharacterAttackComponent>().Add(entity);
+
+            //check ground
+            ref var ground = ref world.GetPool<CharacterGroundComponent>().Add(entity);
+            ground.FeetCollider = view.FeetCollider;
+            ground.BodyCollider = view.BodyCollider;
         }
     }
 }

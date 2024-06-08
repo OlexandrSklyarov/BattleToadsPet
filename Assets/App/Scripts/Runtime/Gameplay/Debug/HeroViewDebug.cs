@@ -13,7 +13,6 @@ namespace BT
 
             //draw check ground
             Gizmos.color = Color.cyan;
-            Gizmos.DrawSphere(transform.TransformPoint(_config.Gravity.CheckGroundOffset), _config.Gravity.CheckGroundSphereRadius);
         }
     }
 }

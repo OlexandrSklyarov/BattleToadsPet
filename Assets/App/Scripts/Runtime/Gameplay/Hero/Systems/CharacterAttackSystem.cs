@@ -46,7 +46,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
 
                 if (movement.IsGround)
                 {
-                    if (input.IsAttack)
+                    if (input.IsAttackWasPressed)
                     {                        
                         if (attack.IsCanStartPowerAttack)
                         {

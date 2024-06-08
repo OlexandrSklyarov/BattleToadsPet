@@ -11,6 +11,7 @@ namespace BT.Runtime.Gameplay
     {
         private EcsWorld _world;        
         private IEcsSystems _systems;
+        private IEcsSystems _fixedSystems;
         private IObjectResolver _resolver;
         private bool _isInitialized;
 
@@ -21,37 +22,58 @@ namespace BT.Runtime.Gameplay
         }
 
         public void Init()
-        {        
+        {
             var sharedData = new SharedData()
             {
                 DIResolver = _resolver
             };
 
-            _world = new EcsWorld ();
-            _systems = new EcsSystems (_world, sharedData);
+            _world = new EcsWorld();
+
+            InitUpdateSystems(sharedData);
+            InitUpdateFixedSystems(sharedData);
+
+            _isInitialized = true;
+        }        
+
+        private void InitUpdateSystems(SharedData sharedData)
+        {
+            _systems = new EcsSystems(_world, sharedData);
             _systems
-                .AddWorld (new EcsWorld (), "events")
+                .AddWorld(new EcsWorld(), "events")
 
                 .Add(new SpawnHeroSystem())
-                .Add(new CharacterCheckGroundSystem())
                 .Add(new HeroApplyInputSystem())
-                .Add(new ChangeSpeedSystem())
                 .Add(new BodyRotateSystem())
                 .Add(new CharacterAttackSystem())
                 .Add(new CharacterGravitySystem())
                 .Add(new CharacterJumpSystem())
-                .Add(new CharacterControllerMoveSystem())
                 .Add(new HeroIKFootIKSystem())
-                .Add(new HeroAnimationSystem())                
-                
-#if UNITY_EDITOR
-                // add debug systems for custom worlds here, for example:
-                .Add (new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem ("events"))
-                .Add (new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem ())
-#endif
-                .Init ();
+                .Add(new HeroAnimationSystem())
 
-            _isInitialized = true;
+        #if UNITY_EDITOR
+                // add debug systems for custom worlds here, for example:
+                .Add(new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem("events"))
+                .Add(new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem())
+        #endif
+                .Init();
+        }
+
+        private void InitUpdateFixedSystems(SharedData sharedData)
+        {
+            _fixedSystems = new EcsSystems(_world, sharedData);
+            _fixedSystems
+                .AddWorld(new EcsWorld(), "events")
+
+                .Add(new CharacterCheckGroundSystem())
+                .Add(new CharacterMoveSystem())
+
+        #if UNITY_EDITOR
+                // add debug systems for custom worlds here, for example:
+                .Add(new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem("events"))
+                .Add(new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem())
+        #endif
+                .Init();
         }
 
         private void Update () 
@@ -61,10 +83,20 @@ namespace BT.Runtime.Gameplay
             _systems?.Run ();
         }
 
+        private void FixedUpdate () 
+        {
+            if (!_isInitialized) return;
+
+            _fixedSystems?.Run ();
+        }
+
         private void OnDestroy () 
         {            
             _systems?.Destroy();
             _systems = null;
+
+            _fixedSystems?.Destroy();
+            _fixedSystems = null;
            
             _world?.Destroy();
             _world = null;            

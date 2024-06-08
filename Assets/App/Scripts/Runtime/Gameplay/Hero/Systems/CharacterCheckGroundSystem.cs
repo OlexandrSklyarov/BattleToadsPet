@@ -7,21 +7,18 @@ namespace BT.Runtime.Gameplay.Hero.Systems
     public sealed class CharacterCheckGroundSystem : IEcsInitSystem, IEcsRunSystem
     {
         private EcsFilter _filter;
-        private EcsPool<CharacterEngineComponent> _characterEnginePool;
-        private EcsPool<MovementDataComponent> _movementDataPool;
+        private EcsPool<CharacterGroundComponent> _characterGroundPool;
         private EcsPool<CharacterConfigComponent> _characterConfigPool;
 
         public void Init(IEcsSystems systems)
         {
             var world = systems.GetWorld();
 
-            _filter = world.Filter<CharacterEngineComponent>()
-                .Inc<MovementDataComponent>()
+            _filter = world.Filter<CharacterGroundComponent>()
                 .Inc<CharacterConfigComponent>()
                 .End();
 
-            _characterEnginePool = world.GetPool<CharacterEngineComponent>();
-            _movementDataPool = world.GetPool<MovementDataComponent>();
+            _characterGroundPool = world.GetPool<CharacterGroundComponent>();
             _characterConfigPool = world.GetPool<CharacterConfigComponent>();
         }
 
@@ -29,17 +26,32 @@ namespace BT.Runtime.Gameplay.Hero.Systems
         {
             foreach(var e in _filter)
             {
-                ref var movement = ref _movementDataPool.Get(e);
-                ref var engine = ref _characterEnginePool.Get(e); 
+                ref var ground = ref _characterGroundPool.Get(e); 
                 ref var config = ref _characterConfigPool.Get(e); 
 
-                movement.IsGround = Physics.CheckSphere
+                var boxCastOrigin = new Vector3
                 (
-                    engine.CharacterControllerRef.Controller.transform.TransformPoint(config.ConfigRef.Gravity.CheckGroundOffset),
-                    config.ConfigRef.Gravity.CheckGroundSphereRadius,
-                    config.ConfigRef.Gravity.GroundLayer
+                    ground.FeetCollider.bounds.center.x,
+                    ground.FeetCollider.bounds.min.y,
+                    ground.FeetCollider.bounds.center.z
                 );
-                //movement.IsGround = engine.CharacterControllerRef.Controller.isGrounded;
+
+                var boxCastSize = new Vector3
+                (
+                    ground.FeetCollider.bounds.size.x,
+                    config.ConfigRef.Gravity.GroundDetectionRayLength,
+                    ground.FeetCollider.bounds.size.z
+                );    
+
+                ground.IsGrounded = Physics.BoxCast
+                (
+                    boxCastOrigin,
+                    boxCastSize,
+                    Vector3.down,
+                    Quaternion.identity,
+                    config.ConfigRef.Gravity.GroundDetectionRayLength,
+                    config.ConfigRef.Gravity.GroundLayer
+                );          
             }
         }   
     }

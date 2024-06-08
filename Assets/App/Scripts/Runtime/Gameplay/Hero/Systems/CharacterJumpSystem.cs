@@ -46,17 +46,17 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                 ref var config = ref _configPool.Get(e);   
 
                 //only editor
-                if (config.ConfigRef.Engine.IsChangeRuntime)
+                if (config.ConfigRef.Engine.IsChangeGravityPrmInRuntime)
                 {
                     SetupGravityPrm(ref movement, ref config);
                 }          
                 
-                if (!movement.IsJumping && movement.IsGround && input.IsJumpPressed) 
+                if (!movement.IsJumping && movement.IsGround && input.IsJumpWasPressed) 
                 {
                     movement.IsJumping = true;
-                    movement.VerticalVelocity = movement.InitialJumpVelocity * 0.5f;
+                    movement.Velocity.y = movement.InitialJumpVelocity * 0.5f;
                 }
-                else if (!input.IsJumpPressed && movement.IsJumping && movement.IsGround)
+                else if (!input.IsJumpWasPressed && movement.IsJumping && movement.IsGround)
                 {             
                     movement.IsJumping = false;                    
                 }
