@@ -46,8 +46,7 @@ namespace BT.Runtime.Gameplay
                 .Add(new HeroApplyInputSystem())
                 .Add(new BodyRotateSystem())
                 .Add(new CharacterAttackSystem())
-                .Add(new CharacterGravitySystem())
-                .Add(new CharacterJumpSystem())
+                .Add(new CharacterJumpChecksSystem())
                 .Add(new HeroIKFootIKSystem())
                 .Add(new HeroAnimationSystem())
 
@@ -66,6 +65,8 @@ namespace BT.Runtime.Gameplay
                 .AddWorld(new EcsWorld(), "events")
 
                 .Add(new CharacterCheckGroundSystem())
+                .Add(new CharacterCheckBumpedHeadSystem())
+                .Add(new CharacterJumpSystem())
                 .Add(new CharacterMoveSystem())
 
         #if UNITY_EDITOR

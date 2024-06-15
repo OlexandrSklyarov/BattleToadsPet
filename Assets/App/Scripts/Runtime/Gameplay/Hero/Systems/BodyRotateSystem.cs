@@ -35,8 +35,12 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                 ref var movement = ref  _movementDataPool.Get(ent);
                 ref var config = ref _configDataPool.Get(ent);
 
-                
-                movement.Rotation = Vector3Math.DirToQuaternion(movement.Velocity);               
+                var vel = movement.Velocity;
+                vel.y = 0f;
+
+                if (vel.sqrMagnitude < Mathf.Epsilon) return;
+
+                movement.Rotation = Vector3Math.DirToQuaternion(movement.Velocity);            
 
                 body.ModelTransformRef.rotation = Quaternion.Slerp
                 (

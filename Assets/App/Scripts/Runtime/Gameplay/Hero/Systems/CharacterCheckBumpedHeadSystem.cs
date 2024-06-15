@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace BT.Runtime.Gameplay.Hero.Systems
 {
-    public sealed class CharacterCheckGroundSystem : IEcsInitSystem, IEcsRunSystem
+    public sealed class CharacterCheckBumpedHeadSystem : IEcsInitSystem, IEcsRunSystem
     {
         private EcsFilter _filter;
         private EcsPool<CharacterCheckGroundComponent> _characterGroundPool;
@@ -22,7 +22,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
 
             _characterGroundPool = world.GetPool<CharacterCheckGroundComponent>();
             _movementPool = world.GetPool<MovementDataComponent>();
-            _characterConfigPool = world.GetPool<CharacterConfigComponent>();
+            _characterConfigPool = world.GetPool<CharacterConfigComponent>();;
         }
 
         public void Run(IEcsSystems systems)
@@ -30,34 +30,33 @@ namespace BT.Runtime.Gameplay.Hero.Systems
             foreach(var e in _filter)
             {
                 ref var ground = ref _characterGroundPool.Get(e); 
-                ref var config = ref _characterConfigPool.Get(e); 
                 ref var movement = ref _movementPool.Get(e); 
+                ref var config = ref _characterConfigPool.Get(e); 
 
                 var boxCastOrigin = new Vector3
                 (
                     ground.FeetCollider.bounds.center.x,
-                    ground.FeetCollider.bounds.min.y,
+                    ground.BodyCollider.bounds.max.y,
                     ground.FeetCollider.bounds.center.z
                 );
 
                 var boxCastSize = new Vector3
                 (
-                    ground.FeetCollider.bounds.size.x,
-                    config.ConfigRef.Gravity.GroundDetectionRayLength,
-                    ground.FeetCollider.bounds.size.z
-                );    
+                    ground.FeetCollider.bounds.size.x * config.ConfigRef.Gravity.HeadWidth,
+                    config.ConfigRef.Gravity.HeadDetectionRayLength,
+                    ground.FeetCollider.bounds.size.z * config.ConfigRef.Gravity.HeadWidth
+                );     
 
                 var count = Physics.OverlapBoxNonAlloc
                 (
                     boxCastOrigin,
                     boxCastSize,
-                    ground.GroundResult,
+                    ground.HeadBumpResult,
                     Quaternion.identity,
-                    //config.ConfigRef.Gravity.GroundDetectionRayLength,
                     config.ConfigRef.Gravity.GroundLayer
                 );          
 
-                movement.IsGround = count > 0;
+                movement.IsBumpedHead = count > 0;    
             }
         }   
     }

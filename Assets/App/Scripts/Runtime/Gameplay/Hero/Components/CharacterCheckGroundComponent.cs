@@ -2,10 +2,11 @@ using UnityEngine;
 
 namespace BT.Runtime.Gameplay.Hero.Components
 {
-    public struct CharacterGroundComponent
+    public struct CharacterCheckGroundComponent
     {
         public BoxCollider FeetCollider;
         public CapsuleCollider BodyCollider;
-        public bool IsGrounded;
+        public Collider[] GroundResult;
+        public Collider[] HeadBumpResult;
     }
 }

@@ -12,11 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03de337c0893e72c58de7c36a70c08e2, type: 3}
   m_Name: HeroGravityConfig
   m_EditorClassIdentifier: 
-  <MinVerticalVelocity>k__BackingField: 0.05
-  <FallMultiplier>k__BackingField: 1.5
-  <MaxFallVelocity>k__BackingField: 20
-  <CheckGroundOffset>k__BackingField: {x: 0, y: 0.2, z: 0}
-  <CheckGroundSphereRadius>k__BackingField: 0.205
   <GroundLayer>k__BackingField:
     serializedVersion: 2
     m_Bits: 64
+  <GroundDetectionRayLength>k__BackingField: 0.05
+  <HeadDetectionRayLength>k__BackingField: 0.02
+  <HeadWidth>k__BackingField: 0.75
+  <IsChangeGravityPrmInRuntime>k__BackingField: 1

@@ -691,6 +691,9 @@ namespace FischlWorks
                 return;
             }
 
+            if (rightFootTransform == null) return;
+            if (leftFootTransform == null) return;
+
             /* Left Foot */
 
             if (leftFootRayHitInfo.collider != null)

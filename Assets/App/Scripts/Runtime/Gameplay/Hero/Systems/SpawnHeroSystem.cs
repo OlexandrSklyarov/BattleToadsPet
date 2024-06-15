@@ -29,6 +29,8 @@ namespace BT.Runtime.Gameplay.Hero.Systems
 
             var entity = world.NewEntity();
 
+            view.SetEntity(world, world.PackEntity(entity));
+
             //Hero
             world.GetPool<HeroTeg>().Add(entity);
 
@@ -66,9 +68,11 @@ namespace BT.Runtime.Gameplay.Hero.Systems
             ref var attack = ref world.GetPool<CharacterAttackComponent>().Add(entity);
 
             //check ground
-            ref var ground = ref world.GetPool<CharacterGroundComponent>().Add(entity);
+            ref var ground = ref world.GetPool<CharacterCheckGroundComponent>().Add(entity);
             ground.FeetCollider = view.FeetCollider;
             ground.BodyCollider = view.BodyCollider;
+            ground.GroundResult = new UnityEngine.Collider[10];
+            ground.HeadBumpResult = new UnityEngine.Collider[10];
         }
     }
 }

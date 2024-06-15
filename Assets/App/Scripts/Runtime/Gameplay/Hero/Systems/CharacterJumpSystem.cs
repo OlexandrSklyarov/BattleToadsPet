@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 using BT.Runtime.Gameplay.Hero.Components;
 using Leopotam.EcsLite;
@@ -46,29 +47,109 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                 ref var config = ref _configPool.Get(e);   
 
                 //only editor
-                if (config.ConfigRef.Engine.IsChangeGravityPrmInRuntime)
+                if (config.ConfigRef.Gravity.IsChangeGravityPrmInRuntime)
                 {
                     SetupGravityPrm(ref movement, ref config);
                 }          
                 
-                if (!movement.IsJumping && movement.IsGround && input.IsJumpWasPressed) 
+                Jump(ref movement, ref config);
+
+                engine.ControllerRef.RB.velocity = new Vector3
+                (
+                    engine.ControllerRef.RB.velocity.x, 
+                    movement.VerticalVelocity, 
+                    engine.ControllerRef.RB.velocity.z 
+                );
+            }
+        }
+
+        private void Jump(ref MovementDataComponent movement, ref CharacterConfigComponent config)
+        {
+            var enfineConfig = config.ConfigRef.Engine;
+
+            if (movement.IsJumping)
+            {
+                if (movement.IsBumpedHead)
                 {
-                    movement.IsJumping = true;
-                    movement.Velocity.y = movement.InitialJumpVelocity * 0.5f;
+                    movement.IsFastFalling = true;
                 }
-                else if (!input.IsJumpWasPressed && movement.IsJumping && movement.IsGround)
-                {             
-                    movement.IsJumping = false;                    
+
+                if (movement.VerticalVelocity >= 0f)
+                {
+                    //apex controls
+                    movement.ApexPoint = Mathf.InverseLerp(enfineConfig.InitialJumpVelocity, 0f, movement.VerticalVelocity);
+
+                    if (movement.ApexPoint > enfineConfig.ApexThreshold)
+                    {
+                        if (!movement.IsPastApexThreshold)
+                        {
+                            movement.IsPastApexThreshold = true;
+                            movement.TimePastApexThreshold = 0f;
+                        }
+
+                        if (movement.IsPastApexThreshold)
+                        {
+                            movement.TimePastApexThreshold += Time.fixedDeltaTime;
+                            movement.VerticalVelocity = (movement.TimePastApexThreshold < enfineConfig.ApexHandTime) ? 0f : -0.01f;
+                        }
+                    }
+                    // gravity on ascending *************************************************************
+                    else
+                    {
+                        movement.VerticalVelocity += movement.Gravity * Time.fixedDeltaTime;
+                        movement.IsPastApexThreshold = false;
+                    }
+                }
+                // gravity on descending ***************************************************************
+                else if (!movement.IsFastFalling)
+                {
+                    movement.VerticalVelocity += movement.Gravity * enfineConfig.GravityOnReleaseMultiplier * Time.fixedDeltaTime;
+                }
+                else if (movement.VerticalVelocity <= 0f)
+                {
+                    movement.IsFalling = true;
                 }
             }
+
+            //jump cut ******************************************************
+            if (movement.IsFastFalling)
+            {
+                if (movement.FastFallTime >= enfineConfig.TimeForUpwardsCancel)
+                {
+                    movement.VerticalVelocity += movement.Gravity * enfineConfig.GravityOnReleaseMultiplier * Time.fixedDeltaTime;
+                }
+                else
+                {
+                    movement.VerticalVelocity = Mathf.Lerp
+                    (
+                        movement.FastFallReleasedSpeed,
+                        0f,
+                        movement.FastFallTime / enfineConfig.TimeForUpwardsCancel
+                    );
+                }
+
+                movement.FastFallTime += Time.fixedDeltaTime;
+            }
+
+            //normal gravity *********************************************
+            if (!movement.IsGround && !movement.IsJumping)
+            {
+                movement.IsFalling = true;
+                movement.VerticalVelocity += movement.Gravity * Time.fixedDeltaTime;
+            }
+
+            //clamp fall speed *********************************************
+            movement.VerticalVelocity = Mathf.Clamp(movement.VerticalVelocity, -enfineConfig.MaxFallSpeed, enfineConfig.MaxUpSpeed);
         }
 
         [Conditional("UNITY_EDITOR")]
         private void SetupGravityPrm(ref MovementDataComponent movement, ref CharacterConfigComponent config)
         {
-            var timeToApex = config.ConfigRef.Engine.JumpTime / 2f;
-            movement.Gravity = (-2f * config.ConfigRef.Engine.MaxJumpHeight) / Mathf.Pow(timeToApex, 2);
-            movement.InitialJumpVelocity = (2f * config.ConfigRef.Engine.MaxJumpHeight) / timeToApex;
+            var engineConfig = config.ConfigRef.Engine;
+
+            movement.AdjustedJumpHeight = engineConfig.JumpHeight * engineConfig.JumpHeightCompensationFactor;
+            movement.Gravity = -(2f * movement.AdjustedJumpHeight) / Mathf.Pow(engineConfig.TimeTillJumpApex, 2f);
+            movement.InitialJumpVelocity = Mathf.Abs(movement.Gravity) * engineConfig.TimeTillJumpApex;
         }
     }
 }
