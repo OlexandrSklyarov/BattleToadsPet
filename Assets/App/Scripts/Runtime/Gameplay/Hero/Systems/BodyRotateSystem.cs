@@ -38,9 +38,9 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                 var vel = movement.Velocity;
                 vel.y = 0f;
 
-                if (vel.sqrMagnitude < Mathf.Epsilon) return;
+                if (vel.sqrMagnitude <= 0.001f) return;
 
-                movement.Rotation = Vector3Math.DirToQuaternion(movement.Velocity);            
+                movement.Rotation = Vector3Math.DirToQuaternion(movement.Velocity);          
 
                 body.ModelTransformRef.rotation = Quaternion.Slerp
                 (

@@ -65,7 +65,6 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                 }
                 
                 engine.ControllerRef.RB.velocity = new Vector3(movement.Velocity.x, movement.VerticalVelocity, movement.Velocity.z);
-                Debug.Log($"engine.ControllerRef.RB.velocity {engine.ControllerRef.RB.velocity} | acceleration {acceleration} | deceleration {deceleration} | movement.Velocity {movement.Velocity}");
             }
         }
     }

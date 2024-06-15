@@ -47,7 +47,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                 ref var config = ref _configPool.Get(e);   
 
                 //only editor
-                if (config.ConfigRef.Gravity.IsChangeGravityPrmInRuntime)
+                if (config.ConfigRef.IsChangePrmInRuntime)
                 {
                     SetupGravityPrm(ref movement, ref config);
                 }          
@@ -143,7 +143,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
         }
 
         [Conditional("UNITY_EDITOR")]
-        private void SetupGravityPrm(ref MovementDataComponent movement, ref CharacterConfigComponent config)
+        private void  SetupGravityPrm(ref MovementDataComponent movement, ref CharacterConfigComponent config)
         {
             var engineConfig = config.ConfigRef.Engine;
 

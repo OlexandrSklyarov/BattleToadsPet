@@ -146,6 +146,10 @@ namespace BT.Runtime.Gameplay.Hero.Systems
             {
                 movement.CoyoteTime = config.ConfigRef.Engine.JumpCoyoteTime;
             }
+
+            //clamp
+            movement.JumpBufferTimer = Mathf.Max(0f, movement.JumpBufferTimer);
+            movement.CoyoteTime = Mathf.Max(0f, movement.CoyoteTime);
         }
     }
 }
