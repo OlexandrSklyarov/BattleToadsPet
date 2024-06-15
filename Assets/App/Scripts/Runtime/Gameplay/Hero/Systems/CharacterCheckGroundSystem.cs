@@ -53,7 +53,6 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                     boxCastSize,
                     ground.GroundResult,
                     Quaternion.identity,
-                    //config.ConfigRef.Gravity.GroundDetectionRayLength,
                     config.ConfigRef.Gravity.GroundLayer
                 );          
 
