@@ -15,7 +15,6 @@ MonoBehaviour:
   <GroundLayer>k__BackingField:
     serializedVersion: 2
     m_Bits: 64
-  <GroundDetectionRayLength>k__BackingField: 0.05
+  <GroundDetectionRayLength>k__BackingField: 0.02
   <HeadDetectionRayLength>k__BackingField: 0.02
   <HeadWidth>k__BackingField: 0.75
-  <IsChangeGravityPrmInRuntime>k__BackingField: 1
