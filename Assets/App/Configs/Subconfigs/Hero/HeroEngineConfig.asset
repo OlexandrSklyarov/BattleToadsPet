@@ -20,8 +20,9 @@ MonoBehaviour:
   <MaxRunSpeed>k__BackingField: 12
   <RotateSpeed>k__BackingField: 20
   <JumpHeight>k__BackingField: 1
-  <MaxJumpHeight>k__BackingField: 6
-  <JumpTime>k__BackingField: 0.5
+  <MaxJumpHeight>k__BackingField: 12
+  <JumpTime>k__BackingField: 1
+  <FallMultiplier>k__BackingField: 2
   <InitialJumpVelocity>k__BackingField: 50
   <JumpHeightCompensationFactor>k__BackingField: 1.054
   <TimeTillJumpApex>k__BackingField: 0.35
