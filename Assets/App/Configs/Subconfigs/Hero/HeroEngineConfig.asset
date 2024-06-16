@@ -19,8 +19,8 @@ MonoBehaviour:
   <AirDeceleration>k__BackingField: 5
   <MaxRunSpeed>k__BackingField: 11
   <RotateSpeed>k__BackingField: 800
-  <JumpHeight>k__BackingField: 2
-  <InitialJumpVelocity>k__BackingField: 150
+  <JumpHeight>k__BackingField: 0.5
+  <InitialJumpVelocity>k__BackingField: 50
   <JumpHeightCompensationFactor>k__BackingField: 1.054
   <TimeTillJumpApex>k__BackingField: 0.35
   <GravityOnReleaseMultiplier>k__BackingField: 2

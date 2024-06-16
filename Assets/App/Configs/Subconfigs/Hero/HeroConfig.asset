@@ -20,4 +20,5 @@ MonoBehaviour:
     type: 2}
   <Attack>k__BackingField: {fileID: 11400000, guid: 7e541b74e32d98bed9278465441d71ef,
     type: 2}
+  <IsChangePrmInRuntime>k__BackingField: 1
   <IsShowDebug>k__BackingField: 1
