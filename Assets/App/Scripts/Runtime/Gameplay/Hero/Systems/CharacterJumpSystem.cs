@@ -86,8 +86,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                             movement.IsPastApexThreshold = true;
                             movement.TimePastApexThreshold = 0f;
                         }
-
-                        if (movement.IsPastApexThreshold)
+                        else 
                         {
                             movement.TimePastApexThreshold += Time.fixedDeltaTime;
                             movement.VerticalVelocity = (movement.TimePastApexThreshold < enfineConfig.ApexHandTime) ? 0f : -0.01f;
