@@ -15,6 +15,8 @@ namespace BT.Runtime.Data.Configs
         [field: Space(20), Header("[ROTATE]"), SerializeField, Min(1f)] public float RotateSpeed { get; private set; } = 800f;
 
         [field: Space(20), Header("[JUMP]"), SerializeField, Min(1f)] public float JumpHeight { get; private set; } = 5f;
+        [field: SerializeField, Min(1f)] public float MaxJumpHeight { get; private set; } = 5f;
+        [field: SerializeField, Min(0.01f)] public float JumpTime { get; private set; } = 0.5f;
         [field: SerializeField, Min(1f)] public float InitialJumpVelocity { get; private set; } = 5f;
         [field: SerializeField, Range(1f, 1.1f)] public float JumpHeightCompensationFactor { get; private set; } = 1.054f;
         [field: SerializeField, Min(0.1f)] public float TimeTillJumpApex { get; private set; } = 0.35f;

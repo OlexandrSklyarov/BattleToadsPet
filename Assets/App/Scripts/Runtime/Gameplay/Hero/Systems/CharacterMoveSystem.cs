@@ -1,5 +1,3 @@
-using System;
-using System.Runtime.InteropServices;
 using BT.Runtime.Gameplay.Hero.Components;
 using Leopotam.EcsLite;
 using UnityEngine;
@@ -57,14 +55,15 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                         new Vector3(input.MoveDirection.x, 0f, input.MoveDirection.y) * config.ConfigRef.Engine.MaxRunSpeed :
                         new Vector3(input.MoveDirection.x, 0f, input.MoveDirection.y) * config.ConfigRef.Engine.MaxWalkSpeed;
 
-                    movement.Velocity = Vector3.Lerp(movement.Velocity, targetVelocity, acceleration * Time.fixedDeltaTime);
+                    movement.Velocity = Vector3.Lerp(movement.Velocity, targetVelocity, acceleration * Time.deltaTime);
                 }
                 else //stopping
                 {
-                    movement.Velocity = Vector3.Lerp(movement.Velocity, Vector3.zero, deceleration * Time.fixedDeltaTime);
+                    movement.Velocity = Vector3.Lerp(movement.Velocity, Vector3.zero, deceleration * Time.deltaTime);
                 }
                 
-                engine.ControllerRef.RB.velocity = new Vector3(movement.Velocity.x, movement.VerticalVelocity, movement.Velocity.z);
+                engine.ControllerRef.CC.Move(
+                    new Vector3(movement.Velocity.x, movement.VerticalVelocity, movement.Velocity.z) * Time.deltaTime);
             }
         }
     }

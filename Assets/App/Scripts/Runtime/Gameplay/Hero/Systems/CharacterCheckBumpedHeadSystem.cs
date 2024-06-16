@@ -36,7 +36,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                 var boxCastOrigin = new Vector3
                 (
                     ground.FeetCollider.bounds.center.x,
-                    ground.BodyCollider.bounds.max.y,
+                    ground.BodyBounds.max.y,
                     ground.FeetCollider.bounds.center.z
                 );
 

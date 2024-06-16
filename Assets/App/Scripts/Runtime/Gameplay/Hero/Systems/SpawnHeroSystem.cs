@@ -70,7 +70,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
             //check ground
             ref var ground = ref world.GetPool<CharacterCheckGroundComponent>().Add(entity);
             ground.FeetCollider = view.FeetCollider;
-            ground.BodyCollider = view.BodyCollider;
+            ground.BodyBounds = view.CC.bounds;
             ground.GroundResult = new UnityEngine.Collider[10];
             ground.HeadBumpResult = new UnityEngine.Collider[10];
         }

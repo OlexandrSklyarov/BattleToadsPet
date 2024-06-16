@@ -12,19 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c904c474ebe81b1709b00d8f909c5c46, type: 3}
   m_Name: HeroEngineConfig
   m_EditorClassIdentifier: 
-  <MaxWalkSpeed>k__BackingField: 7.5
-  <GroundAcceleration>k__BackingField: 5
-  <GroundDeceleration>k__BackingField: 20
-  <AirAcceleration>k__BackingField: 5
-  <AirDeceleration>k__BackingField: 5
-  <MaxRunSpeed>k__BackingField: 11
-  <RotateSpeed>k__BackingField: 800
-  <JumpHeight>k__BackingField: 0.5
+  <MaxWalkSpeed>k__BackingField: 7
+  <GroundAcceleration>k__BackingField: 3
+  <GroundDeceleration>k__BackingField: 10
+  <AirAcceleration>k__BackingField: 2
+  <AirDeceleration>k__BackingField: 2
+  <MaxRunSpeed>k__BackingField: 12
+  <RotateSpeed>k__BackingField: 20
+  <JumpHeight>k__BackingField: 1
+  <MaxJumpHeight>k__BackingField: 6
+  <JumpTime>k__BackingField: 0.5
   <InitialJumpVelocity>k__BackingField: 50
   <JumpHeightCompensationFactor>k__BackingField: 1.054
   <TimeTillJumpApex>k__BackingField: 0.35
   <GravityOnReleaseMultiplier>k__BackingField: 2
-  <MaxUpSpeed>k__BackingField: 26
+  <MaxUpSpeed>k__BackingField: 50
   <MaxFallSpeed>k__BackingField: 26
   <NumberofJumpsAllowed>k__BackingField: 2
   <TimeForUpwardsCancel>k__BackingField: 0.027

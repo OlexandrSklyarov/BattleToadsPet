@@ -42,10 +42,15 @@ namespace BT.Runtime.Gameplay
                 .AddWorld(new EcsWorld(), "events")
 
                 .Add(new SpawnHeroSystem())
+                .Add(new CharacterCheckGroundSystem())
+                .Add(new CharacterCheckBumpedHeadSystem())
                 .Add(new HeroApplyInputSystem())
                 .Add(new BodyRotateSystem())
                 .Add(new CharacterAttackSystem())
-                .Add(new CharacterJumpChecksSystem())
+                .Add(new CharacterGravitySystem())
+                .Add(new CharacterJumpSystemNew())
+                .Add(new CharacterMoveSystem())
+                //.Add(new CharacterJumpChecksSystem())
                 .Add(new HeroIKFootIKSystem())
                 .Add(new HeroAnimationSystem())
 
@@ -61,12 +66,8 @@ namespace BT.Runtime.Gameplay
         {
             _fixedSystems = new EcsSystems(_world, sharedData);
             _fixedSystems
-                .AddWorld(new EcsWorld(), "events")
-
-                .Add(new CharacterCheckGroundSystem())
-                .Add(new CharacterCheckBumpedHeadSystem())
-                .Add(new CharacterJumpSystem())
-                .Add(new CharacterMoveSystem())
+                .AddWorld(new EcsWorld(), "events")                
+                //.Add(new CharacterJumpSystem())
 
         #if UNITY_EDITOR
                 // add debug systems for custom worlds here, for example:

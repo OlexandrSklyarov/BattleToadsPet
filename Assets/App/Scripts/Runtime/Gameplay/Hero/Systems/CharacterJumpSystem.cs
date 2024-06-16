@@ -54,12 +54,12 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                 
                 Jump(ref movement, ref config);
 
-                engine.ControllerRef.RB.velocity = new Vector3
-                (
-                    engine.ControllerRef.RB.velocity.x, 
-                    movement.VerticalVelocity, 
-                    engine.ControllerRef.RB.velocity.z 
-                );
+                // engine.ControllerRef.RB.velocity = new Vector3
+                // (
+                //     engine.ControllerRef.RB.velocity.x, 
+                //     movement.VerticalVelocity, 
+                //     engine.ControllerRef.RB.velocity.z 
+                // );
             }
         }
 
