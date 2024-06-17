@@ -89,11 +89,15 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                     {
                         continue;
                     }
-
+                     
                     //in case of falling and collision with the ground
-                    if (IsState(ref animator, GameConstants.AnimatorPrm.JUMP_FALL))
-                    {                           
-                        animator.AnimatorRef.Play(GameConstants.AnimatorPrm.JUMP_LANDING);                        
+                    if (IsState(ref animator, GameConstants.AnimatorPrm.FALL))
+                    {                          
+                        if (!IsState(ref animator, GameConstants.AnimatorPrm.JUMP_LANDING))
+                        {
+                            animator.AnimatorRef.Play(GameConstants.AnimatorPrm.JUMP_LANDING); 
+                        }
+
                         continue;
                     }
 
@@ -115,20 +119,42 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                         continue;
                     }
                 }
-                else // fall ******************************************************************************
+                else if (movement.IsJumping && movement.VerticalVelocity >= 0f)// Jump ******************************************************************************
                 {
-                    if (movement.Velocity.y > 0f || 
-                        movement.Velocity.y < -config.ConfigRef.Animation.MaxFallVelocity)
+                    if (!IsState(ref animator, GameConstants.AnimatorPrm.JUMP))
                     {
-                        if (!IsState(ref animator, GameConstants.AnimatorPrm.JUMP_FALL))
-                        {
-                            animator.AnimatorRef.CrossFade
-                            (
-                                GameConstants.AnimatorPrm.JUMP_FALL, 
-                                config.ConfigRef.Animation.CrosfadeAnimime
-                            );
-                        }
-                    }
+                        animator.AnimatorRef.CrossFade
+                        (
+                            GameConstants.AnimatorPrm.JUMP, 
+                            config.ConfigRef.Animation.CrosfadeAnimime
+                        );
+                    }                    
+
+                    animator.IsPlayLocomotion = false;
+                }
+                else if (movement.IsJumping && movement.VerticalVelocity < 0f)// jump fall ******************************************************************************
+                {
+                    if (!IsState(ref animator, GameConstants.AnimatorPrm.FALL))
+                    {
+                        animator.AnimatorRef.CrossFade
+                        (
+                            GameConstants.AnimatorPrm.FALL, 
+                            config.ConfigRef.Animation.CrosfadeAnimime
+                        );
+                    }                    
+
+                    animator.IsPlayLocomotion = false;
+                }
+                else if (!movement.IsJumping && movement.VerticalVelocity <= -config.ConfigRef.Engine.MaxFallSpeed)// fall ******************************************************************************
+                {
+                    if (!IsState(ref animator, GameConstants.AnimatorPrm.FALL))
+                    {
+                        animator.AnimatorRef.CrossFade
+                        (
+                            GameConstants.AnimatorPrm.FALL, 
+                            config.ConfigRef.Animation.CrosfadeAnimime
+                        );
+                    }                    
 
                     animator.IsPlayLocomotion = false;
                 }

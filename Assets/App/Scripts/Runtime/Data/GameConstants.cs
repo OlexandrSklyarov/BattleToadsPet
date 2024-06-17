@@ -12,7 +12,8 @@ namespace BT.Runtime.Data
             public static readonly int STAND_UP = Animator.StringToHash("StandUp");
             public static readonly int ATTACK = Animator.StringToHash("Attack");
             public static readonly int JUMP_START = Animator.StringToHash("JumpStart");
-            public static readonly int JUMP_FALL = Animator.StringToHash("JumpFall");
+            public static readonly int JUMP = Animator.StringToHash("Jump");
+            public static readonly int FALL = Animator.StringToHash("Fall");
             public static readonly int JUMP_LANDING = Animator.StringToHash("JumpLanding");
         }
     }
