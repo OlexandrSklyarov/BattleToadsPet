@@ -19,7 +19,8 @@ namespace BT.Runtime.Services.Spawn.Factory
             return UnityEngine.Object.Instantiate
             (
                 _config.Heroes.First(x => x.Type == type).HeroPrefab, 
-                spawnPoint
+                spawnPoint.position,
+                spawnPoint.rotation
             );  
         }
     }
