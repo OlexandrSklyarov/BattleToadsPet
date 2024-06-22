@@ -55,6 +55,8 @@ namespace BT.Runtime.Gameplay.Hero.Systems
         {
             var enfineConfig = config.ConfigRef.Engine;
 
+            movement.IsLanded = false;
+
             if (!movement.IsJumping && movement.IsGround && input.IsJumpHold)
             {
                 movement.IsJumping = true;
@@ -66,6 +68,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
             else if (!input.IsJumpHold && movement.IsJumping && movement.IsGround)
             {
                 movement.IsJumping = false;
+                movement.IsLanded = true;
             }            
         }
 

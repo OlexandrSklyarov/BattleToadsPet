@@ -24,5 +24,6 @@ namespace BT.Runtime.Gameplay.Hero.Components
         public bool IsFastFalling;
         public bool IsFalling;
         public bool IsBumpedHead;
+        public bool IsLanded;
     }
 }

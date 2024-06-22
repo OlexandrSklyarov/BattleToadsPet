@@ -41,146 +41,79 @@ namespace BT.Runtime.Gameplay.Hero.Systems
         {
             foreach (var ent in _filter)
             {
-                ref var animator = ref _animatorPool.Get(ent);  
-                ref var input = ref _inputPool.Get(ent);  
-                ref var movement = ref _movementPool.Get(ent);   
-                ref var config = ref _characterConfigPool.Get(ent);   
-                ref var attack = ref _attackPool.Get(ent);   
+                ref var animator = ref _animatorPool.Get(ent);
+                ref var input = ref _inputPool.Get(ent);
+                ref var movement = ref _movementPool.Get(ent);
+                ref var config = ref _characterConfigPool.Get(ent);
+                ref var attack = ref _attackPool.Get(ent);                
 
-                //set speed prm
-                var velMagnitude = new Vector3(movement.Velocity.x, 0f, movement.Velocity.z).magnitude;
-                var normSpeed = Mathf.Clamp01(velMagnitude / config.ConfigRef.Engine.MaxRunSpeed);
-                animator.AnimatorRef.SetFloat(GameConstants.AnimatorPrm.NORM_SPEED_PRM, normSpeed);
-
-                if (movement.IsGround) // land **************************************************************
-                {
-                    //simple
-                    if (attack.IsExecuted)
-                    {
-                        if (IsState(ref animator, GameConstants.AnimatorPrm.ATTACK) && 
-                            !IsStateTimeProgressHasReached(ref animator, config.ConfigRef.Attack.MinAttackAnimationProgress))
-                        {
-                            continue;
-                        }
-
-                        var item = config.ConfigRef.Attack.Combos[attack.ComboIndex];
-                        PlayAttack(ref animator, item);
-
-                        continue;   
-                    }
-
-                    //power
-                    if (attack.IsExecutedPower)
-                    {
-                        if (IsState(ref animator, GameConstants.AnimatorPrm.ATTACK) &&
-                            !IsStateTimeProgressHasReached(ref animator, config.ConfigRef.Attack.MinAttackAnimationProgress))
-                        {
-                            continue;
-                        }
-
-                        var item = config.ConfigRef.Attack.PowerAttackUp;
-                        PlayAttack(ref animator, item);
-
-                        continue;
-                    }
-
-                    //wait attack anim
-                    if (IsState(ref animator, GameConstants.AnimatorPrm.ATTACK) && !IsStateTimeEnd(ref animator))
-                    {
-                        continue;
-                    }
-                     
-                    //in case of falling and collision with the ground
-                    if (IsState(ref animator, GameConstants.AnimatorPrm.FALL))
-                    {                          
-                        if (!IsState(ref animator, GameConstants.AnimatorPrm.JUMP_LANDING))
-                        {
-                            animator.AnimatorRef.Play(GameConstants.AnimatorPrm.JUMP_LANDING); 
-                        }
-
-                        continue;
-                    }
-
-                    //if we lose the landing and the animation is not completed
-                    if (IsState(ref animator, GameConstants.AnimatorPrm.JUMP_LANDING) && !IsStateTimeEnd(ref animator))
-                    {
-                        continue;
-                    }
-
-                    if (!animator.IsPlayLocomotion)
-                    {
-                        animator.AnimatorRef.CrossFade
-                        (
-                            GameConstants.AnimatorPrm.MOVEMENT, 
-                            config.ConfigRef.Animation.CrosfadeAnimime
-                        
-                        );
-                        animator.IsPlayLocomotion = true;
-                        continue;
-                    }
-                }
-                else if (movement.IsJumping && movement.VerticalVelocity >= 0f)// Jump ******************************************************************************
-                {
-                    if (!IsState(ref animator, GameConstants.AnimatorPrm.JUMP))
-                    {
-                        animator.AnimatorRef.CrossFade
-                        (
-                            GameConstants.AnimatorPrm.JUMP, 
-                            config.ConfigRef.Animation.CrosfadeAnimime
-                        );
-                    }                    
-
-                    animator.IsPlayLocomotion = false;
-                }
-                else if (movement.IsJumping && movement.VerticalVelocity < 0f)// jump fall ******************************************************************************
-                {
-                    if (!IsState(ref animator, GameConstants.AnimatorPrm.FALL))
-                    {
-                        animator.AnimatorRef.CrossFade
-                        (
-                            GameConstants.AnimatorPrm.FALL, 
-                            config.ConfigRef.Animation.CrosfadeAnimime
-                        );
-                    }                    
-
-                    animator.IsPlayLocomotion = false;
-                }
-                else if (!movement.IsJumping && movement.VerticalVelocity <= -config.ConfigRef.Engine.MaxFallSpeed)// fall ******************************************************************************
-                {
-                    if (!IsState(ref animator, GameConstants.AnimatorPrm.FALL))
-                    {
-                        animator.AnimatorRef.CrossFade
-                        (
-                            GameConstants.AnimatorPrm.FALL, 
-                            config.ConfigRef.Animation.CrosfadeAnimime
-                        );
-                    }                    
-
-                    animator.IsPlayLocomotion = false;
-                }
+                AnimationProcess(ref animator, ref movement, ref config, ref attack);
             }
         }
 
-        private void PlayAttack(ref AnimatorComponent animator, ComboItem item)
+        private void AnimationProcess(ref AnimatorComponent animator, ref MovementDataComponent movement, ref CharacterConfigComponent config, ref CharacterAttackComponent attack)
         {
+            SetMovementSpeed(ref animator, ref movement, ref config);
+
+            animator.JumpTriggered = movement.IsJumping;
+            animator.Landed = movement.IsLanded;
+            animator.Attacked = attack.LastAttackTime > 0f;
+
+            var state = GetState(ref animator, ref movement, ref config, ref attack);
+
+            animator.JumpTriggered = false;
+            animator.Landed = false;
+            animator.Attacked = false;
+
+            if (state == animator.CurrentState) return;
+            
+            animator.AnimatorRef.CrossFade(state, 0, 0);
+
+            if (state == GameConstants.AnimatorPrm.ATTACK) PlayAttackAnim(ref animator, ref attack, ref config);
+
+            animator.CurrentState = state;
+        }        
+
+        private void SetMovementSpeed(ref AnimatorComponent animator, ref MovementDataComponent movement, ref CharacterConfigComponent config)
+        {
+            var velMagnitude = new Vector3(movement.Velocity.x, 0f, movement.Velocity.z).magnitude;
+            var normSpeed = Mathf.Clamp01(velMagnitude / config.ConfigRef.Engine.MaxRunSpeed);
+            animator.AnimatorRef.SetFloat(GameConstants.AnimatorPrm.NORM_SPEED_PRM, normSpeed);
+        }
+
+        private int GetState(ref AnimatorComponent animator, ref MovementDataComponent movement, ref CharacterConfigComponent config, ref CharacterAttackComponent attack)
+        {
+            var animConfig = config.ConfigRef.Animation;
+
+            if (Time.time < animator.LockedTill) return animator.CurrentState;
+
+            // Priorities
+            if (animator.Attacked) return LockState(GameConstants.AnimatorPrm.ATTACK, attack.LastAttackTime, ref animator);
+            if (animator.Landed) return LockState(GameConstants.AnimatorPrm.JUMP_LANDING, animConfig.State.LandingTime, ref animator);
+            if (animator.JumpTriggered) return GameConstants.AnimatorPrm.JUMP;
+
+            if (movement.IsGround) return GameConstants.AnimatorPrm.MOVEMENT;
+
+            return (movement.VerticalVelocity >= 0f) ? GameConstants.AnimatorPrm.JUMP : 
+                (movement.VerticalVelocity >= -animConfig.MaxFallVelocity) ? 
+                    GameConstants.AnimatorPrm.MOVEMENT :GameConstants.AnimatorPrm.FALL;
+
+            int LockState(int s, float t, ref AnimatorComponent animator) 
+            {
+                animator.LockedTill = Time.time + t;
+                return s;
+            }
+        }
+
+        private void PlayAttackAnim(ref AnimatorComponent animator, ref CharacterAttackComponent attack, ref CharacterConfigComponent config)
+        {
+            var item = (attack.IsExecutedPower) ?  
+                config.ConfigRef.Attack.PowerAttackUp :
+                config.ConfigRef.Attack.Combos[attack.ComboIndex];
+            
             animator.AnimatorRef.runtimeAnimatorController = item.AnimatorController;
             animator.AnimatorRef.SetFloat(GameConstants.AnimatorPrm.ATTACK_SPEED_PRM, item.AnimationSpeed);
-            animator.AnimatorRef.Play(GameConstants.AnimatorPrm.ATTACK);
-        }
-
-        private bool IsStateTimeProgressHasReached(ref AnimatorComponent animator, float normProgress)
-        {
-            return AnimatorExtensions.IsStateTimeProgressHasReached(animator.AnimatorRef,normProgress);
-        }
-
-        private bool IsStateTimeEnd(ref AnimatorComponent animator)
-        {
-            return AnimatorExtensions.IsStateTimeEnd(animator.AnimatorRef);
-        }
-
-        private bool IsState(ref AnimatorComponent animator, int state)
-        {
-            return AnimatorExtensions.IsState(animator.AnimatorRef, state);
-        }
+            animator.AnimatorRef.Play(GameConstants.AnimatorPrm.ATTACK);           
+        }   
     }
 }
