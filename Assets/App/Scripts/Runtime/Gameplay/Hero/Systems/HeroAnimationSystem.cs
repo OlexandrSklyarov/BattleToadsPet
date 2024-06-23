@@ -93,8 +93,10 @@ namespace BT.Runtime.Gameplay.Hero.Systems
             if (animator.JumpTriggered) return GameConstants.AnimatorPrm.JUMP;
 
             if (movement.IsGround) return GameConstants.AnimatorPrm.MOVEMENT;
+            if (movement.VerticalVelocity > 0f) return GameConstants.AnimatorPrm.JUMP;
 
-            return (movement.VerticalVelocity >= 0f) ? GameConstants.AnimatorPrm.JUMP : GameConstants.AnimatorPrm.FALL;
+            return (movement.VerticalVelocity <= -animConfig.MaxFallVelocity) ? 
+                GameConstants.AnimatorPrm.FALL : GameConstants.AnimatorPrm.MOVEMENT;
 
             int LockState(int s, float t, ref AnimatorComponent animator) 
             {

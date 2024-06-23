@@ -18,5 +18,4 @@ MonoBehaviour:
   <GroundDetectionRayLength>k__BackingField: 0.04
   <HeadDetectionRayLength>k__BackingField: 0.02
   <HeadWidth>k__BackingField: 0.75
-  <Gravity>k__BackingField: -9.81
   <GroundGravity>k__BackingField: -2
