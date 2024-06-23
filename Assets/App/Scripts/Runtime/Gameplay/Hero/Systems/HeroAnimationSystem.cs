@@ -67,12 +67,12 @@ namespace BT.Runtime.Gameplay.Hero.Systems
 
             if (state == animator.CurrentState) return;
             
-            animator.AnimatorRef.CrossFade(state, 0, 0);
+            animator.AnimatorRef.CrossFade(state, 0.1f, 0);
 
             if (state == GameConstants.AnimatorPrm.ATTACK) PlayAttackAnim(ref animator, ref attack, ref config);
 
             animator.CurrentState = state;
-        }        
+        }      
 
         private void SetMovementSpeed(ref AnimatorComponent animator, ref MovementDataComponent movement, ref CharacterConfigComponent config)
         {
@@ -94,9 +94,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
 
             if (movement.IsGround) return GameConstants.AnimatorPrm.MOVEMENT;
 
-            return (movement.VerticalVelocity >= 0f) ? GameConstants.AnimatorPrm.JUMP : 
-                (movement.VerticalVelocity >= -animConfig.MaxFallVelocity) ? 
-                    GameConstants.AnimatorPrm.MOVEMENT :GameConstants.AnimatorPrm.FALL;
+            return (movement.VerticalVelocity >= 0f) ? GameConstants.AnimatorPrm.JUMP : GameConstants.AnimatorPrm.FALL;
 
             int LockState(int s, float t, ref AnimatorComponent animator) 
             {

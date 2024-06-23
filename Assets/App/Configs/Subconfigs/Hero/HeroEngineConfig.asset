@@ -19,19 +19,8 @@ MonoBehaviour:
   <AirDeceleration>k__BackingField: 2
   <MaxRunSpeed>k__BackingField: 12
   <RotateSpeed>k__BackingField: 20
-  <JumpHeight>k__BackingField: 1
   <MaxJumpHeight>k__BackingField: 12
-  <JumpTime>k__BackingField: 1
+  <JumpTime>k__BackingField: 1.2
   <FallMultiplier>k__BackingField: 2
-  <InitialJumpVelocity>k__BackingField: 50
-  <JumpHeightCompensationFactor>k__BackingField: 1.054
-  <TimeTillJumpApex>k__BackingField: 0.35
-  <GravityOnReleaseMultiplier>k__BackingField: 2
-  <MaxUpSpeed>k__BackingField: 50
-  <MaxFallSpeed>k__BackingField: 26
-  <NumberofJumpsAllowed>k__BackingField: 2
-  <TimeForUpwardsCancel>k__BackingField: 0.027
-  <ApexThreshold>k__BackingField: 0.97
-  <ApexHandTime>k__BackingField: 0.075
-  <JumpBufferTime>k__BackingField: 0.125
-  <JumpCoyoteTime>k__BackingField: 0.1
+  <MaxUpSpeed>k__BackingField: 30
+  <MaxFallSpeed>k__BackingField: 20
