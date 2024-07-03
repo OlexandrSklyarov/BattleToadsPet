@@ -35,18 +35,20 @@ namespace BT.Runtime.Gameplay.Hero.Systems
 
                 movement.IsFalling = movement.VerticalVelocity <= 0f || !input.IsJumpHold;
 
-                if (movement.IsGround)
+                if (movement.IsGround) // ground
                 {
                     movement.VerticalVelocity = config.ConfigRef.Gravity.GroundGravity;
+                    movement.FallTime = 0f;
                 }
-                else if (movement.IsFalling)
+                else if (movement.IsFalling) //fall
                 {
                     var previousVelocity = movement.VerticalVelocity;
                     var newVelocity = movement.VerticalVelocity + (movement.Gravity * config.ConfigRef.Engine.FallMultiplier * Time.deltaTime);
                     var nextVelocity = (previousVelocity + newVelocity) * 0.5f;
                     movement.VerticalVelocity = nextVelocity;
+                    movement.FallTime += Time.deltaTime;
                 }
-                else
+                else // jump
                 {
                     var previousVelocity = movement.VerticalVelocity;
                     var newVelocity = movement.VerticalVelocity + (movement.Gravity * Time.deltaTime);

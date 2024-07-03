@@ -1,7 +1,4 @@
-using System;
 using BT.Runtime.Data;
-using BT.Runtime.Data.Configs;
-using BT.Runtime.Gameplay.Extensions;
 using BT.Runtime.Gameplay.General.Components;
 using BT.Runtime.Gameplay.Hero.Components;
 using Leopotam.EcsLite;
@@ -53,15 +50,13 @@ namespace BT.Runtime.Gameplay.Hero.Systems
 
         private void AnimationProcess(ref AnimatorComponent animator, ref MovementDataComponent movement, ref CharacterConfigComponent config, ref CharacterAttackComponent attack)
         {
-            SetMovementSpeed(ref animator, ref movement, ref config);
+            SetMovementSpeedPrm(ref animator, ref movement, ref config);
 
-            animator.JumpTriggered = movement.IsJumping;
-            animator.Landed = movement.IsLanded;
+            animator.Landed = movement.FallTime > 0.4f && movement.IsGroundFar;
             animator.Attacked = attack.LastAttackTime > 0f;
 
             var state = GetState(ref animator, ref movement, ref config, ref attack);
 
-            animator.JumpTriggered = false;
             animator.Landed = false;
             animator.Attacked = false;
 
@@ -74,7 +69,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
             animator.CurrentState = state;
         }      
 
-        private void SetMovementSpeed(ref AnimatorComponent animator, ref MovementDataComponent movement, ref CharacterConfigComponent config)
+        private void SetMovementSpeedPrm(ref AnimatorComponent animator, ref MovementDataComponent movement, ref CharacterConfigComponent config)
         {
             var velMagnitude = new Vector3(movement.Velocity.x, 0f, movement.Velocity.z).magnitude;
             var normSpeed = Mathf.Clamp01(velMagnitude / config.ConfigRef.Engine.MaxRunSpeed);
@@ -89,14 +84,9 @@ namespace BT.Runtime.Gameplay.Hero.Systems
 
             // Priorities
             if (animator.Attacked) return LockState(GameConstants.AnimatorPrm.ATTACK, attack.LastAttackTime, ref animator);
-            if (animator.Landed) return LockState(GameConstants.AnimatorPrm.JUMP_LANDING, animConfig.State.LandingTime, ref animator);
-            if (animator.JumpTriggered) return GameConstants.AnimatorPrm.JUMP;
+            if (animator.Landed) return LockState(GameConstants.AnimatorPrm.LANDING, animConfig.State.LandingTime, ref animator);
 
-            if (movement.IsGround) return GameConstants.AnimatorPrm.MOVEMENT;
-            if (movement.VerticalVelocity > 0f) return GameConstants.AnimatorPrm.JUMP;
-
-            return (movement.VerticalVelocity <= -animConfig.MaxFallVelocity) ? 
-                GameConstants.AnimatorPrm.FALL : GameConstants.AnimatorPrm.MOVEMENT;
+            return (movement.IsGround || movement.IsGroundFar) ? GameConstants.AnimatorPrm.MOVEMENT : GameConstants.AnimatorPrm.FALL;
 
             int LockState(int s, float t, ref AnimatorComponent animator) 
             {

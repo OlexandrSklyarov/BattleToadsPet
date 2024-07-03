@@ -31,10 +31,10 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: JumpLanding
+      name: IdleLanding
       takeName: mixamo.com
       internalID: -203655887218126122
-      firstFrame: 28
+      firstFrame: 30
       lastFrame: 45
       wrapMode: 0
       orientationOffsetY: 0

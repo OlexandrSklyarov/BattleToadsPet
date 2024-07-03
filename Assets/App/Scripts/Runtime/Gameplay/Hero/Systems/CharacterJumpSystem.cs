@@ -53,12 +53,12 @@ namespace BT.Runtime.Gameplay.Hero.Systems
 
         private void Jump(ref MovementDataComponent movement, ref CharacterConfigComponent config, ref InputDataComponent input)
         {
-            var enfineConfig = config.ConfigRef.Engine;
-
             movement.IsLanded = false;
+            movement.IsStartJump = false;
 
             if (!movement.IsJumping && movement.IsGround && input.IsJumpHold)
             {
+                movement.IsStartJump = true;
                 movement.IsJumping = true;
                 var previousVelocity = movement.VerticalVelocity;
                 var newVelocity = movement.VerticalVelocity + movement.InitialJumpVelocity;

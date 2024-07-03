@@ -1,5 +1,6 @@
 using BT.Runtime.Gameplay.Hero.Components;
 using Leopotam.EcsLite;
+using UnityEngine;
 
 namespace BT.Runtime.Gameplay.Hero.Systems
 {
@@ -8,6 +9,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
         private EcsFilter _filter;
         private EcsPool<CharacterEngineComponent> _characterEnginePool;
         private EcsPool<MovementDataComponent> _movementPool;
+        private EcsPool<CharacterConfigComponent> _configPool;
 
         public void Init(IEcsSystems systems)
         {
@@ -15,10 +17,12 @@ namespace BT.Runtime.Gameplay.Hero.Systems
 
             _filter = world.Filter<CharacterCheckGroundComponent>()
                 .Inc<MovementDataComponent>()
+                .Inc<CharacterConfigComponent>()
                 .End();
 
             _characterEnginePool = world.GetPool<CharacterEngineComponent>();
             _movementPool = world.GetPool<MovementDataComponent>();
+            _configPool = world.GetPool<CharacterConfigComponent>();
         }
 
         public void Run(IEcsSystems systems)
@@ -27,8 +31,16 @@ namespace BT.Runtime.Gameplay.Hero.Systems
             {
                 ref var engine = ref _characterEnginePool.Get(e); 
                 ref var movement = ref _movementPool.Get(e);         
+                ref var config = ref _configPool.Get(e);         
 
                 movement.IsGround = engine.ControllerRef.CC.isGrounded;
+
+                movement.IsGroundFar = Physics.Raycast
+                (
+                    new Ray(engine.ControllerRef.CC.transform.position,Vector3.down),
+                    config.ConfigRef.Gravity.GroundDetectionRayLength,
+                    config.ConfigRef.Gravity.GroundLayer
+                );                 
             }
         }   
     }
