@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using BT.Runtime.Gameplay.General.Components;
 using BT.Runtime.Gameplay.Hero.Components;
 using Leopotam.EcsLite;
 using UnityEngine;
@@ -11,6 +12,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
         private EcsPool<CharacterConfigComponent> _configPool;
         private EcsPool<MovementDataComponent> _movementDataPool;
         private EcsPool<InputDataComponent> _inputDataPool;
+        private EcsPool<CharacterVelocityComponent> _velocityPool;
 
         public void Init(IEcsSystems systems)
         {
@@ -19,11 +21,13 @@ namespace BT.Runtime.Gameplay.Hero.Systems
             _filter = world.Filter<CharacterConfigComponent>()
                 .Inc<MovementDataComponent>()
                 .Inc<InputDataComponent>()
+                .Inc<CharacterVelocityComponent>()
                 .End();
 
             _configPool = world.GetPool<CharacterConfigComponent>();
             _movementDataPool = world.GetPool<MovementDataComponent>();
             _inputDataPool = world.GetPool<InputDataComponent>();
+            _velocityPool = world.GetPool<CharacterVelocityComponent>();
 
             foreach (var e in _filter)
             {
@@ -40,6 +44,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                 ref var movement = ref _movementDataPool.Get(e);
                 ref var input = ref _inputDataPool.Get(e);
                 ref var config = ref _configPool.Get(e);   
+                ref var velocity = ref _velocityPool.Get(e);   
 
                 //only editor
                 if (config.ConfigRef.IsChangePrmInRuntime)
@@ -47,11 +52,11 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                     SetupGravityPrm(ref movement, ref config);
                 }          
                 
-                Jump(ref movement, ref config, ref input);                
+                Jump(ref movement, ref velocity, ref input);                
             }
         }
 
-        private void Jump(ref MovementDataComponent movement, ref CharacterConfigComponent config, ref InputDataComponent input)
+        private void Jump(ref MovementDataComponent movement, ref CharacterVelocityComponent velocity, ref InputDataComponent input)
         {
             movement.IsLanded = false;
             movement.IsStartJump = false;
@@ -60,10 +65,10 @@ namespace BT.Runtime.Gameplay.Hero.Systems
             {
                 movement.IsStartJump = true;
                 movement.IsJumping = true;
-                var previousVelocity = movement.VerticalVelocity;
-                var newVelocity = movement.VerticalVelocity + movement.InitialJumpVelocity;
+                var previousVelocity = velocity.Vertical;
+                var newVelocity = velocity.Vertical + movement.InitialJumpVelocity;
                 var nextVelocity = (previousVelocity + newVelocity) * 0.5f;
-                movement.VerticalVelocity = nextVelocity;
+                velocity.Vertical = nextVelocity;
             }
             else if (!input.IsJumpHold && movement.IsJumping && movement.IsGround)
             {

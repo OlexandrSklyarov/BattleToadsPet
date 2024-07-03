@@ -1,3 +1,4 @@
+using BT.Runtime.Gameplay.General.Components;
 using BT.Runtime.Gameplay.Hero.Components;
 using Leopotam.EcsLite;
 using UnityEngine;
@@ -7,7 +8,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
     public sealed class CharacterContrellerCheckGroundSystem : IEcsInitSystem, IEcsRunSystem
     {
         private EcsFilter _filter;
-        private EcsPool<CharacterEngineComponent> _characterEnginePool;
+        private EcsPool<CharacterControllerEngineComponent> _characterEnginePool;
         private EcsPool<MovementDataComponent> _movementPool;
         private EcsPool<CharacterConfigComponent> _configPool;
 
@@ -20,7 +21,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                 .Inc<CharacterConfigComponent>()
                 .End();
 
-            _characterEnginePool = world.GetPool<CharacterEngineComponent>();
+            _characterEnginePool = world.GetPool<CharacterControllerEngineComponent>();
             _movementPool = world.GetPool<MovementDataComponent>();
             _configPool = world.GetPool<CharacterConfigComponent>();
         }

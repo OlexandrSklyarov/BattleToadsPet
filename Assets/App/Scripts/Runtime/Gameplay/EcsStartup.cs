@@ -49,7 +49,7 @@ namespace BT.Runtime.Gameplay
                 .Add(new CharacterAttackSystem())
                 .Add(new CharacterGravitySystem())
                 .Add(new CharacterJumpSystem())
-                .Add(new CharacterMoveSystem())
+                .Add(new ChangeHorizontalVelocitySystem())
                 .Add(new HeroIKFootIKSystem())
                 .Add(new HeroAnimationSystem())
 

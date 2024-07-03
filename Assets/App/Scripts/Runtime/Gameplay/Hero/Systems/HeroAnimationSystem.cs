@@ -14,6 +14,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
         private EcsPool<MovementDataComponent> _movementPool;
         private EcsPool<CharacterConfigComponent> _characterConfigPool;
         private EcsPool<CharacterAttackComponent> _attackPool;
+        private EcsPool<CharacterVelocityComponent> _velocityPool;
 
         public void Init(IEcsSystems systems)
         {
@@ -25,6 +26,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                 .Inc<MovementDataComponent>()
                 .Inc<CharacterConfigComponent>()
                 .Inc<CharacterAttackComponent>()
+                .Inc<CharacterVelocityComponent>()
                 .End();
 
             _animatorPool = world.GetPool<AnimatorComponent>();
@@ -32,6 +34,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
             _movementPool = world.GetPool<MovementDataComponent>();
             _characterConfigPool = world.GetPool<CharacterConfigComponent>();
             _attackPool = world.GetPool<CharacterAttackComponent>();
+            _velocityPool = world.GetPool<CharacterVelocityComponent>();
         }
 
         public void Run(IEcsSystems systems)
@@ -43,14 +46,15 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                 ref var movement = ref _movementPool.Get(ent);
                 ref var config = ref _characterConfigPool.Get(ent);
                 ref var attack = ref _attackPool.Get(ent);                
+                ref var velocity = ref _velocityPool.Get(ent);                
 
-                AnimationProcess(ref animator, ref movement, ref config, ref attack);
+                AnimationProcess(ref animator, ref velocity, ref movement, ref config, ref attack);
             }
         }
 
-        private void AnimationProcess(ref AnimatorComponent animator, ref MovementDataComponent movement, ref CharacterConfigComponent config, ref CharacterAttackComponent attack)
+        private void AnimationProcess(ref AnimatorComponent animator, ref CharacterVelocityComponent velocity, ref MovementDataComponent movement, ref CharacterConfigComponent config, ref CharacterAttackComponent attack)
         {
-            SetMovementSpeedPrm(ref animator, ref movement, ref config);
+            SetMovementSpeedPrm(ref animator, ref velocity, ref config);
 
             animator.Landed = movement.FallTime > 0.4f && movement.IsGroundFar;
             animator.Attacked = attack.LastAttackTime > 0f;
@@ -69,9 +73,9 @@ namespace BT.Runtime.Gameplay.Hero.Systems
             animator.CurrentState = state;
         }      
 
-        private void SetMovementSpeedPrm(ref AnimatorComponent animator, ref MovementDataComponent movement, ref CharacterConfigComponent config)
+        private void SetMovementSpeedPrm(ref AnimatorComponent animator, ref CharacterVelocityComponent velocity, ref CharacterConfigComponent config)
         {
-            var velMagnitude = new Vector3(movement.Velocity.x, 0f, movement.Velocity.z).magnitude;
+            var velMagnitude = new Vector3(velocity.Horizontal.x, 0f, velocity.Horizontal.z).magnitude;
             var normSpeed = Mathf.Clamp01(velMagnitude / config.ConfigRef.Engine.MaxRunSpeed);
             animator.AnimatorRef.SetFloat(GameConstants.AnimatorPrm.NORM_SPEED_PRM, normSpeed);
         }

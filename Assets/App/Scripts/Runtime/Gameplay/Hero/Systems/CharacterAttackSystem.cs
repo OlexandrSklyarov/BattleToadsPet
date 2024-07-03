@@ -1,4 +1,3 @@
-using System;
 using BT.Runtime.Gameplay.Components;
 using BT.Runtime.Gameplay.General.Components;
 using BT.Runtime.Gameplay.Hero.Components;
@@ -16,6 +15,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
         private EcsPool<InputDataComponent> _inputDataPool;
         private EcsPool<CharacterAttackComponent> _attackDataPool;
         private EcsPool<AnimatorComponent> _animatorPool;
+        private EcsPool<CharacterVelocityComponent> _velovityPool;
 
         public void Init(IEcsSystems systems)
         {
@@ -26,6 +26,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                 .Inc<MovementDataComponent>()
                 .Inc<InputDataComponent>()
                 .Inc<CharacterAttackComponent>()
+                .Inc<CharacterVelocityComponent>()
                 .Inc<AnimatorComponent>()
                 .End();
 
@@ -35,6 +36,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
             _inputDataPool = world.GetPool<InputDataComponent>();
             _attackDataPool = world.GetPool<CharacterAttackComponent>();
             _animatorPool = world.GetPool<AnimatorComponent>();
+            _velovityPool = world.GetPool<CharacterVelocityComponent>();
         }
 
         public void Run(IEcsSystems systems)
@@ -47,6 +49,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                 ref var config = ref _configPool.Get(ent);
                 ref var attack = ref _attackDataPool.Get(ent);
                 ref var animator = ref _animatorPool.Get(ent);
+                ref var velocity = ref _velovityPool.Get(ent);
                 
                 ResetExecuteAttack(ref attack);
 
@@ -76,18 +79,18 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                 }
 
                 ResetCombo(ref attack);
-                ClampMovementSpeed(ref attack, ref movement, ref view);
+                ClampMovementSpeed(ref attack, ref velocity, ref view);
             }
         }
 
         private void ClampMovementSpeed(ref CharacterAttackComponent attack, 
-            ref MovementDataComponent movement, 
+            ref CharacterVelocityComponent velocity, 
             ref ViewModelTransformComponent view)
         {
             if (attack.LastAttackTime > 0f)
             {
                 var vel = view.ModelTransformRef.forward * 0.1f;
-                movement.Velocity = new Vector3(vel.x, movement.Velocity.y, vel.z);
+                velocity.Horizontal = new Vector3(vel.x, 0f, vel.z);
             }
         }
 

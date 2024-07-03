@@ -39,12 +39,15 @@ namespace BT.Runtime.Gameplay.Hero.Systems
             configComp.ConfigRef = view.Config;
 
             //character controller
-            ref var cc = ref  world.GetPool<CharacterEngineComponent>().Add(entity);
+            ref var cc = ref  world.GetPool<CharacterControllerEngineComponent>().Add(entity);
             cc.ControllerRef = view;
 
             //character transform
             ref var tr = ref  world.GetPool<TranslateComponent>().Add(entity);
             tr.TrRef = view.transform;
+
+            //velocity
+            world.GetPool<CharacterVelocityComponent>().Add(entity);
 
             //character body transform (model)
             ref var body = ref  world.GetPool<ViewModelTransformComponent>().Add(entity);
