@@ -1,3 +1,4 @@
+using System;
 using BT.Runtime.Data;
 using BT.Runtime.Gameplay.General.Components;
 using BT.Runtime.Gameplay.Hero.Components;
@@ -55,23 +56,25 @@ namespace BT.Runtime.Gameplay.Hero.Systems
         private void AnimationProcess(ref AnimatorComponent animator, ref CharacterVelocityComponent velocity, ref MovementDataComponent movement, ref CharacterConfigComponent config, ref CharacterAttackComponent attack)
         {
             SetMovementSpeedPrm(ref animator, ref velocity, ref config);
+            SetAttackDelayPrm(ref attack, ref animator);
 
             animator.Landed = movement.FallTime > 0.4f && movement.IsGroundFar;
-            animator.Attacked = attack.LastAttackTime > 0f;
 
             var state = GetState(ref animator, ref movement, ref config, ref attack);
 
             animator.Landed = false;
-            animator.Attacked = false;
 
             if (state == animator.CurrentState) return;
             
             animator.AnimatorRef.CrossFade(state, 0.1f, 0);
 
-            if (state == GameConstants.AnimatorPrm.ATTACK) PlayAttackAnim(ref animator, ref attack, ref config);
-
             animator.CurrentState = state;
-        }      
+        }
+
+        private void SetAttackDelayPrm(ref CharacterAttackComponent attack, ref AnimatorComponent animator)
+        {
+            animator.AnimatorRef.SetFloat(GameConstants.AnimatorPrm.ATTACK_DELAY, attack.AttackTimeout);
+        }
 
         private void SetMovementSpeedPrm(ref AnimatorComponent animator, ref CharacterVelocityComponent velocity, ref CharacterConfigComponent config)
         {
@@ -87,9 +90,10 @@ namespace BT.Runtime.Gameplay.Hero.Systems
             if (Time.time < animator.LockedTill) return animator.CurrentState;
 
             // Priorities
-            if (animator.Attacked) return LockState(GameConstants.AnimatorPrm.ATTACK, attack.LastAttackTime, ref animator);
             if (animator.Landed) return LockState(GameConstants.AnimatorPrm.LANDING, animConfig.State.LandingTime, ref animator);
 
+            if (animator.IsAttacked) return GameConstants.AnimatorPrm.ATTACK;
+            
             return (movement.IsGround || movement.IsGroundFar) ? GameConstants.AnimatorPrm.MOVEMENT : GameConstants.AnimatorPrm.FALL;
 
             int LockState(int s, float t, ref AnimatorComponent animator) 
@@ -97,17 +101,6 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                 animator.LockedTill = Time.time + t;
                 return s;
             }
-        }
-
-        private void PlayAttackAnim(ref AnimatorComponent animator, ref CharacterAttackComponent attack, ref CharacterConfigComponent config)
-        {
-            var item = (attack.IsExecutedPower) ?  
-                config.ConfigRef.Attack.PowerAttackUp :
-                config.ConfigRef.Attack.Combos[attack.ComboIndex];
-            
-            animator.AnimatorRef.runtimeAnimatorController = item.AnimatorController;
-            animator.AnimatorRef.SetFloat(GameConstants.AnimatorPrm.ATTACK_SPEED_PRM, item.AnimationSpeed);
-            animator.AnimatorRef.Play(GameConstants.AnimatorPrm.ATTACK);           
-        }   
+        }           
     }
 }

@@ -1,6 +1,8 @@
+using System;
 using System.Diagnostics;
 using BT.Runtime.Data.Configs;
 using BT.Runtime.Gameplay.Hero.Components;
+using BT.Runtime.Gameplay.Hero.View.Animation;
 using BT.Runtime.Gameplay.Views.Camera;
 using FischlWorks;
 using Leopotam.EcsLite;
@@ -22,14 +24,17 @@ namespace BT.Runtime.Gameplay.Views.Hero
 
         private EcsWorld _world;
         private EcsPackedEntity _ecsPackedEntity;
+        private bool _isInit;
         private CharacterController _cc;
         private Animator _animator;
         private csHomebrewIK _footIK;
 
-        public void SetEntity(EcsWorld world, EcsPackedEntity ecsPackedEntity)
+        public void Init(EcsWorld world, EcsPackedEntity ecsPackedEntity)
         {
             _world = world;
             _ecsPackedEntity = ecsPackedEntity;
+
+            _isInit = true;
         }
 
         [Conditional("UNITY_EDITOR")]
@@ -80,6 +85,13 @@ namespace BT.Runtime.Gameplay.Views.Hero
                 Gizmos.color = (movement.IsGround) ? Color.green : Color.yellow;
                 Gizmos.DrawCube(boxCastOrigin, boxCastSize);           
             }
+        }
+
+        public void RegisterAnimBehaviour(IHeroAnimBehaviour heroAnimBehaviour)
+        {
+            if (!_isInit) return;
+            
+            heroAnimBehaviour.Init(_ecsPackedEntity, _world);
         }
     }
 }

@@ -29,7 +29,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
 
             var entity = world.NewEntity();
 
-            view.SetEntity(world, world.PackEntity(entity));
+            view.Init(world, world.PackEntity(entity));
 
             //Hero
             world.GetPool<HeroTeg>().Add(entity);

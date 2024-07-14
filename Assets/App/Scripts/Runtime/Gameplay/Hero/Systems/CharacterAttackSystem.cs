@@ -14,7 +14,6 @@ namespace BT.Runtime.Gameplay.Hero.Systems
         private EcsPool<MovementDataComponent> _movementDataPool;
         private EcsPool<InputDataComponent> _inputDataPool;
         private EcsPool<CharacterAttackComponent> _attackDataPool;
-        private EcsPool<AnimatorComponent> _animatorPool;
         private EcsPool<CharacterVelocityComponent> _velovityPool;
 
         public void Init(IEcsSystems systems)
@@ -27,7 +26,6 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                 .Inc<InputDataComponent>()
                 .Inc<CharacterAttackComponent>()
                 .Inc<CharacterVelocityComponent>()
-                .Inc<AnimatorComponent>()
                 .End();
 
             _configPool = world.GetPool<CharacterConfigComponent>();
@@ -35,7 +33,6 @@ namespace BT.Runtime.Gameplay.Hero.Systems
             _movementDataPool = world.GetPool<MovementDataComponent>();
             _inputDataPool = world.GetPool<InputDataComponent>();
             _attackDataPool = world.GetPool<CharacterAttackComponent>();
-            _animatorPool = world.GetPool<AnimatorComponent>();
             _velovityPool = world.GetPool<CharacterVelocityComponent>();
         }
 
@@ -48,28 +45,23 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                 ref var input = ref _inputDataPool.Get(ent);
                 ref var config = ref _configPool.Get(ent);
                 ref var attack = ref _attackDataPool.Get(ent);
-                ref var animator = ref _animatorPool.Get(ent);
-                ref var velocity = ref _velovityPool.Get(ent);
-                
-                ResetExecuteAttack(ref attack);
+                ref var velocity = ref _velovityPool.Get(ent);                
 
                 if (movement.IsGround)
                 {
-                    if (input.IsAttackWasPressed)
+                    if (input.IsAttackWasPressed && !attack.IsExecuted && !attack.IsExecutedPower)
                     {                        
+                        attack.AttackTimeout = 1f;
+
                         if (attack.IsCanStartPowerAttack)
                         {
                             attack.IsExecutedPower = true;
                             attack.IsCanStartPowerAttack = false;
-                            attack.ComboIndex = 0;
                         }
                         else
                         {
-                            attack.ComboIndex++;
-                            attack.ComboIndex %= config.ConfigRef.Attack.Combos.Length;
                             attack.IsExecuted = true;
-                            attack.LastAttackTime = config.ConfigRef.Attack.SwitchComboAttackTimer;
-                            Debug.Log($"attack.ComboIndex {attack.ComboIndex}");
+                            attack.AttackTimeout = config.ConfigRef.Attack.SwitchComboAttackTimer;
                         }
                     }
                 }
@@ -78,8 +70,8 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                     //in air attack
                 }
 
-                ResetCombo(ref attack);
                 ClampMovementSpeed(ref attack, ref velocity, ref view);
+                ResetAttackTime(ref attack);
             }
         }
 
@@ -87,29 +79,19 @@ namespace BT.Runtime.Gameplay.Hero.Systems
             ref CharacterVelocityComponent velocity, 
             ref ViewModelTransformComponent view)
         {
-            if (attack.LastAttackTime > 0f)
+            if (attack.AttackTimeout > 0 && attack.IsExecuted || attack.IsExecutedPower)
             {
-                var vel = view.ModelTransformRef.forward * 0.1f;
+                var vel = view.ModelTransformRef.forward * 0.01f;
                 velocity.Horizontal = new Vector3(vel.x, 0f, vel.z);
             }
         }
 
-        private void ResetExecuteAttack(ref CharacterAttackComponent attack)
+        private void ResetAttackTime(ref CharacterAttackComponent attack)
         {
-            attack.IsExecuted = false;
-            attack.IsExecutedPower = false;
-        }
-
-        private void ResetCombo(ref CharacterAttackComponent attack)
-        {
-            if (attack.LastAttackTime > 0f)
+            if (attack.AttackTimeout > 0f)
             {
-                attack.LastAttackTime -= Time.deltaTime;
+                attack.AttackTimeout -= Time.deltaTime;
             }
-            else 
-            {
-                attack.ComboIndex = -1;
-            }
-        }
+        }        
     }
 }

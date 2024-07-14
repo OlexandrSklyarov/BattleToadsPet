@@ -8,6 +8,6 @@ namespace BT.Runtime.Gameplay.General.Components
         public int CurrentState;
         public float LockedTill;
         public bool Landed;
-        public bool Attacked;
+        public bool IsAttacked;
     }
 }
