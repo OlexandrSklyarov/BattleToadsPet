@@ -1,4 +1,3 @@
-using System;
 using BT.Runtime.Data;
 using BT.Runtime.Gameplay.General.Components;
 using BT.Runtime.Gameplay.Hero.Components;
@@ -66,7 +65,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
 
             if (state == animator.CurrentState) return;
             
-            animator.AnimatorRef.CrossFade(state, 0.1f, 0);
+            animator.AnimatorRef.CrossFade(state, config.ConfigRef.Animation.CrosfadeAnimime, 0);
 
             animator.CurrentState = state;
         }
@@ -91,8 +90,6 @@ namespace BT.Runtime.Gameplay.Hero.Systems
 
             // Priorities
             if (animator.Landed) return LockState(GameConstants.AnimatorPrm.LANDING, animConfig.State.LandingTime, ref animator);
-
-            if (animator.IsAttacked) return GameConstants.AnimatorPrm.ATTACK;
             
             return (movement.IsGround || movement.IsGroundFar) ? GameConstants.AnimatorPrm.MOVEMENT : GameConstants.AnimatorPrm.FALL;
 

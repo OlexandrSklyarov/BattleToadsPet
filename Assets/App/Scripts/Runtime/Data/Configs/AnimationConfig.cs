@@ -13,7 +13,6 @@ namespace BT.Runtime.Data.Configs
         [Serializable]
         public class StateAnimation
         {
-            [field: SerializeField, Min(0.001f)] public float AttackTime {get; private set;} = 1f;  
             [field: SerializeField, Min(0.001f)] public float LandingTime {get; private set;} = 1f; 
         } 
     }

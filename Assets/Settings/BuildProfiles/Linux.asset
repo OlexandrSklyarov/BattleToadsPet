@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_BuildTarget: 24
   m_Subtarget: 2
-  m_ModuleName: LinuxStandalone
+  m_PlatformId: cb423bfea44b4d658edb8bc5d91a3024
   m_PlatformBuildProfile:
     rid: 7194613924600479764
   m_Scenes:
@@ -24,6 +24,9 @@ MonoBehaviour:
     m_path: Assets/App/Scenes/Game.unity
   - m_enabled: 1
     m_path: Assets/App/Scenes/Environment.unity
+  m_ScriptingDefines: []
+  m_PlayerSettingsYaml:
+    m_Settings: []
   references:
     version: 2
     RefIds:
