@@ -67,9 +67,6 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                 {
                     velocity.Horizontal = Vector3.Lerp(velocity.Horizontal, Vector3.zero, deceleration * Time.deltaTime);
                 }
-                
-                engine.ControllerRef.CC.Move(
-                    new Vector3(velocity.Horizontal.x, velocity.Vertical, velocity.Horizontal.z) * Time.deltaTime);
             }
         }
     }

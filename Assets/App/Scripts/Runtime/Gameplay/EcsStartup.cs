@@ -1,3 +1,4 @@
+using BT.Runtime.Gameplay.General.Systems;
 using BT.Runtime.Gameplay.Hero.Systems;
 using BT.Runtime.Gameplay.Services.GameWorldData;
 using Leopotam.EcsLite;
@@ -50,6 +51,7 @@ namespace BT.Runtime.Gameplay
                 .Add(new CharacterGravitySystem())
                 .Add(new CharacterJumpSystem())
                 .Add(new ChangeHorizontalVelocitySystem())
+                .Add(new MovementCharacterControllerSystem())
                 .Add(new HeroIKFootIKSystem())
                 .Add(new HeroAnimationSystem())
 

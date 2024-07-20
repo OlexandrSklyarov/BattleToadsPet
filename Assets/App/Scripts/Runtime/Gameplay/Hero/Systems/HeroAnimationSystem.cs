@@ -59,7 +59,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
 
             animator.Landed = movement.FallTime > 0.4f && movement.IsGroundFar;
 
-            var state = GetState(ref animator, ref movement, ref config, ref attack);
+            var state = GetMovementState(ref animator, ref movement, ref config, ref attack);
 
             animator.Landed = false;
 
@@ -82,7 +82,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
             animator.AnimatorRef.SetFloat(GameConstants.AnimatorPrm.NORM_SPEED_PRM, normSpeed);
         }
 
-        private int GetState(ref AnimatorComponent animator, ref MovementDataComponent movement, ref CharacterConfigComponent config, ref CharacterAttackComponent attack)
+        private int GetMovementState(ref AnimatorComponent animator, ref MovementDataComponent movement, ref CharacterConfigComponent config, ref CharacterAttackComponent attack)
         {
             var animConfig = config.ConfigRef.Animation;
 
