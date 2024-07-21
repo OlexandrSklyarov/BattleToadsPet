@@ -10,7 +10,6 @@ namespace BT.Runtime.Gameplay.Hero.Systems
     {
         private EcsFilter _filter;
         private EcsPool<CharacterConfigComponent> _configPool;
-        private EcsPool<ViewModelTransformComponent> _viewPool;
         private EcsPool<MovementDataComponent> _movementDataPool;
         private EcsPool<InputDataComponent> _inputDataPool;
         private EcsPool<CharacterAttackComponent> _attackDataPool;
@@ -21,7 +20,6 @@ namespace BT.Runtime.Gameplay.Hero.Systems
             var world = systems.GetWorld();
 
             _filter = world.Filter<CharacterConfigComponent>()
-                .Inc<ViewModelTransformComponent>()
                 .Inc<MovementDataComponent>()
                 .Inc<InputDataComponent>()
                 .Inc<CharacterAttackComponent>()
@@ -29,7 +27,6 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                 .End();
 
             _configPool = world.GetPool<CharacterConfigComponent>();
-            _viewPool = world.GetPool<ViewModelTransformComponent>();
             _movementDataPool = world.GetPool<MovementDataComponent>();
             _inputDataPool = world.GetPool<InputDataComponent>();
             _attackDataPool = world.GetPool<CharacterAttackComponent>();
@@ -41,7 +38,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
             foreach (var ent in _filter)
             {
                 ref var movement = ref _movementDataPool.Get(ent);
-                ref var view = ref _viewPool.Get(ent);
+                
                 ref var input = ref _inputDataPool.Get(ent);
                 ref var config = ref _configPool.Get(ent);
                 ref var attack = ref _attackDataPool.Get(ent);
@@ -70,19 +67,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                     //in air attack
                 }
 
-                ClampMovementSpeed(ref attack, ref velocity, ref view);
                 ResetAttackTime(ref attack);
-            }
-        }
-
-        private void ClampMovementSpeed(ref CharacterAttackComponent attack, 
-            ref CharacterVelocityComponent velocity, 
-            ref ViewModelTransformComponent view)
-        {
-            if (attack.AttackTimeout > 0 && attack.IsExecuted || attack.IsExecutedPower)
-            {
-                var vel = view.ModelTransformRef.forward * 0.001f;
-                velocity.Horizontal = new Vector3(vel.x, 0f, vel.z);
             }
         }
 
@@ -91,6 +76,10 @@ namespace BT.Runtime.Gameplay.Hero.Systems
             if (attack.AttackTimeout > 0f)
             {
                 attack.AttackTimeout -= Time.deltaTime;
+            }
+            else
+            {
+                attack.AttackTimeout = 0f;
             }
         }        
     }

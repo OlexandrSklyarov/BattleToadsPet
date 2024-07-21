@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5e50c17c823fe5a39b62924ba21d5d5, type: 3}
   m_Name: HeroAttackConfig
   m_EditorClassIdentifier: 
-  <SwitchComboAttackTimer>k__BackingField: 0.65
+  <SwitchComboAttackTimer>k__BackingField: 0.5
   <MinAttackAnimationProgress>k__BackingField: 0.7
   <Combos>k__BackingField:
   - {fileID: 11400000, guid: 6eba66492cc71b16193065c74826b7fa, type: 2}

@@ -1,22 +1,20 @@
-using BT.Runtime.Data;
-using BT.Runtime.Gameplay.Extensions;
-using BT.Runtime.Gameplay.Hero.Components;
+using BT.Runtime.Gameplay.Hero.Services;
 using BT.Runtime.Gameplay.Views.Hero;
 using Leopotam.EcsLite;
 using UnityEngine;
 
-namespace BT.Runtime.Gameplay.Hero.View.Animation
+namespace BT.Runtime.Gameplay.Hero.View.Animations
 {
-    public class HeroAnimMovementBehaviour : StateMachineBehaviour, IHeroAnimBehaviour
+    public class HeroAttackTransitionBehaviour : StateMachineBehaviour, IHeroAnimBehaviour
     {
-        private EcsPackedEntity _heroPackedEntity;
-        private EcsWorld _world;
-        private bool _isInit;      
+        [SerializeField] private AttackType _type;
+        
+        private IAttackService _attackService;
+        private bool _isInit;
 
-        public void Init(EcsPackedEntity packedEntity, EcsWorld world)
+        public void Init(IAttackService attackService)
         {
-            _heroPackedEntity = packedEntity;
-            _world = world;
+            _attackService = attackService;
             _isInit = true;
         }
 
@@ -32,33 +30,23 @@ namespace BT.Runtime.Gameplay.Hero.View.Animation
         // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
         override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-           TryRegisterInView(animator);
+            TryRegisterInView(animator);
         }
-
 
         // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
         override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            if (_heroPackedEntity.Unpack(_world, out int entity))
+            if (_attackService.IsAttackExecuted()) 
             {
-                ref var attack = ref _world.GetComponent<CharacterAttackComponent>(entity);
-
-                if (attack.IsExecuted || attack.IsExecutedPower) 
-                {
-                    animator.Play(GameConstants.AnimatorPrm.ATTACK_1);
-                }               
+                animator.Play(_attackService.GetAttackAnimID(_type));
+                _attackService.ApllyAttack(_type);
             }
         }
 
         // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
         override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-        {
-           if (_heroPackedEntity.Unpack(_world, out int entity))
-            {
-                ref var attack = ref _world.GetComponent<CharacterAttackComponent>(entity);
-                attack.IsExecuted = false; 
-                attack.IsExecutedPower = false;           
-            }
+        {            
+            _attackService.ResetAttackExecuted();           
         }
 
         // OnStateMove is called right after Animator.OnAnimatorMove()
@@ -71,6 +59,6 @@ namespace BT.Runtime.Gameplay.Hero.View.Animation
         //override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         //{
         //    // Implement code that sets up animation IK (inverse kinematics)
-        //}        
+        //}
     }
 }

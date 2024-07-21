@@ -2,7 +2,8 @@ using System;
 using System.Diagnostics;
 using BT.Runtime.Data.Configs;
 using BT.Runtime.Gameplay.Hero.Components;
-using BT.Runtime.Gameplay.Hero.View.Animation;
+using BT.Runtime.Gameplay.Hero.Services;
+using BT.Runtime.Gameplay.Hero.View.Animations;
 using BT.Runtime.Gameplay.Views.Camera;
 using FischlWorks;
 using Leopotam.EcsLite;
@@ -24,6 +25,7 @@ namespace BT.Runtime.Gameplay.Views.Hero
 
         private EcsWorld _world;
         private EcsPackedEntity _ecsPackedEntity;
+        private HeroAttackService _attackService;
         private bool _isInit;
         private CharacterController _cc;
         private Animator _animator;
@@ -33,6 +35,8 @@ namespace BT.Runtime.Gameplay.Views.Hero
         {
             _world = world;
             _ecsPackedEntity = ecsPackedEntity;
+
+            _attackService = new HeroAttackService(_ecsPackedEntity, _world);
 
             _isInit = true;
         }
@@ -91,7 +95,7 @@ namespace BT.Runtime.Gameplay.Views.Hero
         {
             if (!_isInit) return;
             
-            heroAnimBehaviour.Init(_ecsPackedEntity, _world);
+            heroAnimBehaviour.Init(_attackService);
         }
     }
 }

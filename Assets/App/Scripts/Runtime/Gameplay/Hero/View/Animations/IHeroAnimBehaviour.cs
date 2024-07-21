@@ -1,9 +1,9 @@
-using Leopotam.EcsLite;
+using BT.Runtime.Gameplay.Hero.Services;
 
-namespace BT.Runtime.Gameplay.Hero.View.Animation
+namespace BT.Runtime.Gameplay.Hero.View.Animations
 {
     public interface IHeroAnimBehaviour
     {
-        void Init(EcsPackedEntity packedEntity, EcsWorld world);
+        void Init(IAttackService attackService);
     }
 }
