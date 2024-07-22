@@ -57,7 +57,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
             SetMovementSpeedPrm(ref animator, ref velocity, ref config);
             SetAttackDelayPrm(ref attack, ref animator);
 
-            animator.Landed = movement.FallTime > 0.4f && movement.IsGroundFar;
+            animator.Landed = movement.FallTime > config.ConfigRef.Animation.FallTimeThreshold && movement.IsGroundFar;
 
             var state = GetMovementState(ref animator, ref movement, ref config, ref attack);
 
@@ -89,7 +89,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
             if (Time.time < animator.LockedTill) return animator.CurrentState;
 
             // Priorities
-            if (animator.Landed) return LockState(GameConstants.AnimatorPrm.LANDING, animConfig.State.LandingTime, ref animator);
+            if (animator.Landed) return LockState(GameConstants.AnimatorPrm.LANDING, animConfig.LandingTime, ref animator);
             
             return (movement.IsGround || movement.IsGroundFar) ? GameConstants.AnimatorPrm.MOVEMENT : GameConstants.AnimatorPrm.FALL;
 

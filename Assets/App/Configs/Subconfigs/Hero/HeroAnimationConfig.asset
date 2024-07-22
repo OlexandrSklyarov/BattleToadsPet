@@ -14,6 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <MaxFallVelocity>k__BackingField: 7
   <CrosfadeAnimime>k__BackingField: 0.1
-  <State>k__BackingField:
-    <AttackTime>k__BackingField: 1
-    <LandingTime>k__BackingField: 0.5
+  <LandingTime>k__BackingField: 0.45
+  <FallTimeThreshold>k__BackingField: 0.3

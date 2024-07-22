@@ -58,7 +58,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                         else
                         {
                             attack.IsExecuted = true;
-                            attack.AttackTimeout = config.ConfigRef.Attack.SwitchComboAttackTimer;
+                            attack.AttackTimeout = config.ConfigRef.Attack.Delay;
                         }
                     }
                 }
