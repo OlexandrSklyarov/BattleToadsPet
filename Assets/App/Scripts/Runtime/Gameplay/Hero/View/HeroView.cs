@@ -52,34 +52,15 @@ namespace BT.Runtime.Gameplay.Views.Hero
                 ref var ground = ref characterGroundPool.Get(entity); 
                 ref var config = ref characterConfigPool.Get(entity); 
                 ref var movement = ref characterMovementPool.Get(entity); 
-
-                //head
+                
                 var boxCastOrigin = new Vector3
-                (
-                    ground.FeetCollider.bounds.center.x,
-                    ground.BodyBounds.max.y,
-                    ground.FeetCollider.bounds.center.z
-                );
-
-                var boxCastSize = new Vector3
-                (
-                    ground.FeetCollider.bounds.size.x * config.ConfigRef.Gravity.HeadWidth,
-                    config.ConfigRef.Gravity.HeadDetectionRayLength,
-                    ground.FeetCollider.bounds.size.z * config.ConfigRef.Gravity.HeadWidth
-                );
-
-                Gizmos.color = (movement.IsBumpedHead) ? Color.red : Color.cyan;
-                Gizmos.DrawCube(boxCastOrigin, boxCastSize);     
-
-                //ground var boxCastOrigin = new Vector3
-                boxCastOrigin = new Vector3
                 (
                     ground.FeetCollider.bounds.center.x,
                     ground.FeetCollider.bounds.min.y,
                     ground.FeetCollider.bounds.center.z
                 );
 
-                boxCastSize = new Vector3
+                var boxCastSize = new Vector3
                 (
                     ground.FeetCollider.bounds.size.x,
                     config.ConfigRef.Gravity.GroundDetectionRayLength,

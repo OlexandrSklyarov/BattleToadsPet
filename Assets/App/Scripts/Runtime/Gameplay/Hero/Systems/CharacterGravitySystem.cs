@@ -45,7 +45,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                 {
                     velocity.Vertical = config.ConfigRef.Gravity.GroundGravity;
                     movement.FallTime = 0f;
-                }
+                }                
                 else if (movement.IsFalling) //fall
                 {
                     var previousVelocity = velocity.Vertical;
