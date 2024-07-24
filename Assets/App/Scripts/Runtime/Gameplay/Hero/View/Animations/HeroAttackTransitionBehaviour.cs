@@ -38,7 +38,7 @@ namespace BT.Runtime.Gameplay.Hero.View.Animations
         {
             if (_attackService.IsAttackExecuted()) 
             {
-                animator.Play(_attackService.GetAttackAnimID(_type));
+                animator.CrossFade(_attackService.GetAttackAnimID(_type), 0.01f);
                 _attackService.ApllyAttack(_type);
             }
         }
