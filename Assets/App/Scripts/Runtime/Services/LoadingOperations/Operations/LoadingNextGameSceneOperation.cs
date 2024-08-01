@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using BT.Runtime.Data;
 using BT.Runtime.Data.Configs;
 using BT.Runtime.Data.Persistent;
 using BT.Runtime.Services.Player;
@@ -37,6 +38,13 @@ namespace Game.Runtime.Services.LoadingOperations.Operations
         {
             var index = _dataStorageService.GetData<LevelData>().NextLevelIndex;
             var level = _levelDataBase.Levels[index];
+
+            await SceneManager.LoadSceneAsync(GameConstants.Scene.MEDIATOR_LEVEL_BOOT, LoadSceneMode.Single)
+                .ToUniTask
+                (
+                    Progress.CreateOnlyValueChanged(progress => onProgressCallback?.Invoke(progress), 
+                    EqualityComparer<float>.Default)
+                );
 
             await SceneManager.LoadSceneAsync(level.Scene, LoadSceneMode.Single)
                 .ToUniTask

@@ -21,6 +21,8 @@ MonoBehaviour:
   - m_enabled: 1
     m_path: Assets/App/Scenes/Boot.unity
   - m_enabled: 1
+    m_path: Assets/App/Scenes/MediatorLevelBoot.unity
+  - m_enabled: 1
     m_path: Assets/App/Scenes/Environment.unity
   - m_enabled: 1
     m_path: Assets/App/Scenes/Game.unity
