@@ -35,9 +35,10 @@ namespace BT.Runtime.Gameplay.Hero.Services
         {
             return type switch
             {
-                AttackType.Attack_1 => GameConstants.AnimatorPrm.ATTACK_1,
-                AttackType.Attack_2 => GameConstants.AnimatorPrm.ATTACK_2,
-                _ => GameConstants.AnimatorPrm.ATTACK_3,
+                AttackType.HandAttack_1 => GameConstants.AnimatorPrm.ATTACK_1,
+                AttackType.HandAttack_2 => GameConstants.AnimatorPrm.ATTACK_2,
+                AttackType.HandAttack_3 => GameConstants.AnimatorPrm.ATTACK_3,
+                _ => GameConstants.AnimatorPrm.ATTACK_4,
             };
         }
 

@@ -87,7 +87,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
         {
             if (attack.AttackTimeout > 0 && attack.IsExecuted || attack.IsExecutedPower)
             {
-                var vel = view.ModelTransformRef.forward * 0.5f;
+                var vel = view.ModelTransformRef.forward * Mathf.Epsilon;
                 velocity.Horizontal = new Vector3(vel.x, 0f, vel.z);
             }
         }

@@ -1,6 +1,5 @@
 using BT.Runtime.Gameplay.Hero.Services;
 using BT.Runtime.Gameplay.Views.Hero;
-using Leopotam.EcsLite;
 using UnityEngine;
 
 namespace BT.Runtime.Gameplay.Hero.View.Animations
@@ -8,6 +7,7 @@ namespace BT.Runtime.Gameplay.Hero.View.Animations
     public class HeroAttackTransitionBehaviour : StateMachineBehaviour, IHeroAnimBehaviour
     {
         [SerializeField] private AttackType _type;
+        [SerializeField, Min(0.01f)] private float _transitionDuration = 0.05f; // 0.05f max...
         
         private IAttackService _attackService;
         private bool _isInit;
@@ -38,7 +38,7 @@ namespace BT.Runtime.Gameplay.Hero.View.Animations
         {
             if (_attackService.IsAttackExecuted()) 
             {
-                animator.CrossFade(_attackService.GetAttackAnimID(_type), 0.01f);
+                animator.CrossFade(_attackService.GetAttackAnimID(_type), _transitionDuration);
                 _attackService.ApllyAttack(_type);
             }
         }

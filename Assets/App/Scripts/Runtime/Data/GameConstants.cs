@@ -17,6 +17,7 @@ namespace BT.Runtime.Data
             public static readonly int ATTACK_1 = Animator.StringToHash("ATTACK_1");
             public static readonly int ATTACK_2 = Animator.StringToHash("ATTACK_2");
             public static readonly int ATTACK_3 = Animator.StringToHash("ATTACK_3");
+            public static readonly int ATTACK_4 = Animator.StringToHash("ATTACK_4");
         }
 
         public static class Scene
