@@ -5,6 +5,7 @@ namespace BT.Runtime.Gameplay.Hero.View.Animations
         HandAttack_1,
         HandAttack_2,
         HandAttack_3,
-        HandAttack_4
+        PowerAttack_1,
+        PowerAttack_2
     }
 }

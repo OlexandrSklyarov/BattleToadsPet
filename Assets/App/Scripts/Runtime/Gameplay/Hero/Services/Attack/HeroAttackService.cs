@@ -37,8 +37,7 @@ namespace BT.Runtime.Gameplay.Hero.Services.Attack
             {
                 AttackType.HandAttack_1 => GameConstants.AnimatorPrm.ATTACK_1,
                 AttackType.HandAttack_2 => GameConstants.AnimatorPrm.ATTACK_2,
-                AttackType.HandAttack_3 => GameConstants.AnimatorPrm.ATTACK_3,
-                _ => GameConstants.AnimatorPrm.ATTACK_4,
+                _ => GameConstants.AnimatorPrm.ATTACK_3,
             };
         }
 
