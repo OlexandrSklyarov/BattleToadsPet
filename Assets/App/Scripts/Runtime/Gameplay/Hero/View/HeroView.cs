@@ -2,7 +2,7 @@ using System;
 using System.Diagnostics;
 using BT.Runtime.Data.Configs;
 using BT.Runtime.Gameplay.Hero.Components;
-using BT.Runtime.Gameplay.Hero.Services;
+using BT.Runtime.Gameplay.Hero.Services.Attack;
 using BT.Runtime.Gameplay.Hero.View.Animations;
 using BT.Runtime.Gameplay.Views.Camera;
 using FischlWorks;
@@ -17,6 +17,7 @@ namespace BT.Runtime.Gameplay.Views.Hero
         [field: SerializeField] public CharacterConfig Config { get; private set; }        
         [field: SerializeField] public Transform Model { get; private set; }            
         [field: SerializeField] public BoxCollider FeetCollider { get; private set; }        
+        [field: Space, SerializeField] public AttackPoint[] AttackPoints { get; private set; }        
         public CharacterController CC => _cc ??= GetComponent<CharacterController>(); 
         public Animator Animator => _animator ??= GetComponentInChildren<Animator>(); 
         public csHomebrewIK FootIK => _footIK ??= GetComponentInChildren<csHomebrewIK>(); 
@@ -41,36 +42,36 @@ namespace BT.Runtime.Gameplay.Views.Hero
             _isInit = true;
         }
 
-        [Conditional("UNITY_EDITOR")]
-        private void OnDrawGizmos() 
-        {
-            if (_ecsPackedEntity.Unpack(_world, out int entity))
-            {
-                var characterGroundPool = _world.GetPool<CharacterCheckGroundComponent>();
-                var characterConfigPool = _world.GetPool<CharacterConfigComponent>();
-                var characterMovementPool = _world.GetPool<MovementDataComponent>();
-                ref var ground = ref characterGroundPool.Get(entity); 
-                ref var config = ref characterConfigPool.Get(entity); 
-                ref var movement = ref characterMovementPool.Get(entity); 
+        // [Conditional("UNITY_EDITOR")]
+        // private void OnDrawGizmos() 
+        // {
+        //     if (_ecsPackedEntity.Unpack(_world, out int entity))
+        //     {
+        //         var characterGroundPool = _world.GetPool<CharacterCheckGroundComponent>();
+        //         var characterConfigPool = _world.GetPool<CharacterConfigComponent>();
+        //         var characterMovementPool = _world.GetPool<MovementDataComponent>();
+        //         ref var ground = ref characterGroundPool.Get(entity); 
+        //         ref var config = ref characterConfigPool.Get(entity); 
+        //         ref var movement = ref characterMovementPool.Get(entity); 
                 
-                var boxCastOrigin = new Vector3
-                (
-                    ground.FeetCollider.bounds.center.x,
-                    ground.FeetCollider.bounds.min.y,
-                    ground.FeetCollider.bounds.center.z
-                );
+        //         var boxCastOrigin = new Vector3
+        //         (
+        //             ground.FeetCollider.bounds.center.x,
+        //             ground.FeetCollider.bounds.min.y,
+        //             ground.FeetCollider.bounds.center.z
+        //         );
 
-                var boxCastSize = new Vector3
-                (
-                    ground.FeetCollider.bounds.size.x,
-                    config.ConfigRef.Gravity.GroundDetectionRayLength,
-                    ground.FeetCollider.bounds.size.z
-                );   
+        //         var boxCastSize = new Vector3
+        //         (
+        //             ground.FeetCollider.bounds.size.x,
+        //             config.ConfigRef.Gravity.GroundDetectionRayLength,
+        //             ground.FeetCollider.bounds.size.z
+        //         );   
 
-                Gizmos.color = (movement.IsGround) ? Color.green : Color.yellow;
-                Gizmos.DrawCube(boxCastOrigin, boxCastSize);           
-            }
-        }
+        //         Gizmos.color = (movement.IsGround) ? Color.green : Color.yellow;
+        //         Gizmos.DrawCube(boxCastOrigin, boxCastSize);           
+        //     }
+        // }
 
         public void RegisterAnimBehaviour(IHeroAnimBehaviour heroAnimBehaviour)
         {

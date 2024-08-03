@@ -1,4 +1,4 @@
-using BT.Runtime.Gameplay.Hero.Services;
+using BT.Runtime.Gameplay.Hero.Services.Attack;
 
 namespace BT.Runtime.Gameplay.Hero.View.Animations
 {

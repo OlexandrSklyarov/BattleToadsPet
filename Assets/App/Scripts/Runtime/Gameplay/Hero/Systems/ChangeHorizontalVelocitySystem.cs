@@ -9,11 +9,9 @@ namespace BT.Runtime.Gameplay.Hero.Systems
     public sealed class ChangeHorizontalVelocitySystem : IEcsInitSystem, IEcsRunSystem
     {
         private EcsFilter _filter;
-        private EcsPool<CharacterControllerEngineComponent> _characterEnginePool;
         private EcsPool<MovementDataComponent> _movementDataPool;
         private EcsPool<CharacterConfigComponent> _configDataPool;
         private EcsPool<InputDataComponent> _inputDataPoool;
-        private EcsPool<CharacterCheckGroundComponent> _groundDataPoool;
         private EcsPool<CharacterVelocityComponent> _velocityPool;
         private EcsPool<ViewModelTransformComponent> _viewPool;
         private EcsPool<CharacterAttackComponent> _attackDataPool;
@@ -22,36 +20,29 @@ namespace BT.Runtime.Gameplay.Hero.Systems
         {
             var world = systems.GetWorld();
 
-            _filter = world.Filter<CharacterControllerEngineComponent>()
-                .Inc<MovementDataComponent>()
+            _filter = world.Filter<MovementDataComponent>()
                 .Inc<CharacterConfigComponent>()
                 .Inc<InputDataComponent>()
-                .Inc<CharacterCheckGroundComponent>()
                 .Inc<CharacterVelocityComponent>()
                 .Inc<ViewModelTransformComponent>()
                 .Inc<CharacterAttackComponent>()
                 .End();
 
-            _characterEnginePool = world.GetPool<CharacterControllerEngineComponent>();
             _movementDataPool = world.GetPool<MovementDataComponent>();
             _configDataPool = world.GetPool<CharacterConfigComponent>();
             _inputDataPoool = world.GetPool<InputDataComponent>();
-            _groundDataPoool = world.GetPool<CharacterCheckGroundComponent>();
             _velocityPool = world.GetPool<CharacterVelocityComponent>();
             _viewPool = world.GetPool<ViewModelTransformComponent>();
             _attackDataPool = world.GetPool<CharacterAttackComponent>();
-
         }
 
         public void Run(IEcsSystems systems)
         {
             foreach (var ent in _filter)
             {
-                ref var engine = ref _characterEnginePool.Get(ent);
                 ref var movement = ref _movementDataPool.Get(ent);
                 ref var config = ref _configDataPool.Get(ent);
-                ref var input = ref _inputDataPoool.Get(ent);
-                ref var ground = ref _groundDataPoool.Get(ent);                
+                ref var input = ref _inputDataPoool.Get(ent);                
                 ref var velocity = ref _velocityPool.Get(ent);  
                 ref var view = ref _viewPool.Get(ent);       
                 ref var attack = ref _attackDataPool.Get(ent);

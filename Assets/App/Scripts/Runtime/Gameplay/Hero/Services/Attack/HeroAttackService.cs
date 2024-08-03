@@ -7,7 +7,7 @@ using Leopotam.EcsLite;
 using UnityEngine;
 using Util;
 
-namespace BT.Runtime.Gameplay.Hero.Services
+namespace BT.Runtime.Gameplay.Hero.Services.Attack
 {
     public sealed class HeroAttackService : IAttackService
     {
@@ -52,10 +52,10 @@ namespace BT.Runtime.Gameplay.Hero.Services
             }
         }
 
-        public void ApllyAttack(AttackType type)
+        public void ApllyAttack(AttackType type, AttackPointType pointType)
         {
             var power = 100;
-            DebugUtil.PrintColor($"ApllyAttack pow {power}", Color.cyan);
+            DebugUtil.PrintColor($"ApllyAttack pow {power} - [{pointType}]", Color.cyan);
 
             if (_packedEntity.Unpack(_world, out int entity))
             {

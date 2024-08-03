@@ -1,4 +1,4 @@
-using BT.Runtime.Gameplay.Hero.Services;
+using BT.Runtime.Gameplay.Hero.Services.Attack;
 using BT.Runtime.Gameplay.Views.Hero;
 using UnityEngine;
 
@@ -6,6 +6,8 @@ namespace BT.Runtime.Gameplay.Hero.View.Animations
 {
     public class HeroAttackFinishTransitionBehaviour : StateMachineBehaviour, IHeroAnimBehaviour
     {
+        [SerializeField] private AttackPointType _pointType;
+        
         private IAttackService _attackService;
         private bool _isInit;
 
