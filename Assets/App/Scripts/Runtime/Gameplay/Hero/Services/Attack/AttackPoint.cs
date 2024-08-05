@@ -4,7 +4,7 @@ using UnityEngine;
 namespace BT.Runtime.Gameplay.Hero.Services.Attack
 {
     [Serializable]
-    public struct AttackPoint
+    public class AttackPoint
     {
         public AttackPointType Type;
         public Transform Point;

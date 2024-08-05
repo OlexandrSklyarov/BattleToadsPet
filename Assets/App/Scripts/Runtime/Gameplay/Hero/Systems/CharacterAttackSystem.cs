@@ -48,7 +48,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                 {
                     if (input.IsAttackWasPressed && !attack.IsExecuted && !attack.IsExecutedPower)
                     {                        
-                        attack.AttackTimeout = 1f;
+                        attack.AttackTimeout = config.ConfigRef.Attack.Delay;
 
                         if (attack.IsCanStartPowerAttack)
                         {
@@ -58,7 +58,6 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                         else
                         {
                             attack.IsExecuted = true;
-                            attack.AttackTimeout = config.ConfigRef.Attack.Delay;
                         }
                     }
                 }

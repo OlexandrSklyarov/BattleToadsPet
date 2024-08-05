@@ -1,7 +1,5 @@
-using System;
-using System.Diagnostics;
 using BT.Runtime.Data.Configs;
-using BT.Runtime.Gameplay.Hero.Components;
+using BT.Runtime.Gameplay.Combat.View;
 using BT.Runtime.Gameplay.Hero.Services.Attack;
 using BT.Runtime.Gameplay.Hero.View.Animations;
 using BT.Runtime.Gameplay.Views.Camera;
@@ -12,7 +10,7 @@ using UnityEngine;
 namespace BT.Runtime.Gameplay.Views.Hero
 {
     [RequireComponent(typeof(CharacterController))]
-    public class HeroView : MonoBehaviour, ICharacterController, ICameraTarget
+    public class HeroView : MonoBehaviour, ICharacterController, ICameraTarget, IDamagableEntity
     {
         [field: SerializeField] public CharacterConfig Config { get; private set; }        
         [field: SerializeField] public Transform Model { get; private set; }            
@@ -23,21 +21,23 @@ namespace BT.Runtime.Gameplay.Views.Hero
         public csHomebrewIK FootIK => _footIK ??= GetComponentInChildren<csHomebrewIK>(); 
         public Transform TR => transform;
         public EcsPackedEntity MyEntity => _ecsPackedEntity;
-
+        public EcsPackedEntity DamageEntity => _ecsPackedEntity;
+        
         private EcsWorld _world;
         private EcsPackedEntity _ecsPackedEntity;
         private HeroAttackService _attackService;
-        private bool _isInit;
         private CharacterController _cc;
         private Animator _animator;
         private csHomebrewIK _footIK;
+        private bool _isInit;
 
         public void Init(EcsWorld world, EcsPackedEntity ecsPackedEntity)
         {
             _world = world;
             _ecsPackedEntity = ecsPackedEntity;
 
-            _attackService = new HeroAttackService(_ecsPackedEntity, _world);
+            _attackService = new HeroAttackService(_world, _ecsPackedEntity, 
+                AttackPoints, Config.Attack, Config.Animation);
 
             _isInit = true;
         }
@@ -78,6 +78,6 @@ namespace BT.Runtime.Gameplay.Views.Hero
             if (!_isInit) return;
             
             heroAnimBehaviour.Init(_attackService);
-        }
+        }        
     }
 }

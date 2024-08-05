@@ -1,4 +1,5 @@
 using System.Runtime.InteropServices;
+using BT.Runtime.Data;
 using BT.Runtime.Gameplay.Components;
 using BT.Runtime.Gameplay.General.Components;
 using BT.Runtime.Gameplay.Hero.Components;

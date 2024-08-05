@@ -316,7 +316,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _type: 0
   _pointType: 0
-  _transitionDuration: 0.01
 --- !u!206 &-2293464973721218014
 BlendTree:
   m_ObjectHideFlags: 1
@@ -498,7 +497,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _type: 2
   _pointType: 1
-  _transitionDuration: 0.01
 --- !u!114 &3135839807628244960
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -837,7 +835,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _type: 1
   _pointType: 0
-  _transitionDuration: 0.01
 --- !u!1101 &8674150289280640949
 AnimatorStateTransition:
   m_ObjectHideFlags: 1

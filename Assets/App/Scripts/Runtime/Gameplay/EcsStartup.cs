@@ -1,3 +1,5 @@
+using BT.Runtime.Data;
+using BT.Runtime.Gameplay.Combat.Systems;
 using BT.Runtime.Gameplay.General.Systems;
 using BT.Runtime.Gameplay.Hero.Systems;
 using BT.Runtime.Gameplay.Services.GameWorldData;
@@ -40,7 +42,6 @@ namespace BT.Runtime.Gameplay
         {
             _systems = new EcsSystems(_world, sharedData);
             _systems
-                .AddWorld(new EcsWorld(), "events")
 
                 .Add(new SpawnHeroSystem())
                 .Add(new HeroApplyInputSystem())
@@ -54,9 +55,9 @@ namespace BT.Runtime.Gameplay
                 .Add(new HeroIKFootIKSystem())
                 .Add(new HeroAnimationSystem())
 
+                .Add(new AttackRequestHandleSystem())
+
         #if UNITY_EDITOR
-                // add debug systems for custom worlds here, for example:
-                .Add(new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem("events"))
                 .Add(new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem())
         #endif
                 .Init();
@@ -66,11 +67,8 @@ namespace BT.Runtime.Gameplay
         {
             _fixedSystems = new EcsSystems(_world, sharedData);
             _fixedSystems
-                .AddWorld(new EcsWorld(), "events")  
 
         #if UNITY_EDITOR
-                // add debug systems for custom worlds here, for example:
-                .Add(new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem("events"))
                 .Add(new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem())
         #endif
                 .Init();

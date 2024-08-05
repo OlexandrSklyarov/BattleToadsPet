@@ -8,7 +8,6 @@ namespace BT.Runtime.Gameplay.Hero.View.Animations
     {
         [SerializeField] private AttackType _type;
         [SerializeField] private AttackPointType _pointType;
-        [SerializeField, Min(0.01f)] private float _transitionDuration = 0.05f; // 0.05f max...
         
         private IAttackService _attackService;
         private bool _isInit;
@@ -39,7 +38,7 @@ namespace BT.Runtime.Gameplay.Hero.View.Animations
         {
             if (_attackService.IsAttackExecuted()) 
             {
-                animator.CrossFade(_attackService.GetAttackAnimID(_type), _transitionDuration);
+                animator.CrossFade(_attackService.GetAttackAnimID(_type), _attackService.GetCrossFadeTime());
                 _attackService.ApllyAttack(_type, _pointType);
             }
         }
