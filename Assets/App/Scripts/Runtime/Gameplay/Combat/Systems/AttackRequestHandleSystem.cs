@@ -1,4 +1,3 @@
-using System;
 using BT.Runtime.Gameplay.Combat.Components;
 using BT.Runtime.Gameplay.Combat.View;
 using Leopotam.EcsLite;

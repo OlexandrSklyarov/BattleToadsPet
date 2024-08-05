@@ -43,6 +43,7 @@ namespace BT.Runtime.Gameplay
             _systems = new EcsSystems(_world, sharedData);
             _systems
 
+                //Hero
                 .Add(new SpawnHeroSystem())
                 .Add(new HeroApplyInputSystem())
                 .Add(new CharacterContrellerCheckGroundSystem())
@@ -55,6 +56,7 @@ namespace BT.Runtime.Gameplay
                 .Add(new HeroIKFootIKSystem())
                 .Add(new HeroAnimationSystem())
 
+                //combat
                 .Add(new AttackRequestHandleSystem())
 
         #if UNITY_EDITOR
