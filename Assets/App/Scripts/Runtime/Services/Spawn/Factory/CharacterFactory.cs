@@ -1,5 +1,7 @@
 using System.Linq;
 using BT.Runtime.Data.Configs;
+using BT.Runtime.Gameplay.Characters.Views;
+using BT.Runtime.Gameplay.View;
 using BT.Runtime.Gameplay.Views.Hero;
 using UnityEngine;
 
@@ -12,6 +14,16 @@ namespace BT.Runtime.Services.Spawn.Factory
         public CharacterFactory(FactoryItemsConfig config)
         {
             _config = config;
+        }
+
+        public EnemyView CreateEnemy(EnemyType type, Vector3 spawnPoint)
+        {
+            return UnityEngine.Object.Instantiate
+            (
+                _config.Enemies.First(x => x.Type == type).Prefab, 
+                spawnPoint,
+                Quaternion.identity
+            );
         }
 
         HeroView ICharacterFactory.GetHero(HeroType type, Transform spawnPoint)

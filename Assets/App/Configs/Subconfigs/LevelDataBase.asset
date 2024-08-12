@@ -16,3 +16,5 @@ MonoBehaviour:
   - <LevelName>k__BackingField: Level 1
     <Scene>k__BackingField: Game
     <SceneEnvironment>k__BackingField: Environment
+    <MapPrefab>k__BackingField: {fileID: 567557615160173434, guid: 1cebc43416da203bb8d499470487d27c,
+      type: 3}

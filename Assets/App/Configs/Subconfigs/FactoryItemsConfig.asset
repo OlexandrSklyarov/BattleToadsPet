@@ -19,3 +19,7 @@ MonoBehaviour:
   - <Type>k__BackingField: 1
     <HeroPrefab>k__BackingField: {fileID: 1280118273359490907, guid: 8f4a558cd70c0b619910c4f36582e4c0,
       type: 3}
+  <Enemies>k__BackingField:
+  - <Type>k__BackingField: 0
+    <Prefab>k__BackingField: {fileID: 8198952486064404416, guid: 0abc2f28c0f373f79b11fbb4ad2243f8,
+      type: 3}

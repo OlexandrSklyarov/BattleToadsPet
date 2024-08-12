@@ -1,8 +1,11 @@
 using BT.Runtime.Data;
+using BT.Runtime.Gameplay.Characters.Systems;
 using BT.Runtime.Gameplay.Combat.Systems;
 using BT.Runtime.Gameplay.General.Systems;
 using BT.Runtime.Gameplay.Hero.Systems;
+using BT.Runtime.Gameplay.Map.Systems;
 using BT.Runtime.Gameplay.Services.GameWorldData;
+using Cysharp.Threading.Tasks;
 using Leopotam.EcsLite;
 using UnityEngine;
 using VContainer;
@@ -43,6 +46,9 @@ namespace BT.Runtime.Gameplay
             _systems = new EcsSystems(_world, sharedData);
             _systems
 
+                //Map
+                .Add(new SpawnMapSystem())
+
                 //Hero
                 .Add(new SpawnHeroSystem())
                 .Add(new HeroApplyInputSystem())
@@ -58,6 +64,9 @@ namespace BT.Runtime.Gameplay
 
                 //combat
                 .Add(new AttackRequestHandleSystem())
+
+                //enemy
+                .Add(new EnemySpawnSystem())
 
         #if UNITY_EDITOR
                 .Add(new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem())
@@ -99,7 +108,7 @@ namespace BT.Runtime.Gameplay
             _fixedSystems = null;
            
             _world?.Destroy();
-            _world = null;            
+            _world = null; 
         }        
     }
 }

@@ -3,6 +3,7 @@ using BT.Runtime.Gameplay;
 using BT.Runtime.Gameplay.Views.Camera;
 using BT.Runtime.Gameplay.Views.World;
 using BT.Runtime.Services.Input;
+using BT.Runtime.Services.Player;
 using BT.Runtime.Services.Spawn;
 using BT.Runtime.Services.Spawn.Factory;
 using UnityEngine;
@@ -35,6 +36,10 @@ namespace BT
         {
             builder.Register<IInputService, DeviceInputService>(Lifetime.Singleton);
             builder.Register<IItemGenerator, ItemGenerator>(Lifetime.Singleton);
+
+            builder.Register<PlayerDataStorageService>(Lifetime.Scoped)
+            .AsImplementedInterfaces()
+            .AsSelf();
         }
 
         private void RegisterConfigs(IContainerBuilder builder)
@@ -55,6 +60,10 @@ namespace BT
                 .AsSelf();
 
             builder.RegisterComponentInHierarchy<CameraController>()
+                .AsImplementedInterfaces()
+                .AsSelf();
+
+            builder.RegisterComponentInHierarchy<WorldTeg>()
                 .AsImplementedInterfaces()
                 .AsSelf();
         }

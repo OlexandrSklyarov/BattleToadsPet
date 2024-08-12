@@ -1,4 +1,5 @@
 using System;
+using BT.Runtime.Gameplay.Map.View;
 using UnityEngine;
 
 namespace BT.Runtime.Data.Configs
@@ -14,6 +15,7 @@ namespace BT.Runtime.Data.Configs
             [field: SerializeField] public string LevelName {get; private set;} = "TestLevel";
             [field: SerializeField] public string Scene {get; private set;} = "LevelTest";            
             [field: SerializeField] public string SceneEnvironment {get; private set;} = "Environment";            
+            [field: SerializeField] public MapViewMediator MapPrefab {get; private set;}           
         }
     }
 }

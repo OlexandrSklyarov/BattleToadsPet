@@ -1,5 +1,6 @@
+using System.Collections.Generic;
 using BT.Runtime.Gameplay.Combat.Components;
-using BT.Runtime.Gameplay.Combat.View;
+using BT.Runtime.Gameplay.Services.GameWorldData;
 using Leopotam.EcsLite;
 using UnityEngine;
 using Util;
@@ -8,6 +9,7 @@ namespace BT.Runtime.Gameplay.Combat.Systems
 {
     public sealed class AttackRequestHandleSystem : IEcsInitSystem, IEcsRunSystem
     {
+        private Dictionary<Collider, EcsPackedEntity> _entityColliders;
         private EcsWorld _world;
         private EcsFilter _filter;
         private EcsPool<AttackRequestComponent> _attackRequestPool;
@@ -15,7 +17,9 @@ namespace BT.Runtime.Gameplay.Combat.Systems
 
         public void Init(IEcsSystems systems)
         {
+            _entityColliders = systems.GetShared<SharedData>().EntityColliders;
             _world = systems.GetWorld();
+
             _filter = _world.Filter<AttackRequestComponent>().End();
             _attackRequestPool = _world.GetPool<AttackRequestComponent>();
             _colliderResult = new Collider[32];
@@ -50,9 +54,8 @@ namespace BT.Runtime.Gameplay.Combat.Systems
                 
                 DebugUtil.Print($"find collider {col.name}");
 
-                if (!col.TryGetComponent(out IDamagableEntity target)) continue;
-
-                if (!target.DamageEntity.Unpack(_world, out int damageEntity)) continue;
+                if (!_entityColliders.TryGetValue(col, out EcsPackedEntity target)) continue;
+                if (!target.Unpack(_world, out int damageEntity)) continue;
 
                 ApplyDamage(ref request, attackEntity, damageEntity);                
             }

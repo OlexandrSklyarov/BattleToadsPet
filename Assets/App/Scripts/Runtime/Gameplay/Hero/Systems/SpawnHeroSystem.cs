@@ -1,5 +1,3 @@
-using System.Runtime.InteropServices;
-using BT.Runtime.Data;
 using BT.Runtime.Gameplay.Components;
 using BT.Runtime.Gameplay.General.Components;
 using BT.Runtime.Gameplay.Hero.Components;
@@ -29,8 +27,9 @@ namespace BT.Runtime.Gameplay.Hero.Systems
             camera.FollowTarget(view);
 
             var entity = world.NewEntity();
+            var packedEntity =  world.PackEntity(entity);
 
-            view.Init(world, world.PackEntity(entity));
+            view.Init(world, packedEntity);
 
             //Hero
             world.GetPool<HeroTeg>().Add(entity);
@@ -42,6 +41,9 @@ namespace BT.Runtime.Gameplay.Hero.Systems
             //character controller
             ref var cc = ref  world.GetPool<CharacterControllerEngineComponent>().Add(entity);
             cc.ControllerRef = view;
+
+            //added to collider collection
+            data.EntityColliders.Add(cc.ControllerRef.CC, packedEntity);
 
             //character transform
             ref var tr = ref  world.GetPool<TranslateComponent>().Add(entity);
