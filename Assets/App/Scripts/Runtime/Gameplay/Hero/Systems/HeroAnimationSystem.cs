@@ -52,29 +52,25 @@ namespace BT.Runtime.Gameplay.Hero.Systems
             }
         }
 
-        private void AnimationProcess(ref AnimatorComponent animator, ref CharacterVelocityComponent velocity, ref MovementDataComponent movement, ref CharacterConfigComponent config, ref CharacterAttackComponent attack)
+        private void AnimationProcess(ref AnimatorComponent animator, ref CharacterVelocityComponent velocity, 
+            ref MovementDataComponent movement, ref CharacterConfigComponent config, ref CharacterAttackComponent attack)
         {
-            SetMovementSpeedPrm(ref animator, ref velocity, ref config);
-            SetAttackDelayPrm(ref attack, ref animator);
+            SetMovementSpeedPrm(ref animator, ref velocity, ref config);          
 
-            animator.Landed = movement.FallTime > config.ConfigRef.Animation.FallTimeThreshold && movement.IsGroundFar;
+            animator.Landed = movement.FallTime > config.ConfigRef.Animation.FallTimeThreshold && 
+                movement.IsGroundFar;
 
-            var state = GetMovementState(ref animator, ref movement, ref config, ref attack);
+            var state = GetMovementState(ref animator, ref movement, ref config);
 
             animator.Landed = false;
 
             if (state == animator.CurrentState) return;
             
-            animator.AnimatorRef.CrossFade(state, config.ConfigRef.Animation.CrosfadeAnimime, 0);
+            animator.AnimatorRef.CrossFade(state, config.ConfigRef.Animation.DefaultCrosfadeAnimime, 0);
 
             animator.CurrentState = state;
         }
-
-        private void SetAttackDelayPrm(ref CharacterAttackComponent attack, ref AnimatorComponent animator)
-        {
-            animator.AnimatorRef.SetFloat(GameConstants.AnimatorPrm.ATTACK_DELAY, attack.AttackTimeout);
-        }
-
+      
         private void SetMovementSpeedPrm(ref AnimatorComponent animator, ref CharacterVelocityComponent velocity, ref CharacterConfigComponent config)
         {
             var velMagnitude = new Vector3(velocity.Horizontal.x, 0f, velocity.Horizontal.z).magnitude;
@@ -82,14 +78,14 @@ namespace BT.Runtime.Gameplay.Hero.Systems
             animator.AnimatorRef.SetFloat(GameConstants.AnimatorPrm.NORM_SPEED_PRM, normSpeed);
         }
 
-        private int GetMovementState(ref AnimatorComponent animator, ref MovementDataComponent movement, ref CharacterConfigComponent config, ref CharacterAttackComponent attack)
+        private int GetMovementState(ref AnimatorComponent animator, ref MovementDataComponent movement, ref CharacterConfigComponent config)
         {
             var animConfig = config.ConfigRef.Animation;
 
             if (Time.time < animator.LockedTill) return animator.CurrentState;
 
             // Priorities
-            if (animator.Landed) return LockState(GameConstants.AnimatorPrm.LANDING, animConfig.LandingTime, ref animator);
+            if (animator.Landed && movement.IsGroundFar) return LockState(GameConstants.AnimatorPrm.LANDING, animConfig.LandingTime, ref animator);
             
             return (movement.IsGround || movement.IsGroundFar) ? GameConstants.AnimatorPrm.MOVEMENT : GameConstants.AnimatorPrm.FALL;
 

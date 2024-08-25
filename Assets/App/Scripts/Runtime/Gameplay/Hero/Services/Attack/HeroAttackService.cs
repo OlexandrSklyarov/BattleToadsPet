@@ -98,6 +98,6 @@ namespace BT.Runtime.Gameplay.Hero.Services.Attack
             }
         }
 
-        public float GetCrossFadeTime() => _animConfig.CrosfadeAnimime;
+        public float GetCrossFadeTime() => _animConfig.AttackCrosfadeAnimime;
     }
 }

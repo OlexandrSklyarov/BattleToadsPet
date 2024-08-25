@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5e50c17c823fe5a39b62924ba21d5d5, type: 3}
   m_Name: HeroAttackConfig
   m_EditorClassIdentifier: 
-  <Delay>k__BackingField: 0.5
+  <Delay>k__BackingField: 0.6
   <Radius>k__BackingField: 1
+  <PowerDamageMultiplier>k__BackingField: 3
   <Damages>k__BackingField:
   - <Type>k__BackingField: 0
     <Power>k__BackingField: 20

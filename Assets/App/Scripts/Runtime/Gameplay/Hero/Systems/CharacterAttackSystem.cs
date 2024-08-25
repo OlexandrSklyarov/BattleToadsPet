@@ -1,4 +1,3 @@
-using BT.Runtime.Gameplay.Components;
 using BT.Runtime.Gameplay.General.Components;
 using BT.Runtime.Gameplay.Hero.Components;
 using Leopotam.EcsLite;

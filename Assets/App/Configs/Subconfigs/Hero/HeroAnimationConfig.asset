@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3a0f352cb9fc93778bbb591964c7a7f, type: 3}
   m_Name: HeroAnimationConfig
   m_EditorClassIdentifier: 
-  <CrosfadeAnimime>k__BackingField: 0.01
-  <LandingTime>k__BackingField: 0.45
+  <DefaultCrosfadeAnimime>k__BackingField: 0.1
+  <AttackCrosfadeAnimime>k__BackingField: 0.01
+  <LandingTime>k__BackingField: 0.5
   <FallTimeThreshold>k__BackingField: 0.3

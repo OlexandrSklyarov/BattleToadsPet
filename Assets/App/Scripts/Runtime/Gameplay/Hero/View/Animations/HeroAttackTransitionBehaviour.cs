@@ -1,6 +1,7 @@
 using BT.Runtime.Gameplay.Hero.Services.Attack;
 using BT.Runtime.Gameplay.Views.Hero;
 using UnityEngine;
+using Util;
 
 namespace BT.Runtime.Gameplay.Hero.View.Animations
 {
@@ -11,6 +12,7 @@ namespace BT.Runtime.Gameplay.Hero.View.Animations
         
         private IAttackService _attackService;
         private bool _isInit;
+        private bool _isActiveAttackState;
 
         public void Init(IAttackService attackService)
         {
@@ -36,8 +38,9 @@ namespace BT.Runtime.Gameplay.Hero.View.Animations
         // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
         override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            if (_attackService.IsAttackExecuted()) 
+            if (!_isActiveAttackState && _attackService.IsAttackExecuted()) 
             {
+                _isActiveAttackState = true;
                 animator.CrossFade(_attackService.GetAttackAnimID(_type), _attackService.GetCrossFadeTime());
                 _attackService.ApllyAttack(_type, _pointType);
             }
@@ -46,7 +49,8 @@ namespace BT.Runtime.Gameplay.Hero.View.Animations
         // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
         override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {            
-            _attackService.ResetAttackExecuted();           
+            _isActiveAttackState = false;         
+            _attackService.ResetAttackExecuted();  
         }
 
         // OnStateMove is called right after Animator.OnAnimatorMove()
