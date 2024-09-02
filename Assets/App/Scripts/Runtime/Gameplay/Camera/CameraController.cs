@@ -1,6 +1,6 @@
 using System;
 using BT.Runtime.Data.Configs;
-using Cinemachine;
+using Unity.Cinemachine;
 using Cysharp.Threading.Tasks;
 using NaughtyAttributes;
 using UnityEngine;
@@ -14,8 +14,8 @@ namespace BT.Runtime.Gameplay.Views.Camera
         private enum CameraType {Follow, Overview}
         #endregion
 
-        [SerializeField] private CinemachineVirtualCamera _followCamera;
-        [SerializeField] private CinemachineVirtualCamera _overviewCamera;
+        [SerializeField] private CinemachineCamera _followCamera;
+        [SerializeField] private CinemachineCamera _overviewCamera;
 
         private CinemachineBasicMultiChannelPerlin _perlin;
         private CameraConfig _config;
@@ -28,7 +28,7 @@ namespace BT.Runtime.Gameplay.Views.Camera
 
         private void Awake() 
         {
-            _perlin = _followCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();     
+            _perlin = _followCamera.GetComponent<CinemachineBasicMultiChannelPerlin>();     
         }
 
         private void Start() 
@@ -45,17 +45,17 @@ namespace BT.Runtime.Gameplay.Views.Camera
             SetPresset(_overviewCamera);
         }
 
-        private void SetPresset(CinemachineVirtualCamera cam)
+        private void SetPresset(CinemachineCamera cam)
         {
-            cam.m_Lens.FieldOfView = _config.FOV;
+            cam.Lens.FieldOfView = _config.FOV;
             
-            var body = cam.GetCinemachineComponent<CinemachineTransposer>();
-            body.m_FollowOffset = _config.FollowOffset;
-            body.m_XDamping = _config.BodyDamping.x;
-            body.m_YDamping = _config.BodyDamping.y;
-            body.m_ZDamping = _config.BodyDamping.z;
+            var body = cam.GetComponent<CinemachineFollow>();
+            body.FollowOffset = _config.FollowOffset;
+            body.TrackerSettings.PositionDamping.x = _config.BodyDamping.x;
+            body.TrackerSettings.PositionDamping.y = _config.BodyDamping.y;
+            body.TrackerSettings.PositionDamping.z = _config.BodyDamping.z;
 
-            cam.GetCinemachineComponent<CinemachineComposer>().m_TrackedObjectOffset = _config.AimOffset;            
+            cam.GetComponent<CinemachineRotationComposer>().TargetOffset = _config.AimOffset;            
         }
 
         public void FollowTarget(ICameraTarget target)
@@ -83,13 +83,13 @@ namespace BT.Runtime.Gameplay.Views.Camera
 
         public async UniTaskVoid ShakeAsync()
         {
-            _perlin.m_AmplitudeGain = 0.25f;
-            _perlin.m_FrequencyGain = 3f;
+            _perlin.AmplitudeGain = 0.25f;
+            _perlin.FrequencyGain = 3f;
 
             await Awaitable.WaitForSecondsAsync(0.4f);
 
-            _perlin.m_AmplitudeGain = 0f;
-            _perlin.m_FrequencyGain = 0f;
+            _perlin.AmplitudeGain = 0f;
+            _perlin.FrequencyGain = 0f;
         }
     }
 }
