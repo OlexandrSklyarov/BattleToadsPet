@@ -8,6 +8,7 @@ namespace BT.Runtime.Gameplay.Services.GameWorldData
     public sealed class SharedData
     {
         public IObjectResolver DIResolver;
+        public EcsPackedEntity HeroEntity;
         public readonly Dictionary<Collider, EcsPackedEntity> EntityColliders = new();
     }
 }

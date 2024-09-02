@@ -31,13 +31,13 @@ namespace BT.Runtime.Gameplay.Combat.Systems
             {
                 ref var request = ref _attackRequestPool.Get(ent);
 
-                ApplyDamageTargets(ref request, ent);
+                TryApplyDamageTargets(ref request, ent);
 
                 _attackRequestPool.Del(ent);
             }
         }
 
-        private void ApplyDamageTargets(ref AttackRequestComponent request, int attackEntity)
+        private void TryApplyDamageTargets(ref AttackRequestComponent request, int attackEntity)
         {
             var findCount = Physics.OverlapSphereNonAlloc
             (

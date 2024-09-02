@@ -1,6 +1,6 @@
 using BT.Runtime.Data.Configs;
 using BT.Runtime.Data.Persistent;
-using BT.Runtime.Gameplay.Characters.Components;
+using BT.Runtime.Gameplay.Enemy.Components;
 using BT.Runtime.Gameplay.Services.GameWorldData;
 using BT.Runtime.Gameplay.Views.World;
 using BT.Runtime.Services.Player;

@@ -29,6 +29,8 @@ namespace BT.Runtime.Gameplay.Hero.Systems
             var entity = world.NewEntity();
             var packedEntity =  world.PackEntity(entity);
 
+            data.HeroEntity = packedEntity;
+
             view.Init(world, packedEntity);
 
             //Hero

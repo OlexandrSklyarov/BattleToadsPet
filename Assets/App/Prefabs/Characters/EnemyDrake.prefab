@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1521010814559797607}
-  - component: {fileID: 3277222114547434884}
   - component: {fileID: 2003724914368419158}
+  - component: {fileID: 265699895857218002}
   - component: {fileID: 8198952486064404416}
   m_Layer: 0
   m_Name: EnemyDrake
@@ -35,28 +35,6 @@ Transform:
   - {fileID: 9048766203899315758}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &3277222114547434884
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6480734578552537783}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: c997b82975c9d3643a86a71c07200f65, type: 3}
-  m_Controller: {fileID: 9100000, guid: a5514691fd89d7aecb6d6128728b4e29, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!136 &2003724914368419158
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -80,6 +58,28 @@ CapsuleCollider:
   m_Height: 1.780396
   m_Direction: 1
   m_Center: {x: 0, y: 0.88699985, z: 0}
+--- !u!195 &265699895857218002
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6480734578552537783}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!114 &8198952486064404416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -93,6 +93,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Collider>k__BackingField: {fileID: 2003724914368419158}
+  <ViewBody>k__BackingField: {fileID: 8544808302954454755}
+  <Config>k__BackingField: {fileID: 11400000, guid: f77447a066b15e83ab0d6911ccc8a2e5,
+    type: 2}
 --- !u!1 &8089874598227608686
 GameObject:
   m_ObjectHideFlags: 0
@@ -188,6 +191,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Drake
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: c997b82975c9d3643a86a71c07200f65,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: a5514691fd89d7aecb6d6128728b4e29, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

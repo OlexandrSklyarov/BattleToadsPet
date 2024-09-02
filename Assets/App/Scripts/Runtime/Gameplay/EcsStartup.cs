@@ -1,11 +1,9 @@
-using BT.Runtime.Data;
-using BT.Runtime.Gameplay.Characters.Systems;
 using BT.Runtime.Gameplay.Combat.Systems;
+using BT.Runtime.Gameplay.Enemy.Systems;
 using BT.Runtime.Gameplay.General.Systems;
 using BT.Runtime.Gameplay.Hero.Systems;
 using BT.Runtime.Gameplay.Map.Systems;
 using BT.Runtime.Gameplay.Services.GameWorldData;
-using Cysharp.Threading.Tasks;
 using Leopotam.EcsLite;
 using UnityEngine;
 using VContainer;
@@ -64,6 +62,10 @@ namespace BT.Runtime.Gameplay
 
                 //combat
                 .Add(new AttackRequestHandleSystem())
+                .Add(new EnemyIdleStateSystem())
+                .Add(new EnemyChaseStateSystem())
+                .Add(new EnemyAttackStateSystem())
+                .Add(new EnemyAnimationSystem())
 
                 //enemy
                 .Add(new EnemySpawnSystem())

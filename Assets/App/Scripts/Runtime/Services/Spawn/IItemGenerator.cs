@@ -1,5 +1,4 @@
-using BT.Runtime.Gameplay.Characters.Views;
-using BT.Runtime.Gameplay.View;
+using BT.Runtime.Gameplay.Enemy.View;
 using BT.Runtime.Gameplay.Views.Hero;
 using UnityEngine;
 

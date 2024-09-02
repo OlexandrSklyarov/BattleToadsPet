@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace BT.Runtime.Gameplay.Characters.Components
+namespace BT.Runtime.Gameplay.Enemy.Components
 {
     public struct EnemySpawnerComponent
     {

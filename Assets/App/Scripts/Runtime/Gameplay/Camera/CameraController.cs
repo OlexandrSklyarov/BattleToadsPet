@@ -1,4 +1,3 @@
-using System;
 using BT.Runtime.Data.Configs;
 using Unity.Cinemachine;
 using Cysharp.Threading.Tasks;

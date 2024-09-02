@@ -1,4 +1,4 @@
-namespace BT.Runtime.Gameplay.Characters.Views
+namespace BT.Runtime.Gameplay.Enemy.View
 {
     public enum EnemyType
     {
