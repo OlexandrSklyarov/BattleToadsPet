@@ -3,6 +3,7 @@ using BT.Runtime.Gameplay.Enemy.Components;
 using BT.Runtime.Gameplay.General.Components;
 using BT.Runtime.Gameplay.Services.GameWorldData;
 using Leopotam.EcsLite;
+using Util;
 
 namespace BT.Runtime.Gameplay.Enemy.Systems
 {
@@ -13,9 +14,10 @@ namespace BT.Runtime.Gameplay.Enemy.Systems
         private EcsFilter _filter;
         private EcsPool<EnemyComponent> _enemyPool;
         private EcsPool<IdleState> _idleStatePool;
-        private EcsPool<ChaseHeroState> _chaseStatePool;
+        private EcsPool<ChaseTargetState> _chaseStatePool;
         private EcsPool<AttackState> _attackStatePool;
         private EcsPool<NavMeshCharacterEngine> _navMeshEnginePool;
+        private EcsPool<ViewModelTransformComponent> _viewModelTrPool;
         private EcsPool<TranslateComponent> _translatePool;
 
         public void Init(IEcsSystems systems)
@@ -25,17 +27,19 @@ namespace BT.Runtime.Gameplay.Enemy.Systems
             _world = systems.GetWorld();
 
             _filter = _world.Filter<EnemyComponent>()
-                .Inc<ChaseHeroState>()
+                .Inc<ChaseTargetState>()
                 .Inc<TranslateComponent>()
                 .Inc<NavMeshCharacterEngine>()
+                .Inc<ViewModelTransformComponent>()
                 .End();
 
             _enemyPool = _world.GetPool<EnemyComponent>();
             _translatePool = _world.GetPool<TranslateComponent>();
             _idleStatePool = _world.GetPool<IdleState>();
-            _chaseStatePool = _world.GetPool<ChaseHeroState>();
+            _chaseStatePool = _world.GetPool<ChaseTargetState>();
             _attackStatePool = _world.GetPool<AttackState>();
             _navMeshEnginePool = _world.GetPool<NavMeshCharacterEngine>();
+            _viewModelTrPool = _world.GetPool<ViewModelTransformComponent>();
         }
 
         public void Run(IEcsSystems systems)
@@ -46,6 +50,7 @@ namespace BT.Runtime.Gameplay.Enemy.Systems
                 ref var navMesh = ref _navMeshEnginePool.Get(ent);
                 ref var myTr = ref _translatePool.Get(ent);
                 ref var chaseState = ref _chaseStatePool.Get(ent);
+                ref var viewModel = ref _viewModelTrPool.Get(ent);
 
                 if (!chaseState.Target.Unpack(_world, out int heroEntity)) 
                 {
@@ -61,7 +66,8 @@ namespace BT.Runtime.Gameplay.Enemy.Systems
                 if ((myTr.TrRef.position - heroTr.TrRef.position).sqrMagnitude > enemy.AttackDistance * enemy.AttackDistance)
                 {
                     navMesh.AgentRef.speed = 2f;
-                    navMesh.AgentRef.SetDestination(heroTr.TrRef.position);                                       
+                    navMesh.AgentRef.SetDestination(heroTr.TrRef.position);  
+                    viewModel.LookAt = Vector3Math.DirToQuaternion(heroTr.TrRef.position - myTr.TrRef.position); 
                 }
                 else
                 {

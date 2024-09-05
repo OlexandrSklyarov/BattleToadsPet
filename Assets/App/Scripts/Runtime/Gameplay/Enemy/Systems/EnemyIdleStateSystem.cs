@@ -12,7 +12,7 @@ namespace BT.Runtime.Gameplay.Enemy.Systems
         private EcsFilter _filter;
         private EcsPool<EnemyComponent> _enemyPool;
         private EcsPool<IdleState> _idleStatePool;
-        private EcsPool<ChaseHeroState> _chaseStatePool;
+        private EcsPool<ChaseTargetState> _chaseStatePool;
         private EcsPool<TranslateComponent> _translatePool;
 
         public void Init(IEcsSystems systems)
@@ -29,7 +29,7 @@ namespace BT.Runtime.Gameplay.Enemy.Systems
             _enemyPool = _world.GetPool<EnemyComponent>();
             _translatePool = _world.GetPool<TranslateComponent>();
             _idleStatePool = _world.GetPool<IdleState>();
-            _chaseStatePool = _world.GetPool<ChaseHeroState>();
+            _chaseStatePool = _world.GetPool<ChaseTargetState>();
         }
 
         public void Run(IEcsSystems systems)

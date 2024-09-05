@@ -16,10 +16,13 @@ namespace BT.Runtime.Gameplay.Enemy.Systems
         private EcsFilter _filter;
         private EcsPool<EnemyComponent> _enemyPool;
         private EcsPool<IdleState> _idleStatePool;
-        private EcsPool<ChaseHeroState> _chaseStatePool;
+        private EcsPool<ChaseTargetState> _chaseStatePool;
         private EcsPool<AttackState> _attackStatePool;
         private EcsPool<NavMeshCharacterEngine> _navMeshEnginePool;
+        private EcsPool<ViewModelTransformComponent> _viewModelTrPool;
         private EcsPool<TranslateComponent> _translatePool;
+
+        private const float MIN_ANGLE_TO_TARGET = 5;
 
         public void Init(IEcsSystems systems)
         {
@@ -31,14 +34,16 @@ namespace BT.Runtime.Gameplay.Enemy.Systems
                 .Inc<AttackState>()
                 .Inc<TranslateComponent>()
                 .Inc<NavMeshCharacterEngine>()
+                .Inc<ViewModelTransformComponent>()
                 .End();
 
             _enemyPool = _world.GetPool<EnemyComponent>();
             _translatePool = _world.GetPool<TranslateComponent>();
             _idleStatePool = _world.GetPool<IdleState>();
-            _chaseStatePool = _world.GetPool<ChaseHeroState>();
+            _chaseStatePool = _world.GetPool<ChaseTargetState>();
             _attackStatePool = _world.GetPool<AttackState>();
             _navMeshEnginePool = _world.GetPool<NavMeshCharacterEngine>();
+            _viewModelTrPool = _world.GetPool<ViewModelTransformComponent>();
         }
 
         public void Run(IEcsSystems systems)
@@ -49,6 +54,7 @@ namespace BT.Runtime.Gameplay.Enemy.Systems
                 ref var navMesh = ref _navMeshEnginePool.Get(ent);
                 ref var myTr = ref _translatePool.Get(ent);
                 ref var attackState = ref _attackStatePool.Get(ent);
+                ref var viewModel = ref _viewModelTrPool.Get(ent);
 
                 enemy.IsMeeleAttackTrigger = false;
 
@@ -64,7 +70,10 @@ namespace BT.Runtime.Gameplay.Enemy.Systems
 
                 if ((myTr.TrRef.position - heroTr.TrRef.position).sqrMagnitude <= enemy.AttackDistance * enemy.AttackDistance)
                 {
-                    if (attackState.NextAttackDelay <= 0f)
+                    viewModel.LookAt = Vector3Math.DirToQuaternion(heroTr.TrRef.position - myTr.TrRef.position);  
+                    var angle = Quaternion.Angle(viewModel.LookAt, viewModel.ModelTransformRef.rotation);
+
+                    if (angle < MIN_ANGLE_TO_TARGET && attackState.NextAttackDelay <= 0f)
                     {
                         Debug.Print("Try attack hero!!!");  
                         enemy.IsMeeleAttackTrigger = true;                                   

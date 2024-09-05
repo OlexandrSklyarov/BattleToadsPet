@@ -108,6 +108,7 @@ namespace BT.Runtime.Gameplay.Enemy.Systems
         private void AddEnemy(int entity, EnemyView enemyView)
         {
             ref var comp = ref _enemyPool.Add(entity);
+            comp.RotateBodySpeed = enemyView.Config.RotateBodySpeed;
             comp.AttackDistance = enemyView.Config.AttackDistance;
             comp.TriggerDistance = enemyView.Config.TriggerDistance;
             comp.MeeleAttackDelay = enemyView.Config.MeeleAttackDelay;
