@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using BT.Runtime.Gameplay.Combat.Components;
+using BT.Runtime.Gameplay.Combat.Services;
 using BT.Runtime.Gameplay.Services.GameWorldData;
 using Leopotam.EcsLite;
 using UnityEngine;
@@ -10,6 +11,7 @@ namespace BT.Runtime.Gameplay.Combat.Systems
     public sealed class AttackRequestHandleSystem : IEcsInitSystem, IEcsRunSystem
     {
         private Dictionary<Collider, EcsPackedEntity> _entityColliders;
+        private DetectTargetService _detectTargetService;
         private EcsWorld _world;
         private EcsFilter _filter;
         private EcsPool<AttackRequestComponent> _attackRequestPool;
@@ -18,6 +20,8 @@ namespace BT.Runtime.Gameplay.Combat.Systems
         public void Init(IEcsSystems systems)
         {
             _entityColliders = systems.GetShared<SharedData>().EntityColliders;
+            _detectTargetService = systems.GetShared<SharedData>().DetectTargetService;
+
             _world = systems.GetWorld();
 
             _filter = _world.Filter<AttackRequestComponent>().End();
@@ -39,19 +43,10 @@ namespace BT.Runtime.Gameplay.Combat.Systems
 
         private void TryApplyDamageTargets(ref AttackRequestComponent request, int attackEntity)
         {
-            var findCount = Physics.OverlapSphereNonAlloc
-            (
-                request.Position,
-                request.Radius,
-                _colliderResult
-            );
+            var colliders = _detectTargetService.FindCollidersInRadius(request.Position, request.Radius);
 
-            for (int i = 0; i < findCount; i++)
+            foreach(var col in colliders)
             {
-                var col = _colliderResult[i];
-
-                if (col == null) continue;
-                
                 DebugUtil.Print($"find collider {col.name}");
 
                 if (!_entityColliders.TryGetValue(col, out EcsPackedEntity target)) continue;
@@ -63,6 +58,7 @@ namespace BT.Runtime.Gameplay.Combat.Systems
 
         private void ApplyDamage(ref AttackRequestComponent request, int attackEntity, int damageEntity)
         {
+            //exclude self
             if (attackEntity == damageEntity) return;
                 
             //apply damage... 

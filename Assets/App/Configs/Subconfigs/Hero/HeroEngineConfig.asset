@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: HeroEngineConfig
   m_EditorClassIdentifier: 
   <MaxWalkSpeed>k__BackingField: 4.5
-  <GroundAcceleration>k__BackingField: 3
-  <GroundDeceleration>k__BackingField: 3
-  <AirAcceleration>k__BackingField: 4
-  <AirDeceleration>k__BackingField: 2
+  <GroundAcceleration>k__BackingField: 7
+  <GroundDeceleration>k__BackingField: 4
+  <AirAcceleration>k__BackingField: 6
+  <AirDeceleration>k__BackingField: 3
   <MaxRunSpeed>k__BackingField: 10
   <RotateSpeed>k__BackingField: 15
   <MaxJumpHeight>k__BackingField: 12

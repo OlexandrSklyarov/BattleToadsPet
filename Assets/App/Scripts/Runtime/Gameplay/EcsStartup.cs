@@ -1,3 +1,4 @@
+using BT.Runtime.Gameplay.Combat.Services;
 using BT.Runtime.Gameplay.Combat.Systems;
 using BT.Runtime.Gameplay.Enemy.Systems;
 using BT.Runtime.Gameplay.General.Systems;
@@ -28,7 +29,8 @@ namespace BT.Runtime.Gameplay
         {
             var sharedData = new SharedData()
             {
-                DIResolver = _resolver
+                DIResolver = _resolver,
+                DetectTargetService = new DetectTargetService()
             };
 
             _world = new EcsWorld();
@@ -62,14 +64,15 @@ namespace BT.Runtime.Gameplay
                 .Add(new HeroAnimationSystem())
 
                 //combat
+                .Add(new RotateToNearTargetSystem())
                 .Add(new AttackRequestHandleSystem())
+
+                //enemy
+                .Add(new EnemySpawnSystem())
                 .Add(new EnemyIdleStateSystem())
                 .Add(new EnemyChaseStateSystem())
                 .Add(new EnemyAttackStateSystem())
                 .Add(new EnemyAnimationSystem())
-
-                //enemy
-                .Add(new EnemySpawnSystem())
 
         #if UNITY_EDITOR
                 .Add(new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem())

@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Delay>k__BackingField: 0.6
   <Radius>k__BackingField: 1
+  <DetectTargetRadius>k__BackingField: 1.5
   <PowerDamageMultiplier>k__BackingField: 3
   <Damages>k__BackingField:
   - <Type>k__BackingField: 0

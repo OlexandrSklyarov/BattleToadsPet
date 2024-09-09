@@ -6,10 +6,10 @@ namespace BT.Runtime.Data.Configs
     public sealed class EngineConfig : ScriptableObject
     {
         [field: Header("[MOVING]"), SerializeField, Min(1f)] public float MaxWalkSpeed { get; private set; } = 12f;
-        [field: SerializeField, Min(1f)] public float GroundAcceleration { get; private set; } = 5f;
-        [field: SerializeField, Min(1f)] public float GroundDeceleration { get; private set; } = 20f;
-        [field: SerializeField, Min(1f)] public float AirAcceleration { get; private set; } = 5f;
-        [field: SerializeField, Min(1f)] public float AirDeceleration { get; private set; } = 5f;
+        [field: SerializeField, Min(0.01f)] public float GroundAcceleration { get; private set; } = 5f;
+        [field: SerializeField, Min(0.01f)] public float GroundDeceleration { get; private set; } = 20f;
+        [field: SerializeField, Min(0.01f)] public float AirAcceleration { get; private set; } = 5f;
+        [field: SerializeField, Min(0.01f)] public float AirDeceleration { get; private set; } = 5f;
         [field: SerializeField, Min(1f)] public float MaxRunSpeed { get; private set; } = 20f;
 
         [field: Space(20), Header("[ROTATE]"), SerializeField, Min(1f)] public float RotateSpeed { get; private set; } = 800f;
