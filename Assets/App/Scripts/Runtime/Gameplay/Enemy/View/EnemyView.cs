@@ -15,5 +15,11 @@ namespace BT.Runtime.Gameplay.Enemy.View
 
         private Animator _animator;
         private NavMeshAgent _navMeshAgent;
+
+        public async void ReclaimAsync()
+        {
+            await Awaitable.WaitForSecondsAsync(3f);
+            Destroy(this.gameObject);
+        }
     }
 }

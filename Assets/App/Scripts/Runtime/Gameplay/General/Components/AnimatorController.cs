@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace BT.Runtime.Gameplay.General.Components
 {
-    public struct AnimatorComponent
+    public struct AnimatorController
     {
         public Animator AnimatorRef;
         public int CurrentState;

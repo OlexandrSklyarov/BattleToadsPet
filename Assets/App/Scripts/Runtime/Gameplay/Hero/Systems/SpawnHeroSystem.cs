@@ -41,21 +41,21 @@ namespace BT.Runtime.Gameplay.Hero.Systems
             configComp.ConfigRef = view.Config;
 
             //character controller
-            ref var cc = ref  world.GetPool<CharacterControllerEngineComponent>().Add(entity);
-            cc.ControllerRef = view;
+            ref var cc = ref  world.GetPool<CharacterControllerEngine>().Add(entity);
+            cc.Ref = view;
 
             //added to collider collection
-            data.EntityColliders.Add(cc.ControllerRef.CC, packedEntity);
+            data.EntityColliders.Add(cc.Ref.CC, packedEntity);
 
             //character transform
-            ref var tr = ref  world.GetPool<TranslateComponent>().Add(entity);
-            tr.TrRef = view.transform;
+            ref var tr = ref  world.GetPool<Translate>().Add(entity);
+            tr.Ref = view.transform;
 
             //velocity
-            world.GetPool<CharacterVelocityComponent>().Add(entity);
+            world.GetPool<CharacterVelocity>().Add(entity);
 
             //character body transform (model)
-            ref var body = ref  world.GetPool<ViewModelTransformComponent>().Add(entity);
+            ref var body = ref  world.GetPool<ViewModelTransform>().Add(entity);
             body.ModelTransformRef = view.Model;
 
             //movement
@@ -65,7 +65,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
             world.GetPool<InputDataComponent>().Add(entity);
 
             //animations
-            ref var animation = ref world.GetPool<AnimatorComponent>().Add(entity);
+            ref var animation = ref world.GetPool<AnimatorController>().Add(entity);
             animation.AnimatorRef = view.Animator;
 
             //IK

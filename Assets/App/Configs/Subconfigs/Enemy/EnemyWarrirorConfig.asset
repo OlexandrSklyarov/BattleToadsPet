@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07d74f3d111592f3d81ae06894b21890, type: 3}
   m_Name: EnemyWarrirorConfig
   m_EditorClassIdentifier: 
-  <AttackDistance>k__BackingField: 2
+  <AttackDistance>k__BackingField: 1.3
   <TriggerDistance>k__BackingField: 10
+  <MeeleAttackDelay>k__BackingField: 2
+  <RotateBodySpeed>k__BackingField: 5

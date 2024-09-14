@@ -76,11 +76,11 @@ namespace BT.Runtime.Gameplay.Hero.Services.Attack
 
             if (_packedEntity.Unpack(_world, out int entity))
             {
-                var pool = _world.GetPool<AttackRequestComponent>();
+                var pool = _world.GetPool<AttackRequest>();
 
                 if (pool.Has(entity)) return;
 
-                ref var heroView = ref _world.GetComponent<ViewModelTransformComponent>(entity);
+                ref var heroView = ref _world.GetComponent<ViewModelTransform>(entity);
 
                 ref var attackRequest = ref pool.Add(entity);
                 attackRequest.AttackDirection = heroView.ModelTransformRef.forward;

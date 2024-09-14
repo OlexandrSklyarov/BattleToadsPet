@@ -7,14 +7,14 @@ namespace BT.Runtime.Gameplay.General.Systems
     public sealed class BodyRotateSystem : IEcsInitSystem, IEcsRunSystem
     {
         private EcsFilter _filter;
-        private EcsPool<ViewModelTransformComponent> _bodyPool;
+        private EcsPool<ViewModelTransform> _bodyPool;
 
         public void Init(IEcsSystems systems)
         {
             var world = systems.GetWorld();
 
-            _filter = world.Filter<ViewModelTransformComponent>().End();
-            _bodyPool = world.GetPool<ViewModelTransformComponent>();
+            _filter = world.Filter<ViewModelTransform>().End();
+            _bodyPool = world.GetPool<ViewModelTransform>();
         }
 
         public void Run(IEcsSystems systems)

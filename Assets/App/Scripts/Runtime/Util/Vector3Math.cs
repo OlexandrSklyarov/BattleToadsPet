@@ -86,8 +86,7 @@ namespace Util
         {
             var angle = GetUpAxisAngleRotate(dir);
             return Quaternion.Euler(new Vector3(0f, angle, 0f));
-        }
-
+        }     
 
         public static float GetUpAxisAngleRotate(Vector3 dir)
         {

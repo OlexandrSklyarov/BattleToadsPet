@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace BT.Runtime.Gameplay.Components
 {
-    public struct ViewModelTransformComponent
+    public struct ViewModelTransform
     {
         public Transform ModelTransformRef;
         public Quaternion LookAt;

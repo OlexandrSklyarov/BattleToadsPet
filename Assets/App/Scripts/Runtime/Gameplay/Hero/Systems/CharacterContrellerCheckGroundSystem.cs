@@ -8,7 +8,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
     public sealed class CharacterContrellerCheckGroundSystem : IEcsInitSystem, IEcsRunSystem
     {
         private EcsFilter _filter;
-        private EcsPool<CharacterControllerEngineComponent> _characterEnginePool;
+        private EcsPool<CharacterControllerEngine> _characterEnginePool;
         private EcsPool<MovementDataComponent> _movementPool;
         private EcsPool<CharacterConfigComponent> _configPool;
 
@@ -21,7 +21,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                 .Inc<CharacterConfigComponent>()
                 .End();
 
-            _characterEnginePool = world.GetPool<CharacterControllerEngineComponent>();
+            _characterEnginePool = world.GetPool<CharacterControllerEngine>();
             _movementPool = world.GetPool<MovementDataComponent>();
             _configPool = world.GetPool<CharacterConfigComponent>();
         }
@@ -34,11 +34,11 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                 ref var movement = ref _movementPool.Get(e);         
                 ref var config = ref _configPool.Get(e);         
 
-                movement.IsGround = engine.ControllerRef.CC.isGrounded;
+                movement.IsGround = engine.Ref.CC.isGrounded;
 
                 movement.IsGroundFar = Physics.Raycast
                 (
-                    new Ray(engine.ControllerRef.CC.transform.position,Vector3.down),
+                    new Ray(engine.Ref.CC.transform.position,Vector3.down),
                     config.ConfigRef.Gravity.GroundDetectionRayLength,
                     config.ConfigRef.Gravity.GroundLayer
                 );                 

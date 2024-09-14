@@ -12,8 +12,8 @@ namespace BT.Runtime.Gameplay.Hero.Systems
         private EcsPool<MovementDataComponent> _movementDataPool;
         private EcsPool<CharacterConfigComponent> _configDataPool;
         private EcsPool<InputDataComponent> _inputDataPoool;
-        private EcsPool<CharacterVelocityComponent> _velocityPool;
-        private EcsPool<ViewModelTransformComponent> _viewPool;
+        private EcsPool<CharacterVelocity> _velocityPool;
+        private EcsPool<ViewModelTransform> _viewPool;
         private EcsPool<CharacterAttackComponent> _attackDataPool;
 
         public void Init(IEcsSystems systems)
@@ -23,16 +23,16 @@ namespace BT.Runtime.Gameplay.Hero.Systems
             _filter = world.Filter<MovementDataComponent>()
                 .Inc<CharacterConfigComponent>()
                 .Inc<InputDataComponent>()
-                .Inc<CharacterVelocityComponent>()
-                .Inc<ViewModelTransformComponent>()
+                .Inc<CharacterVelocity>()
+                .Inc<ViewModelTransform>()
                 .Inc<CharacterAttackComponent>()
                 .End();
 
             _movementDataPool = world.GetPool<MovementDataComponent>();
             _configDataPool = world.GetPool<CharacterConfigComponent>();
             _inputDataPoool = world.GetPool<InputDataComponent>();
-            _velocityPool = world.GetPool<CharacterVelocityComponent>();
-            _viewPool = world.GetPool<ViewModelTransformComponent>();
+            _velocityPool = world.GetPool<CharacterVelocity>();
+            _viewPool = world.GetPool<ViewModelTransform>();
             _attackDataPool = world.GetPool<CharacterAttackComponent>();
         }
 
@@ -65,7 +65,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                 }
                 else //stopping
                 {
-                    velocity.Horizontal = Vector3.Lerp(velocity.Horizontal, Vector3.zero, deceleration * Time.deltaTime);
+                    velocity.Horizontal = Vector2.Lerp(velocity.Horizontal, Vector3.zero, deceleration * Time.deltaTime);
                     if (velocity.Horizontal.magnitude < 0.1f) velocity.Horizontal = Vector3.zero;
                 }
                 
@@ -74,8 +74,8 @@ namespace BT.Runtime.Gameplay.Hero.Systems
         }
 
         private void ClampHorVelocityFromAttack(ref CharacterAttackComponent attack, 
-            ref CharacterVelocityComponent velocity, 
-            ref ViewModelTransformComponent view)
+            ref CharacterVelocity velocity, 
+            ref ViewModelTransform view)
         {
             if (attack.AttackTimeout > 0f)
             {

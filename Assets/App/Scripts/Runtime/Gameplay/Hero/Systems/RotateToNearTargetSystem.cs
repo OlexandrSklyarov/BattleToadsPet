@@ -16,11 +16,11 @@ namespace BT.Runtime.Gameplay.Hero.Systems
         private SharedData _sharedData;
         private EcsWorld _world;
         private EcsFilter _filter;
-        private EcsPool<ViewModelTransformComponent> _bodyPool;
-        private EcsPool<CharacterVelocityComponent> _velocityPool;
+        private EcsPool<ViewModelTransform> _bodyPool;
+        private EcsPool<CharacterVelocity> _velocityPool;
         private EcsPool<CharacterConfigComponent> _configPool;
         private EcsPool<EnemyComponent> _enemyPool;
-        private EcsPool<TranslateComponent> _translatePool;
+        private EcsPool<Translate> _translatePool;
         private List<int> _entityList = new();
 
         public void Init(IEcsSystems systems)
@@ -29,16 +29,16 @@ namespace BT.Runtime.Gameplay.Hero.Systems
             
             _world = systems.GetWorld();
 
-            _filter = _world.Filter<ViewModelTransformComponent>()
-                .Inc<CharacterVelocityComponent>()
+            _filter = _world.Filter<ViewModelTransform>()
+                .Inc<CharacterVelocity>()
                 .Inc<CharacterConfigComponent>()
                 .End();
 
-            _bodyPool = _world.GetPool<ViewModelTransformComponent>();
-            _velocityPool = _world.GetPool<CharacterVelocityComponent>();
+            _bodyPool = _world.GetPool<ViewModelTransform>();
+            _velocityPool = _world.GetPool<CharacterVelocity>();
             _configPool = _world.GetPool<CharacterConfigComponent>();
             _enemyPool = _world.GetPool<EnemyComponent>();
-            _translatePool = _world.GetPool<TranslateComponent>();
+            _translatePool = _world.GetPool<Translate>();
         }
 
         public void Run(IEcsSystems systems)
@@ -59,7 +59,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
             }
         }
 
-        private bool TryFindNearEnemyPosition(ref ViewModelTransformComponent body, float radius, out Vector3 nearEnemyPosition)
+        private bool TryFindNearEnemyPosition(ref ViewModelTransform body, float radius, out Vector3 nearEnemyPosition)
         {
             nearEnemyPosition = default;
 
@@ -83,7 +83,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                 var myForward = body.ModelTransformRef.forward;
 
                 var nearEnemyTransform = _entityList
-                    .Select(x => _translatePool.Get(x).TrRef)
+                    .Select(x => _translatePool.Get(x).Ref)
                     .OrderByDescending(x => Vector3.Dot(x.position - myPos, myForward))
                     .FirstOrDefault();
     

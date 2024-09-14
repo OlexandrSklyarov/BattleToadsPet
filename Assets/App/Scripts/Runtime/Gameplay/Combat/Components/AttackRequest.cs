@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace BT.Runtime.Gameplay.Combat.Components
 {
-    public struct AttackRequestComponent
+    public struct AttackRequest
     {
         public Vector3 Position;
         public Vector3 AttackDirection;

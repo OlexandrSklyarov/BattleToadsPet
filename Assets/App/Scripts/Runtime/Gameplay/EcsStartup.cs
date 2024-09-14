@@ -72,7 +72,12 @@ namespace BT.Runtime.Gameplay
                 .Add(new EnemyIdleStateSystem())
                 .Add(new EnemyChaseStateSystem())
                 .Add(new EnemyAttackStateSystem())
+                .Add(new EnemyStunStateSystem())
                 .Add(new EnemyAnimationSystem())
+                .Add(new EnemyKillSystem())
+
+                //hp / damage
+                .Add(new ApplyDamageSystem())
 
         #if UNITY_EDITOR
                 .Add(new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem())

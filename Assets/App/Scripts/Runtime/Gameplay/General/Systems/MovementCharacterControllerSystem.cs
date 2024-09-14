@@ -7,19 +7,19 @@ namespace BT.Runtime.Gameplay.General.Systems
     public sealed class MovementCharacterControllerSystem : IEcsInitSystem, IEcsRunSystem
     {
         private EcsFilter _filter;
-        private EcsPool<CharacterControllerEngineComponent> _characterEnginePool;
-        private EcsPool<CharacterVelocityComponent> _velocityPool;
+        private EcsPool<CharacterControllerEngine> _characterEnginePool;
+        private EcsPool<CharacterVelocity> _velocityPool;
 
         public void Init(IEcsSystems systems)
         {
             var world = systems.GetWorld();
 
-            _filter = world.Filter<CharacterControllerEngineComponent>()
-                .Inc<CharacterVelocityComponent>()
+            _filter = world.Filter<CharacterControllerEngine>()
+                .Inc<CharacterVelocity>()
                 .End();
 
-            _characterEnginePool = world.GetPool<CharacterControllerEngineComponent>();
-            _velocityPool = world.GetPool<CharacterVelocityComponent>();
+            _characterEnginePool = world.GetPool<CharacterControllerEngine>();
+            _velocityPool = world.GetPool<CharacterVelocity>();
         }
 
         public void Run(IEcsSystems systems)
@@ -29,7 +29,7 @@ namespace BT.Runtime.Gameplay.General.Systems
                 ref var engine = ref _characterEnginePool.Get(ent);                
                 ref var velocity = ref _velocityPool.Get(ent);  
                 
-                engine.ControllerRef.CC.Move(
+                engine.Ref.CC.Move(
                     new Vector3(velocity.Horizontal.x, velocity.Vertical, velocity.Horizontal.z) * Time.deltaTime);
             }
         }

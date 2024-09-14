@@ -9,21 +9,21 @@ namespace BT.Runtime.Gameplay.Hero.Systems
     public sealed class HeroSetLookSystem : IEcsInitSystem, IEcsRunSystem
     {
         private EcsFilter _filter;
-        private EcsPool<ViewModelTransformComponent> _bodyPool;
-        private EcsPool<CharacterVelocityComponent> _velocityPool;
+        private EcsPool<ViewModelTransform> _bodyPool;
+        private EcsPool<CharacterVelocity> _velocityPool;
         private EcsPool<CharacterConfigComponent> _configPool;
 
         public void Init(IEcsSystems systems)
         {
             var world = systems.GetWorld();
 
-            _filter = world.Filter<ViewModelTransformComponent>()
-                .Inc<CharacterVelocityComponent>()
+            _filter = world.Filter<ViewModelTransform>()
+                .Inc<CharacterVelocity>()
                 .Inc<CharacterConfigComponent>()
                 .End();
 
-            _bodyPool = world.GetPool<ViewModelTransformComponent>();
-            _velocityPool = world.GetPool<CharacterVelocityComponent>();
+            _bodyPool = world.GetPool<ViewModelTransform>();
+            _velocityPool = world.GetPool<CharacterVelocity>();
             _configPool = world.GetPool<CharacterConfigComponent>();
         }
 

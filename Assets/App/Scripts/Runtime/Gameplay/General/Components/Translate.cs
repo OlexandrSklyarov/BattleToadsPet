@@ -2,8 +2,8 @@ using UnityEngine;
 
 namespace BT.Runtime.Gameplay.Components
 {
-    public struct TranslateComponent
+    public struct Translate
     {
-        public Transform TrRef;
+        public Transform Ref;
     }
 }

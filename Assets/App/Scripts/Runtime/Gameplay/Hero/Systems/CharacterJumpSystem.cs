@@ -12,7 +12,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
         private EcsPool<CharacterConfigComponent> _configPool;
         private EcsPool<MovementDataComponent> _movementDataPool;
         private EcsPool<InputDataComponent> _inputDataPool;
-        private EcsPool<CharacterVelocityComponent> _velocityPool;
+        private EcsPool<CharacterVelocity> _velocityPool;
 
         public void Init(IEcsSystems systems)
         {
@@ -21,13 +21,13 @@ namespace BT.Runtime.Gameplay.Hero.Systems
             _filter = world.Filter<CharacterConfigComponent>()
                 .Inc<MovementDataComponent>()
                 .Inc<InputDataComponent>()
-                .Inc<CharacterVelocityComponent>()
+                .Inc<CharacterVelocity>()
                 .End();
 
             _configPool = world.GetPool<CharacterConfigComponent>();
             _movementDataPool = world.GetPool<MovementDataComponent>();
             _inputDataPool = world.GetPool<InputDataComponent>();
-            _velocityPool = world.GetPool<CharacterVelocityComponent>();
+            _velocityPool = world.GetPool<CharacterVelocity>();
 
             foreach (var e in _filter)
             {
@@ -56,7 +56,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
             }
         }
 
-        private void Jump(ref MovementDataComponent movement, ref CharacterVelocityComponent velocity, ref InputDataComponent input)
+        private void Jump(ref MovementDataComponent movement, ref CharacterVelocity velocity, ref InputDataComponent input)
         {
             movement.IsLanded = false;
             movement.IsStartJump = false;

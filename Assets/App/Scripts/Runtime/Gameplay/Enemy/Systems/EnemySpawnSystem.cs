@@ -23,9 +23,9 @@ namespace BT.Runtime.Gameplay.Enemy.Systems
         private EcsPool<EnemyComponent> _enemyPool;
         private EcsPool<HealthComponent> _healthPool;
         private EcsPool<IdleState> _idleStatePool;
-        private EcsPool<TranslateComponent> _translatePool;
-        private EcsPool<AnimatorComponent> _animatorPool;
-        private EcsPool<ViewModelTransformComponent> _viewModelTrPool;
+        private EcsPool<Translate> _translatePool;
+        private EcsPool<AnimatorController> _animatorPool;
+        private EcsPool<ViewModelTransform> _viewModelTrPool;
         private EcsPool<NavMeshCharacterEngine> _navMeshEnginePool;
         private Dictionary<Collider, EcsPackedEntity> _entityColliders;
 
@@ -42,9 +42,9 @@ namespace BT.Runtime.Gameplay.Enemy.Systems
             _enemyPool = _world.GetPool<EnemyComponent>();
             _healthPool = _world.GetPool<HealthComponent>();
             _idleStatePool = _world.GetPool<IdleState>();
-            _translatePool = _world.GetPool<TranslateComponent>();
-            _animatorPool = _world.GetPool<AnimatorComponent>();
-            _viewModelTrPool = _world.GetPool<ViewModelTransformComponent>();
+            _translatePool = _world.GetPool<Translate>();
+            _animatorPool = _world.GetPool<AnimatorController>();
+            _viewModelTrPool = _world.GetPool<ViewModelTransform>();
             _navMeshEnginePool = _world.GetPool<NavMeshCharacterEngine>();
         }
 
@@ -87,7 +87,7 @@ namespace BT.Runtime.Gameplay.Enemy.Systems
 
         private void AddNavMeshEngine(int entity, EnemyView enemyView)
         {
-            _navMeshEnginePool.Add(entity).AgentRef = enemyView.NavMeshAgent;
+            _navMeshEnginePool.Add(entity).Ref = enemyView.NavMeshAgent;
         }
 
         private void AddBodyView(int entity, EnemyView enemyView)
@@ -102,7 +102,7 @@ namespace BT.Runtime.Gameplay.Enemy.Systems
 
         private void AddTranslate(int entity, EnemyView enemyView)
         {
-            _translatePool.Add(entity).TrRef = enemyView.transform;
+            _translatePool.Add(entity).Ref = enemyView.transform;
         }
         
         private void AddEnemy(int entity, EnemyView enemyView)

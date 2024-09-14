@@ -12,7 +12,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
         private EcsPool<MovementDataComponent> _movementDataPool;
         private EcsPool<InputDataComponent> _inputDataPool;
         private EcsPool<CharacterAttackComponent> _attackDataPool;
-        private EcsPool<CharacterVelocityComponent> _velovityPool;
+        private EcsPool<CharacterVelocity> _velovityPool;
 
         public void Init(IEcsSystems systems)
         {
@@ -22,14 +22,14 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                 .Inc<MovementDataComponent>()
                 .Inc<InputDataComponent>()
                 .Inc<CharacterAttackComponent>()
-                .Inc<CharacterVelocityComponent>()
+                .Inc<CharacterVelocity>()
                 .End();
 
             _configPool = world.GetPool<CharacterConfigComponent>();
             _movementDataPool = world.GetPool<MovementDataComponent>();
             _inputDataPool = world.GetPool<InputDataComponent>();
             _attackDataPool = world.GetPool<CharacterAttackComponent>();
-            _velovityPool = world.GetPool<CharacterVelocityComponent>();
+            _velovityPool = world.GetPool<CharacterVelocity>();
         }
 
         public void Run(IEcsSystems systems)

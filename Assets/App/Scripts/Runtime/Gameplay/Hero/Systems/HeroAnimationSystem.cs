@@ -9,32 +9,32 @@ namespace BT.Runtime.Gameplay.Hero.Systems
     public sealed class HeroAnimationSystem : IEcsInitSystem, IEcsRunSystem
     {
         private EcsFilter _filter;
-        private EcsPool<AnimatorComponent> _animatorPool;
+        private EcsPool<AnimatorController> _animatorPool;
         private EcsPool<InputDataComponent> _inputPool;
         private EcsPool<MovementDataComponent> _movementPool;
         private EcsPool<CharacterConfigComponent> _characterConfigPool;
         private EcsPool<CharacterAttackComponent> _attackPool;
-        private EcsPool<CharacterVelocityComponent> _velocityPool;
+        private EcsPool<CharacterVelocity> _velocityPool;
 
         public void Init(IEcsSystems systems)
         {
             var world = systems.GetWorld();
 
             _filter = world.Filter<HeroTeg>()
-                .Inc<AnimatorComponent>()
+                .Inc<AnimatorController>()
                 .Inc<InputDataComponent>()
                 .Inc<MovementDataComponent>()
                 .Inc<CharacterConfigComponent>()
                 .Inc<CharacterAttackComponent>()
-                .Inc<CharacterVelocityComponent>()
+                .Inc<CharacterVelocity>()
                 .End();
 
-            _animatorPool = world.GetPool<AnimatorComponent>();
+            _animatorPool = world.GetPool<AnimatorController>();
             _inputPool = world.GetPool<InputDataComponent>();
             _movementPool = world.GetPool<MovementDataComponent>();
             _characterConfigPool = world.GetPool<CharacterConfigComponent>();
             _attackPool = world.GetPool<CharacterAttackComponent>();
-            _velocityPool = world.GetPool<CharacterVelocityComponent>();
+            _velocityPool = world.GetPool<CharacterVelocity>();
         }
 
         public void Run(IEcsSystems systems)
@@ -52,7 +52,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
             }
         }
 
-        private void AnimationProcess(ref AnimatorComponent animator, ref CharacterVelocityComponent velocity, 
+        private void AnimationProcess(ref AnimatorController animator, ref CharacterVelocity velocity, 
             ref MovementDataComponent movement, ref CharacterConfigComponent config, ref CharacterAttackComponent attack)
         {
             SetMovementSpeedPrm(ref animator, ref velocity, ref config);          
@@ -71,14 +71,14 @@ namespace BT.Runtime.Gameplay.Hero.Systems
             animator.CurrentState = state;
         }
       
-        private void SetMovementSpeedPrm(ref AnimatorComponent animator, ref CharacterVelocityComponent velocity, ref CharacterConfigComponent config)
+        private void SetMovementSpeedPrm(ref AnimatorController animator, ref CharacterVelocity velocity, ref CharacterConfigComponent config)
         {
             var velMagnitude = new Vector3(velocity.Horizontal.x, 0f, velocity.Horizontal.z).magnitude;
             var normSpeed = Mathf.Clamp01(velMagnitude / config.ConfigRef.Engine.MaxRunSpeed);
             animator.AnimatorRef.SetFloat(GameConstants.AnimatorPrm.NORM_SPEED_PRM, normSpeed);
         }
 
-        private int GetMovementState(ref AnimatorComponent animator, ref MovementDataComponent movement, ref CharacterConfigComponent config)
+        private int GetMovementState(ref AnimatorController animator, ref MovementDataComponent movement, ref CharacterConfigComponent config)
         {
             var animConfig = config.ConfigRef.Animation;
 
@@ -89,7 +89,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
             
             return (movement.IsGround || movement.IsGroundFar) ? GameConstants.AnimatorPrm.MOVEMENT : GameConstants.AnimatorPrm.FALL;
 
-            int LockState(int s, float t, ref AnimatorComponent animator) 
+            int LockState(int s, float t, ref AnimatorController animator) 
             {
                 animator.LockedTill = Time.time + t;
                 return s;
