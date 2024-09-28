@@ -53,7 +53,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                 {
                     if (TryFindNearEnemyPosition(ref body, config.ConfigRef.Attack.DetectTargetRadius, out Vector3 nearEnemyPosition))
                     {
-                        body.LookAt = Vector3Math.DirToQuaternion(nearEnemyPosition - body.ModelTransformRef.position);
+                        body.LookAtDirection = nearEnemyPosition - body.ModelTransformRef.position;
                     }
                 }
             }

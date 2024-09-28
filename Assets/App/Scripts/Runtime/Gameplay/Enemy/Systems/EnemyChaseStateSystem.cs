@@ -78,7 +78,7 @@ namespace BT.Runtime.Gameplay.Enemy.Systems
                 {
                     navMesh.Ref.speed = 2f;
                     navMesh.Ref.SetDestination(heroTr.Ref.position);  
-                    viewModel.LookAt = Vector3Math.DirToQuaternion(heroTr.Ref.position - myTr.Ref.position); 
+                    viewModel.LookAtDirection = heroTr.Ref.position - myTr.Ref.position; 
                 }
                 else
                 {

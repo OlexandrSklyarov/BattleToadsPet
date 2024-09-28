@@ -54,6 +54,7 @@ namespace BT.Runtime.Gameplay
                 .Add(new HeroApplyInputSystem())
                 .Add(new CharacterContrellerCheckGroundSystem())
                 .Add(new HeroSetLookSystem())
+                .Add(new ClampWorldMovemenOrientationSystem())
                 .Add(new BodyRotateSystem())
                 .Add(new CharacterGravitySystem())
                 .Add(new CharacterAttackSystem())

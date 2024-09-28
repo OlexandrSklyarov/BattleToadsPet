@@ -42,7 +42,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
 
                 if (vel.sqrMagnitude <= 0.001f) return;
 
-                body.LookAt = Vector3Math.DirToQuaternion(velocity.Horizontal);
+                body.LookAtDirection = velocity.Horizontal;
             }
         }
     }

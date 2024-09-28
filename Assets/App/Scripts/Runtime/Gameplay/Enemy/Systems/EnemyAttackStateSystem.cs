@@ -81,7 +81,7 @@ namespace BT.Runtime.Gameplay.Enemy.Systems
 
                 if ((myTr.Ref.position - heroTr.Ref.position).sqrMagnitude <= enemy.AttackDistance * enemy.AttackDistance)
                 {
-                    viewModel.LookAt = Vector3Math.DirToQuaternion(heroTr.Ref.position - myTr.Ref.position);  
+                    viewModel.LookAtDirection = heroTr.Ref.position - myTr.Ref.position;  
                     var angle = Quaternion.Angle(viewModel.LookAt, viewModel.ModelTransformRef.rotation);
 
                     if (angle < MIN_ANGLE_TO_TARGET && attackState.NextAttackDelay <= 0f)
