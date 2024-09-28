@@ -65,7 +65,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                 }
                 else //stopping
                 {
-                    velocity.Horizontal = Vector2.Lerp(velocity.Horizontal, Vector3.zero, deceleration * Time.deltaTime);
+                    velocity.Horizontal = Vector3.Lerp(velocity.Horizontal, Vector3.zero, deceleration * Time.deltaTime);
                     if (velocity.Horizontal.magnitude < 0.1f) velocity.Horizontal = Vector3.zero;
                 }
                 
