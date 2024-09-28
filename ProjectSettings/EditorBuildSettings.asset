@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/App/Scenes/Game.unity
     guid: 32aef9e94a357926db809952a100848f
   - enabled: 1
+    path: Assets/App/Scenes/MediatorLevelBoot.unity
+    guid: d08c2dc67b558865ea5c282b61cfcd34
+  - enabled: 1
     path: Assets/App/Scenes/Environment.unity
     guid: 1490b7b47582774f38b54c4ae4bcc56f
   m_configObjects:
