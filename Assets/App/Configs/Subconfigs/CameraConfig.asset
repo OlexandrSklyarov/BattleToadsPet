@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdac0a317d0c92c1faa6f4b58c7753f8, type: 3}
   m_Name: CameraConfig
   m_EditorClassIdentifier: 
-  <FollowOffset>k__BackingField: {x: 0, y: 6.11, z: -7.12}
-  <AimOffset>k__BackingField: {x: 0, y: -6.92, z: 6.96}
-  <BodyDamping>k__BackingField: {x: 0.3, y: 1, z: 0.3}
-  <FOV>k__BackingField: 60
+  <FollowOffset>k__BackingField: {x: 0, y: 5.1, z: -7.12}
+  <AimOffset>k__BackingField: {x: 0, y: 0.47, z: 6.96}
+  <BodyDamping>k__BackingField: {x: 0.3, y: 0.24, z: 0.3}
+  <FOV>k__BackingField: 54
   <IsChangeInRuntime>k__BackingField: 0
