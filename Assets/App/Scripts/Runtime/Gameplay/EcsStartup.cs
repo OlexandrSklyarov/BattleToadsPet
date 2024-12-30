@@ -52,9 +52,9 @@ namespace BT.Runtime.Gameplay
                 //Hero
                 .Add(new SpawnHeroSystem())
                 .Add(new HeroApplyInputSystem())
-                .Add(new CharacterContrellerCheckGroundSystem())
+                .Add(new CharacterControllerCheckGroundSystem())
                 .Add(new HeroSetLookSystem())
-                .Add(new ClampWorldMovemenOrientationSystem())
+                .Add(new ClampWorldMovementOrientationSystem())
                 .Add(new BodyRotateSystem())
                 .Add(new CharacterGravitySystem())
                 .Add(new CharacterAttackSystem())

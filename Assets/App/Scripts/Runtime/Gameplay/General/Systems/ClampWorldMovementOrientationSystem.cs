@@ -6,7 +6,7 @@ using Util;
 
 namespace BT.Runtime.Gameplay.General.Systems
 {
-    public sealed class ClampWorldMovemenOrientationSystem : IEcsInitSystem, IEcsRunSystem
+    public sealed class ClampWorldMovementOrientationSystem : IEcsInitSystem, IEcsRunSystem
     {
         private EcsFilter _modeFilter;
         private EcsFilter _bodyFilter;

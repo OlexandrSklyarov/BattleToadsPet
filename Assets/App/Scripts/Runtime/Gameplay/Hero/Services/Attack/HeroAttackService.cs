@@ -64,7 +64,7 @@ namespace BT.Runtime.Gameplay.Hero.Services.Attack
             }
         }
 
-        public void ApllyAttack(AttackType type, AttackPointType pointType, bool isPowerAttack = false)
+        public void ApplyAttack(AttackType type, AttackPointType pointType, bool isPowerAttack = false)
         {
             var point = _attackPoints.FirstOrDefault(x => x.Type == pointType);
 
@@ -94,10 +94,10 @@ namespace BT.Runtime.Gameplay.Hero.Services.Attack
                     attackRequest.Damage *= _attackConfig.PowerDamageMultiplier;
                 }
 
-                DebugUtil.PrintColor($"ApllyAttack pow {attackRequest.Damage} - [{pointType}]", Color.cyan);
+                DebugUtil.PrintColor($"ApplyAttack pow {attackRequest.Damage} - [{pointType}]", Color.cyan);
             }
         }
 
-        public float GetCrossFadeTime() => _animConfig.AttackCrosfadeAnimime;
+        public float GetCrossFadeTime() => _animConfig.AttackCrossFadeAnimation;
     }
 }

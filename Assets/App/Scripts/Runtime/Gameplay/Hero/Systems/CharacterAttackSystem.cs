@@ -12,7 +12,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
         private EcsPool<MovementDataComponent> _movementDataPool;
         private EcsPool<InputDataComponent> _inputDataPool;
         private EcsPool<CharacterAttackComponent> _attackDataPool;
-        private EcsPool<CharacterVelocity> _velovityPool;
+        private EcsPool<CharacterVelocity> _velocityPool;
 
         public void Init(IEcsSystems systems)
         {
@@ -29,7 +29,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
             _movementDataPool = world.GetPool<MovementDataComponent>();
             _inputDataPool = world.GetPool<InputDataComponent>();
             _attackDataPool = world.GetPool<CharacterAttackComponent>();
-            _velovityPool = world.GetPool<CharacterVelocity>();
+            _velocityPool = world.GetPool<CharacterVelocity>();
         }
 
         public void Run(IEcsSystems systems)
@@ -41,7 +41,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
                 ref var input = ref _inputDataPool.Get(ent);
                 ref var config = ref _configPool.Get(ent);
                 ref var attack = ref _attackDataPool.Get(ent);
-                ref var velocity = ref _velovityPool.Get(ent);                
+                ref var velocity = ref _velocityPool.Get(ent);                
 
                 if (movement.IsGround)
                 {

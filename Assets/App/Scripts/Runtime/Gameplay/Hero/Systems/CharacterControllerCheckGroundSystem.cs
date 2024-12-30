@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace BT.Runtime.Gameplay.Hero.Systems
 {
-    public sealed class CharacterContrellerCheckGroundSystem : IEcsInitSystem, IEcsRunSystem
+    public sealed class CharacterControllerCheckGroundSystem : IEcsInitSystem, IEcsRunSystem
     {
         private EcsFilter _filter;
         private EcsPool<CharacterControllerEngine> _characterEnginePool;

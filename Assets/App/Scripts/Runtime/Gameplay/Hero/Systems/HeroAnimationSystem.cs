@@ -66,7 +66,7 @@ namespace BT.Runtime.Gameplay.Hero.Systems
 
             if (state == animator.CurrentState) return;
             
-            animator.AnimatorRef.CrossFade(state, config.ConfigRef.Animation.DefaultCrosfadeAnimime, 0);
+            animator.AnimatorRef.CrossFade(state, config.ConfigRef.Animation.DefaultCrossFadeAnimation, 0);
 
             animator.CurrentState = state;
         }

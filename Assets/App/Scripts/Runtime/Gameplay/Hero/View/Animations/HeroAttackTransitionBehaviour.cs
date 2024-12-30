@@ -42,7 +42,7 @@ namespace BT.Runtime.Gameplay.Hero.View.Animations
             {
                 _isActiveAttackState = true;
                 animator.CrossFade(_attackService.GetAttackAnimID(_type), _attackService.GetCrossFadeTime());
-                _attackService.ApllyAttack(_type, _pointType);
+                _attackService.ApplyAttack(_type, _pointType);
             }
         }
 

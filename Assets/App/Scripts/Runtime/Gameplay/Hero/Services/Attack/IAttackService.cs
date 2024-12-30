@@ -7,7 +7,7 @@ namespace BT.Runtime.Gameplay.Hero.Services.Attack
         float GetCrossFadeTime();
         int GetAttackAnimID(AttackType type);
         void ResetAttackExecuted();
-        void ApllyAttack(AttackType type, AttackPointType _pointType, bool isPowerAttack = false);
+        void ApplyAttack(AttackType type, AttackPointType _pointType, bool isPowerAttack = false);
         bool IsAttackExecuted();
     }
 }
