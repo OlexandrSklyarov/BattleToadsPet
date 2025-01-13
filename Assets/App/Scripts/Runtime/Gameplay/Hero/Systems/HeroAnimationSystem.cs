@@ -52,8 +52,12 @@ namespace BT.Runtime.Gameplay.Hero.Systems
             }
         }
 
-        private void AnimationProcess(ref AnimatorController animator, ref CharacterVelocity velocity, 
-            ref MovementDataComponent movement, ref CharacterConfigComponent config, ref CharacterAttackComponent attack)
+        private void AnimationProcess(
+            ref AnimatorController animator, 
+            ref CharacterVelocity velocity, 
+            ref MovementDataComponent movement, 
+            ref CharacterConfigComponent config, 
+            ref CharacterAttackComponent attack)
         {
             SetMovementSpeedPrm(ref animator, ref velocity, ref config);          
 
