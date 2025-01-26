@@ -25,6 +25,7 @@ namespace BT.Runtime.Data
 
         public static class Scene
         {
+            public static readonly string BOOT = "Boot";            
             public static readonly string MEDIATOR_LEVEL_BOOT = "MediatorLevelBoot";            
         }
     }

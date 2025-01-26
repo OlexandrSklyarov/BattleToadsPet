@@ -6,7 +6,7 @@ namespace BT.Runtime.Services.Spawn
 {
     public interface IItemGenerator
     {
-        T SpawnPrefab<T>(T prefab, Transform spawnPoint) where T : MonoBehaviour;
+        T SpawnPrefab<T>(T prefab, Transform parent) where T : MonoBehaviour;
         HeroView GetHero(HeroType type, Transform spawnPoint);
         EnemyView CreateEnemy(EnemyType type, Vector3 spawnPoint);
     } 

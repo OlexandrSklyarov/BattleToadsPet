@@ -1,10 +1,10 @@
+using System.Linq;
 using BT.Runtime.Gameplay.Components;
 using BT.Runtime.Gameplay.General.Components;
 using BT.Runtime.Gameplay.Hero.Components;
 using BT.Runtime.Gameplay.Services.GameWorldData;
 using BT.Runtime.Gameplay.Views.Camera;
 using BT.Runtime.Gameplay.Views.Hero;
-using BT.Runtime.Gameplay.Views.World;
 using BT.Runtime.Services.Spawn;
 using Leopotam.EcsLite;
 using VContainer;
@@ -15,12 +15,14 @@ namespace BT.Runtime.Gameplay.Hero.Systems
     {
         public void Init(IEcsSystems systems)
         {
-            var data = systems.GetShared<SharedData>();
-            var spawnPoint = data.DIResolver.Resolve<SpawnPointTag>().transform;
+            var data = systems.GetShared<SharedData>();            
             var camera = data.DIResolver.Resolve<ICameraController>();
             var itemGenerator =  data.DIResolver.Resolve<IItemGenerator>();
 
             var world = systems.GetWorld();
+
+            var components = world.GetPool<HeroSpawnerComponent>().GetRawDenseItems();
+            var spawnPoint = components.First(x => x.SpawnPosition != null).SpawnPosition;
 
             var view = itemGenerator.GetHero(HeroType.Rash, spawnPoint);         
 

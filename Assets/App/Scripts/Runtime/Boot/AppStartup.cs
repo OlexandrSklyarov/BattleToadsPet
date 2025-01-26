@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using BT.Runtime.Data;
 using BT.Runtime.Data.Configs;
 using BT.Runtime.Gameplay;
 using BT.Runtime.Services.Player;
@@ -14,6 +16,29 @@ namespace BT.Runtime.Boot
 {
     public sealed class AppStartup : MonoBehaviour
     {
+        #region 
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        private static void SetupApplication()
+        {
+            ApplicationSetup();
+            
+            for(int i = 0; i < SceneManager.sceneCount; i++)
+            {
+                var curScene = SceneManager.GetSceneAt(i);
+
+                if (curScene.name == GameConstants.Scene.BOOT) return;                
+            }
+
+            SceneManager.LoadScene(GameConstants.Scene.BOOT, LoadSceneMode.Additive);
+        }
+
+        private static void ApplicationSetup()
+        {
+            //setup app settings
+        }
+        #endregion
+
+
         private ILoadingScreenProvider _loadingScreenProvider;
         private LevelDataBase _levelDataBase;
         private PlayerDataStorageService _dataStorageService;

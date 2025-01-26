@@ -19,9 +19,9 @@ namespace BT.Runtime.Services.Spawn
             return _characterFactory.CreateEnemy(type, spawnPoint);
         }
 
-        public T SpawnPrefab<T>(T prefab, Transform spawnPoint) where T : MonoBehaviour
+        public T SpawnPrefab<T>(T prefab, Transform parent) where T : MonoBehaviour
         {
-            return UnityEngine.Object.Instantiate(prefab, spawnPoint);
+            return UnityEngine.Object.Instantiate(prefab, parent);
         }
 
         HeroView IItemGenerator.GetHero(HeroType type, Transform spawnPoint)

@@ -53,17 +53,9 @@ namespace BT
         {
             builder.RegisterComponentInHierarchy<EcsStartup>()
                 .AsImplementedInterfaces()
-                .AsSelf();
-
-            builder.RegisterComponentInHierarchy<SpawnPointTag>()
-                .AsImplementedInterfaces()
-                .AsSelf();
+                .AsSelf();            
 
             builder.RegisterComponentInHierarchy<CameraController>()
-                .AsImplementedInterfaces()
-                .AsSelf();
-
-            builder.RegisterComponentInHierarchy<WorldTeg>()
                 .AsImplementedInterfaces()
                 .AsSelf();
         }
