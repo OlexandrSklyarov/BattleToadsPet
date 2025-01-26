@@ -16,12 +16,14 @@ namespace BT
             builder.RegisterInstance(_mainConfig);
             builder.RegisterInstance(_mainConfig.LevelDataBase);
             builder.RegisterInstance(_mainConfig.UI);
+            builder.RegisterInstance(_mainConfig.Camera);
+            builder.RegisterInstance(_mainConfig.Factory);
 
             builder.Register<ILoadingScreenProvider, LoadingScreenProvider>(Lifetime.Scoped);
             
             builder.Register<PlayerDataStorageService>(Lifetime.Transient)
                 .AsImplementedInterfaces()
-                .AsSelf();
+                .AsSelf(); 
         }
     }
 }

@@ -18,8 +18,6 @@ namespace BT
         
         protected override void Configure(IContainerBuilder builder)
         {
-            RegisterConfigs(builder);
-
             RegisterInHierarchy(builder);
 
             RegisterServices(builder);
@@ -40,14 +38,7 @@ namespace BT
             builder.Register<PlayerDataStorageService>(Lifetime.Scoped)
             .AsImplementedInterfaces()
             .AsSelf();
-        }
-
-        private void RegisterConfigs(IContainerBuilder builder)
-        {
-            builder.RegisterInstance(_mainConfig);
-            builder.RegisterInstance(_mainConfig.Factory);
-            builder.RegisterInstance(_mainConfig.Camera);
-        }
+        }      
 
         private void RegisterInHierarchy(IContainerBuilder builder)
         {
